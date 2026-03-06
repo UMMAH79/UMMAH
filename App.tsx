@@ -201,9 +201,9 @@ const App: React.FC = () => {
             />
           )}
           <Layout activeTab={activeTab} setActiveTab={handleTabChange}>
-            <div className="animate-in fade-in duration-500 min-h-full">
-              {renderContent()}
-            </div>
+<div className="animate-in fade-in duration-500 min-h-screen">
+  {renderContent()}
+</div>
           </Layout>
         </>
       )}
