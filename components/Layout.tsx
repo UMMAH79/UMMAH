@@ -16,12 +16,15 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, activeTab, setActiveTab }) => {
   return (
-    <div className="flex flex-col h-screen max-w-lg mx-auto bg-ummah-bg-light dark:bg-ummah-bg-dark shadow-2xl relative overflow-hidden transition-colors duration-700 ring-1 ring-black/5 dark:ring-white/5">
-      <main className="flex-1 relative overflow-hidden">
-        <div className="absolute inset-0">
+    <div className="flex flex-col min-h-screen max-w-lg mx-auto bg-ummah-bg-light dark:bg-ummah-bg-dark shadow-2xl relative overflow-y-auto transition-colors duration-700 ring-1 ring-black/5 dark:ring-white/5">
+      <main className="flex-1 relative">
+        <div>
           {children}
         </div>
       </main>
+    </div>
+  );
+};
 
       <nav className="shrink-0 bg-white/95 dark:bg-ummah-bg-dark/95 backdrop-blur-2xl border-t border-black/5 dark:border-white/10 flex justify-around items-center z-50 shadow-[0_-15px_50px_rgba(0,0,0,0.04)] pb-[calc(env(safe-area-inset-bottom,20px)+12px)] pt-5 px-6 transition-all duration-700">
         {[
