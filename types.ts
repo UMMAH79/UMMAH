@@ -24,6 +24,7 @@ export interface UserSettings {
   prayerAdhanSettings: Record<string, boolean>;
   userName?: string;
   appMode: AppMode;
+  viewMode: ViewMode;
   dailyChatCount: {
     date: string;
     count: number;
@@ -38,6 +39,8 @@ export enum Tab {
 }
 
 export type AppMode = 'normal' | 'ramadan' | 'hajj';
+
+export type ViewMode = 'mobile' | 'desktop';
 
 export type AppLanguage = 
   | 'en' | 'ar' | 'ur' | 'bn' | 'id' | 'ms' | 'tr' 

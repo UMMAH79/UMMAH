@@ -1,5 +1,5 @@
 {
-  "name": "Remix: UMMAH - Islamic Lifestyle Companion",
+  "name": "UMMAH - Islamic Lifestyle Companion",
   "description": "A comprehensive Islamic application featuring accurate prayer times, Qibla compass, full Quran reader, fasting tracker, and digital tasbih counter.",
   "requestFramePermissions": [
     "geolocation",
