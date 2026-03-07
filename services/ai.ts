@@ -1,5 +1,5 @@
 
-import { GoogleGenAI, Type, Modality } from "@google/genai";
+import { GoogleGenAI, Type, Modality, ThinkingLevel } from "@google/genai";
 
 export type VoiceType = 'male'; 
 
@@ -23,7 +23,7 @@ const GET_VOICE_NAME = (voice: VoiceType) => 'Charon';
  */
 export async function searchGlobalHadiths(query: string, category?: string): Promise<GlobalHadith[]> {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     
     const contents = category 
       ? `Provide 10 highly authentic Hadiths related to "${category}". Search terms: "${query}" if relevant.`
@@ -36,7 +36,7 @@ export async function searchGlobalHadiths(query: string, category?: string): Pro
         systemInstruction: "Islamic librarian. Provide authentic Hadiths from Kutub al-Sittah. Format as JSON.",
         responseMimeType: "application/json",
         // OPTIMIZATION: Instant response
-        thinkingConfig: { thinkingBudget: 0 },
+        thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
         responseSchema: {
           type: Type.ARRAY,
           items: {
@@ -69,7 +69,7 @@ export async function reciteHadith(
   voice: VoiceType = 'male'
 ): Promise<Uint8Array | null> {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     
     const voiceName = GET_VOICE_NAME(voice);
     const prompt = `Narrate: Category: ${category}. Source: From ${source}. Text: ${text}.`;
@@ -103,7 +103,7 @@ export async function reciteDuaPart(
   voice: VoiceType = 'male'
 ): Promise<Uint8Array | null> {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     const voiceName = GET_VOICE_NAME(voice);
     
     const prompt = `[ROLE: WORLD-CLASS QARI] Recite Arabic text exactly: "${text}"`;
@@ -134,7 +134,7 @@ export async function reciteDuaPart(
 
 export async function getHadithExplanation(text: string, source: string): Promise<HadithInsight | null> {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
@@ -143,7 +143,7 @@ export async function getHadithExplanation(text: string, source: string): Promis
         systemInstruction: "Islamic scholar. Provide authentic insights. JSON format.",
         responseMimeType: "application/json",
         // OPTIMIZATION: Instant response
-        thinkingConfig: { thinkingBudget: 0 },
+        thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
         responseSchema: {
           type: Type.OBJECT,
           properties: {

@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
+import { GoogleGenAI, GenerateContentResponse, ThinkingLevel } from "@google/genai";
 import { 
   Send, 
   Bot, 
@@ -181,7 +181,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
     onUpdateSettings({ dailyChatCount: { date: today, count: currentCount + 1 } });
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
       
       // OPTIMIZATION: Limit history context to the last 6 messages to reduce latency
       const historyToInclude = messages.slice(-6);
@@ -211,7 +211,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
           systemInstruction: SYSTEM_INSTRUCTION,
           temperature: 0.1,
           // OPTIMIZATION: Disable thinking to maximize response speed
-          thinkingConfig: { thinkingBudget: 0 }
+          thinkingConfig: { thinkingLevel: ThinkingLevel.LOW }
         }
       });
       
