@@ -419,7 +419,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
             <input type="text" placeholder="Search Surah..." className="w-full pl-12 pr-4 py-4 bg-slate-100 dark:bg-zinc-900 border-none rounded-2xl outline-none font-bold text-slate-800 dark:text-white" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
           </div>
 
-          <div className="grid gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3">
             {filteredSurahs.map(surah => (
               <button key={surah.number} onClick={() => handleSurahClick(surah)} className="flex items-center justify-between p-5 bg-white dark:bg-zinc-950 rounded-2xl border border-slate-100 dark:border-zinc-900 hover:border-emerald-200 transition-all text-left group">
                 <div className="flex items-center gap-4">

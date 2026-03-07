@@ -391,7 +391,9 @@ const MoreFeatures: React.FC<MoreFeaturesProps> = ({
         </div>
       </div>
 
-      <button onClick={() => setActiveFeature('upgrade')} className="w-full bg-gradient-to-br from-ummah-gold to-amber-600 rounded-[2rem] p-6 mb-6 shadow-premium group relative overflow-hidden flex items-center justify-between">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+        <div className="space-y-6">
+          <button onClick={() => setActiveFeature('upgrade')} className="w-full bg-gradient-to-br from-ummah-gold to-amber-600 rounded-[2rem] p-6 mb-6 shadow-premium group relative overflow-hidden flex items-center justify-between">
          <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
          <div className="flex items-center gap-4 relative z-10">
             <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-white shadow-inner">
@@ -451,7 +453,10 @@ const MoreFeatures: React.FC<MoreFeaturesProps> = ({
         </button>
       </div>
 
-      <div className="px-2 mb-3">
+        </div>
+
+        <div className="space-y-6">
+          <div className="px-2 mb-3">
         <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/40">Follow Us</h3>
       </div>
       <div className="bg-white dark:bg-ummah-card-dark border border-black/5 dark:border-white/10 rounded-[2rem] p-2 overflow-hidden shadow-sm transition-colors mb-6">
@@ -505,6 +510,9 @@ const MoreFeatures: React.FC<MoreFeaturesProps> = ({
           </div>
           <ChevronRight size={14} className="text-slate-300 group-hover:translate-x-1 transition-all" />
         </button>
+      </div>
+
+        </div>
       </div>
 
       <div className="text-center px-10 opacity-20 flex flex-col items-center gap-2">

@@ -665,7 +665,7 @@ const Home: React.FC<HomeProps> = ({
           ))}
         </div>
 
-        <div className="grid grid-cols-1 gap-4 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 pt-4">
           {filtered.length > 0 ? (
             <>
               {filtered.map((article) => (
@@ -816,7 +816,7 @@ const Home: React.FC<HomeProps> = ({
       <div className="px-6 py-10 space-y-12">
         <section className="animate-fade-up [animation-delay:100ms]">
           <SectionTitle title="Daily Essentials" />
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             <DashboardCard icon={Clock} label="Prayers" onClick={() => setActiveSubFeature('prayers')} />
             <DashboardCard icon={Zap} label="Tasbih" onClick={() => setActiveSubFeature('tasbih')} />
             <DashboardCard icon={BookMarked} label="Duas" onClick={() => setActiveSubFeature('duas')} />
@@ -839,7 +839,7 @@ const Home: React.FC<HomeProps> = ({
 
         <section className="animate-fade-up [animation-delay:200ms]">
           <SectionTitle title="Wealth & Guidance" />
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <button 
               onClick={() => setActiveSubFeature('zakat')}
               className="flex items-center gap-6 p-6 bg-gradient-to-br from-ummah-icon-active-light to-[#043326] dark:from-ummah-card-dark dark:to-[#0F172A] rounded-[2rem] border border-emerald-500/20 text-white shadow-premium group transition-all active:scale-[0.98]"

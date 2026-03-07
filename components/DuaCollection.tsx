@@ -161,23 +161,24 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
       </div>
 
       {/* Main List Section */}
-      <div className="px-8 space-y-4 pt-8 pb-32">
+      <div className="px-8 pt-8 pb-32">
         {filteredDuas.length === 0 ? (
           <div className="py-20 text-center opacity-30 flex flex-col items-center gap-4">
             <Sparkles size={48} className="text-ummah-icon-inactive-light" />
             <p className="text-xs font-black uppercase tracking-widest">No matching supplications found</p>
           </div>
         ) : (
-          filteredDuas.map((dua) => (
-            <div 
-              key={dua.id} 
-              className={`p-6 rounded-[2.5rem] border transition-all duration-500 shadow-soft cursor-pointer relative overflow-hidden group ${
-                selectedDua?.id === dua.id 
-                  ? 'bg-ummah-mint dark:bg-ummah-card-dark border-ummah-emerald/30 ring-1 ring-ummah-emerald/10' 
-                  : 'bg-white dark:bg-ummah-card-dark border-black/5 dark:border-white/5 hover:border-ummah-emerald/20'
-              }`}
-              onClick={() => handleDuaClick(dua)}
-            >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+            {filteredDuas.map((dua) => (
+              <div 
+                key={dua.id} 
+                className={`p-6 rounded-[2.5rem] border transition-all duration-500 shadow-soft cursor-pointer relative overflow-hidden group h-fit ${
+                  selectedDua?.id === dua.id 
+                    ? 'bg-ummah-mint dark:bg-ummah-card-dark border-ummah-emerald/30 ring-1 ring-ummah-emerald/10' 
+                    : 'bg-white dark:bg-ummah-card-dark border-black/5 dark:border-white/5 hover:border-ummah-emerald/20'
+                }`}
+                onClick={() => handleDuaClick(dua)}
+              >
               <div className="flex items-center justify-between relative z-10">
                 <div className="flex items-center gap-4">
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${
@@ -260,7 +261,8 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
                 </div>
               )}
             </div>
-          ))
+            ))}
+          </div>
         )}
 
         {/* Spiritual Footer */}

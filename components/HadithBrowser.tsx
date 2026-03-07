@@ -485,7 +485,8 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
           </div>
         ) : (
           <>
-            {allResults.map((hadith) => {
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {allResults.map((hadith) => {
               const insight = explanations[hadith.id];
               const isExpanded = expandedId === hadith.id;
               const isCopied = copiedId === hadith.id;
@@ -647,24 +648,26 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                 </div>
               );
             })}
+          </div>
 
-            {viewMode === 'all' && (
-              <div className="p-10 flex flex-col items-center gap-4 animate-in fade-in">
-                <button 
-                    onClick={() => handleGlobalSearch(true)}
-                    disabled={isSearchingGlobal}
-                    className="px-8 py-5 bg-ummah-icon-active-light dark:bg-ummah-icon-active-dark text-white rounded-[2rem] text-[10px] font-black uppercase tracking-[0.2em] shadow-premium flex items-center justify-center gap-3 active:scale-95 transition-all disabled:opacity-50"
-                >
-                    {isSearchingGlobal ? <Loader2 size={16} className="animate-spin" /> : <Plus size={16} />}
-                    Load More from Global Corpus
-                </button>
-                <p className="text-[9px] text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/30 font-bold uppercase tracking-widest">
-                    Browsing through 10,000+ Verified Narrations
-                </p>
-              </div>
-            )}
-          </>
-        )}
+          {viewMode === 'all' && (
+            <div className="p-10 flex flex-col items-center gap-4 animate-in fade-in">
+              <button 
+                  onClick={() => handleGlobalSearch(true)}
+                  disabled={isSearchingGlobal}
+                  className="px-8 py-5 bg-ummah-icon-active-light dark:bg-ummah-icon-active-dark text-white rounded-[2rem] text-[10px] font-black uppercase tracking-[0.2em] shadow-premium flex items-center justify-center gap-3 active:scale-95 transition-all disabled:opacity-50"
+              >
+                  {isSearchingGlobal ? <Loader2 size={16} className="animate-spin" /> : <Plus size={16} />}
+                  Load More from Global Corpus
+              </button>
+              <p className="text-[9px] text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/30 font-bold uppercase tracking-widest">
+                  Browsing through 10,000+ Verified Narrations
+              </p>
+            </div>
+          )}
+        </>
+      )
+    }
       </div>
       
       <div className="py-20 text-center opacity-10">

@@ -304,7 +304,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
         ) : (
           messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in`}>
-              <div className={`flex gap-3 max-w-[92%] group ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+              <div className={`flex gap-3 max-w-[92%] lg:max-w-[75%] group ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                 <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${msg.role === 'user' ? 'bg-ummah-icon-active-light text-white' : 'bg-white dark:bg-ummah-card-dark text-ummah-icon-inactive-light dark:text-ummah-icon-inactive-dark shadow-sm border border-black/5 dark:border-white/5'}`}>
                   {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
                 </div>
@@ -326,7 +326,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
         )}
       </div>
 
-      <div className="bg-white/95 dark:bg-ummah-bg-dark/95 backdrop-blur-2xl border-t border-black/5 dark:border-white/10 shrink-0 px-4 pt-4 pb-6 space-y-4">
+      <div className="bg-white/95 dark:bg-ummah-bg-dark/95 backdrop-blur-2xl border-t border-black/5 dark:border-white/10 shrink-0 px-4 pt-4 pb-6 space-y-4 lg:px-12 lg:py-8">
         
         <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex flex-col gap-3">
           {selectedImage && (
