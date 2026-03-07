@@ -262,7 +262,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto no-scrollbar snap-y snap-mandatory">
+          <div className="flex-1 overflow-y-auto green-scrollbar snap-y snap-mandatory scroll-smooth">
             {loading ? (
               <div className="flex justify-center items-center h-full"><Loader2 className="animate-spin text-emerald-600" size={32}/></div>
             ) : (
@@ -350,7 +350,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
           </div>
         </div>
       ) : (
-        <div className="flex-1 overflow-y-auto green-scrollbar p-5 pb-24">
+        <div className="flex-1 overflow-y-auto green-scrollbar p-5 pb-24 scroll-smooth">
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-2xl font-black text-slate-800 dark:text-white uppercase tracking-tight">The Holy Quran</h1>
             <div className="bg-slate-100 dark:bg-zinc-900 p-1 rounded-xl flex gap-1">

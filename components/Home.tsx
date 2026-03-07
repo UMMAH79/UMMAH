@@ -791,7 +791,7 @@ const Home: React.FC<HomeProps> = ({
           </h3>
           <div className="w-16"></div>
         </div>
-        <div className="flex-1 overflow-y-auto green-scrollbar relative">
+        <div className="flex-1 overflow-y-auto green-scrollbar relative scroll-smooth">
           {renderSubFeature()}
         </div>
       </div>
@@ -799,7 +799,7 @@ const Home: React.FC<HomeProps> = ({
   }
 
   return (
-    <div className="h-full overflow-y-auto green-scrollbar bg-ummah-bg-light dark:bg-ummah-bg-dark pattern-bg pb-32">
+    <div className="h-full overflow-y-auto green-scrollbar bg-ummah-bg-light dark:bg-ummah-bg-dark pattern-bg pb-32 scroll-smooth">
       <div className="pt-12 pb-6 text-center flex flex-col items-center">
         <h1 className="premium-header text-xl md:text-2xl font-bold uppercase tracking-[0.3em] text-black dark:text-white">
           Welcome to UMMAH

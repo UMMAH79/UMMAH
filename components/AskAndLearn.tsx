@@ -869,7 +869,7 @@ const AskAndLearn: React.FC<AskAndLearnProps> = ({ onAskAgent }) => {
 
   if (activeQuestion) {
     return (
-      <div className="flex flex-col bg-ummah-bg-light dark:bg-ummah-bg-dark h-full overflow-y-auto green-scrollbar animate-in slide-in-from-right duration-300">
+      <div className="flex flex-col bg-ummah-bg-light dark:bg-ummah-bg-dark h-full scroll-smooth animate-in slide-in-from-right duration-300">
         <div className="p-3 sticky top-0 bg-white/90 dark:bg-ummah-bg-dark/90 backdrop-blur-md z-20 flex items-center justify-between border-b border-black/5 dark:border-white/5">
            <button 
             onClick={() => setActiveQuestion(null)}
@@ -926,7 +926,7 @@ const AskAndLearn: React.FC<AskAndLearnProps> = ({ onAskAgent }) => {
   }
 
   return (
-    <div ref={listScrollRef} className="h-full overflow-y-auto green-scrollbar bg-ummah-bg-light dark:bg-ummah-bg-dark transition-colors relative">
+    <div ref={listScrollRef} className="h-full bg-ummah-bg-light dark:bg-ummah-bg-dark transition-colors relative scroll-smooth">
       <div className="bg-ummah-bg-light dark:bg-ummah-bg-dark pt-3 px-5 pb-2 space-y-1.5 border-b border-black/5 dark:border-white/5">
         
         <div className="flex items-center gap-1.5 opacity-60">

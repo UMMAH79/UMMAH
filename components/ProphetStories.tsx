@@ -445,7 +445,7 @@ const ProphetStories: React.FC<ProphetStoriesProps> = ({ onAskAgent }) => {
 
   if (selectedProphet) {
     return (
-      <div className="flex flex-col bg-ummah-bg-light dark:bg-ummah-bg-dark h-full overflow-y-auto green-scrollbar animate-in slide-in-from-right duration-300">
+      <div className="flex flex-col bg-ummah-bg-light dark:bg-ummah-bg-dark h-full scroll-smooth animate-in slide-in-from-right duration-300">
         <div className="p-4 sticky top-0 bg-white/90 dark:bg-ummah-bg-dark/90 backdrop-blur-md z-20 flex items-center justify-between border-b border-black/5 dark:border-white/5">
            <button 
             onClick={() => setSelectedProphet(null)}
@@ -564,7 +564,7 @@ const ProphetStories: React.FC<ProphetStoriesProps> = ({ onAskAgent }) => {
   }
 
   return (
-    <div className="h-full overflow-y-auto green-scrollbar bg-ummah-bg-light dark:bg-ummah-bg-dark transition-colors relative p-8">
+    <div className="h-full bg-ummah-bg-light dark:bg-ummah-bg-dark transition-colors relative p-8 scroll-smooth">
       <div className="flex justify-between items-start mb-8 animate-fade-up">
         <div>
           <h1 className="premium-header text-4xl font-black text-ummah-text-light dark:text-ummah-text-dark tracking-tight leading-none">Prophets</h1>

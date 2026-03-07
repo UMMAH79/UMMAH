@@ -135,7 +135,7 @@ const IslamicCalendar: React.FC<IslamicCalendarProps> = ({ onAskAgent }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-ummah-bg-light dark:bg-ummah-bg-dark overflow-y-auto green-scrollbar pb-32 transition-colors">
+    <div className="flex flex-col h-full bg-ummah-bg-light dark:bg-ummah-bg-dark transition-colors">
       {/* Header Info */}
       <div className="px-8 pt-10 pb-6 flex justify-between items-end">
         <div>

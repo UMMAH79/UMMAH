@@ -34,7 +34,6 @@ const App: React.FC = () => {
       notifications: true,
       language: 'en',
       appMode: 'normal',
-      viewMode: 'desktop',
       adhanEnabled: true,
       selectedAdhanVoice: 'makkah',
       prayerAdhanSettings: {
@@ -201,8 +200,8 @@ const App: React.FC = () => {
               onClose={() => setActiveAdhan(null)} 
             />
           )}
-          <Layout activeTab={activeTab} setActiveTab={handleTabChange} viewMode={settings.viewMode}>
-            <div className="animate-in fade-in duration-500 h-full flex flex-col">
+          <Layout activeTab={activeTab} setActiveTab={handleTabChange}>
+            <div className="animate-in fade-in duration-500 h-full overflow-hidden">
               {renderContent()}
             </div>
           </Layout>

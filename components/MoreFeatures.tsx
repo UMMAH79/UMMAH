@@ -366,7 +366,7 @@ const MoreFeatures: React.FC<MoreFeaturesProps> = ({
           title={activeFeature === 'donate' ? 'Donate Us' : activeFeature === 'upgrade' ? 'Premium Upgrade' : activeFeature.replace('_', ' ')} 
           onBack={() => setActiveFeature('main')} 
         />
-        <div className="flex-1 overflow-y-auto green-scrollbar">
+        <div className="flex-1 overflow-y-auto green-scrollbar scroll-smooth">
           {renderFeatureContent()}
         </div>
       </div>
@@ -374,7 +374,7 @@ const MoreFeatures: React.FC<MoreFeaturesProps> = ({
   }
 
   return (
-    <div className="h-full overflow-y-auto green-scrollbar p-5 pb-24 bg-slate-50/50 dark:bg-ummah-bg-dark/50 relative">
+    <div className="h-full overflow-y-auto green-scrollbar p-5 pb-24 bg-slate-50/50 dark:bg-ummah-bg-dark/50 relative scroll-smooth">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-black text-slate-800 dark:text-white tracking-tight uppercase">More</h1>
         <div className="flex gap-2">

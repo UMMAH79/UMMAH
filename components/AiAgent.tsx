@@ -290,7 +290,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
         </div>
       </div>
 
-      <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 space-y-6 green-scrollbar">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 space-y-6 green-scrollbar scroll-smooth">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center min-h-full text-center space-y-8 animate-in fade-in py-10">
             <div className="w-20 h-20 bg-white dark:bg-ummah-card-dark rounded-[2.5rem] border border-black/5 dark:border-white/5 flex items-center justify-center text-ummah-icon-active-light dark:text-ummah-icon-active-dark shadow-xl">

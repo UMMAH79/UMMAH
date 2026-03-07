@@ -128,7 +128,7 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
   }
 
   return (
-    <div className="min-h-full flex flex-col bg-ummah-bg-light dark:bg-ummah-bg-dark transition-colors duration-300 overflow-y-auto green-scrollbar pb-32">
+    <div className="min-h-full flex flex-col bg-ummah-bg-light dark:bg-ummah-bg-dark transition-colors duration-300 pb-32 scroll-smooth">
       {/* Header */}
       <div className="p-8 flex justify-between items-center bg-white/80 dark:bg-ummah-bg-dark/80 backdrop-blur-md sticky top-0 z-30 border-b border-black/5 dark:border-white/5">
         <div>
