@@ -98,3 +98,12 @@ export interface Question {
 }
 
 export type HomeSubFeature = 'main' | 'duas' | 'calendar' | 'fasting' | 'prayers' | 'hadith' | 'tasbih' | 'ask-learn' | 'zakat' | 'names' | 'stories' | 'life-guidance';
+
+declare global {
+  interface Window {
+    aistudio: {
+      hasSelectedApiKey: () => Promise<boolean>;
+      openSelectKey: () => Promise<void>;
+    };
+  }
+}

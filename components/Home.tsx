@@ -41,6 +41,7 @@ import AskAndLearn from './AskAndLearn';
 import ZakatCalculator from './ZakatCalculator';
 import NamesOfAllah from './NamesOfAllah';
 import ProphetStories from './ProphetStories';
+import { useTranslation } from '../hooks/useTranslation';
 import { LocationData, PrayerTimes as IPrayerTimes, UserSettings, HomeSubFeature, AppMode } from '../types';
 
 interface ArticleSection {
@@ -541,6 +542,7 @@ const Home: React.FC<HomeProps> = ({
   setActiveAdhan,
   initialSubFeature = 'main'
 }) => {
+  const { t } = useTranslation(settings.language);
   const [activeSubFeature, setActiveSubFeature] = useState<HomeSubFeature>(initialSubFeature);
   const [guidanceFilter, setGuidanceFilter] = useState('All');
   const [guidanceSearch, setGuidanceSearch] = useState('');
@@ -565,7 +567,7 @@ const Home: React.FC<HomeProps> = ({
               <ChevronLeft size={20} className="text-ummah-text-light dark:text-ummah-text-dark" />
             </button>
             <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40">
-              {activeArticle.category} Guidance
+              {activeArticle.category} {t('guidance')}
             </h4>
           </div>
 
@@ -583,7 +585,7 @@ const Home: React.FC<HomeProps> = ({
 
             {activeArticle.reflection && (
               <>
-                <GlowingHeader children="FINAL REFLECTION" />
+                <GlowingHeader children={t('final_reflection')} />
                 <ArticleBody children={activeArticle.reflection} />
               </>
             )}
@@ -594,7 +596,7 @@ const Home: React.FC<HomeProps> = ({
                 className="group relative px-10 py-5 rounded-2xl border border-ummah-icon-active-light/50 text-ummah-icon-active-light dark:text-ummah-icon-active-dark font-black text-[11px] uppercase tracking-[0.25em] shadow-[0_0_15px_rgba(16,185,129,0.1)] hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all flex items-center gap-3 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-ummah-icon-active-light/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                AI DIVE DEEPER
+                {t('ai_dive_deeper')}
               </button>
             </div>
           </div>
@@ -632,9 +634,9 @@ const Home: React.FC<HomeProps> = ({
     return (
       <div className="px-5 pt-4 pb-20 space-y-4">
         <div className="space-y-0.5">
-          <h2 className="premium-header text-lg font-black text-ummah-text-light dark:text-ummah-text-dark tracking-tighter uppercase">Life & Guidance</h2>
+          <h2 className="premium-header text-lg font-black text-ummah-text-light dark:text-ummah-text-dark tracking-tighter uppercase">{t('life_guidance')}</h2>
           <p className="text-[8px] text-ummah-text-light/40 dark:text-ummah-text-secondary-dark font-black leading-tight uppercase tracking-[0.1em]">
-            Deep Islamic solutions for real struggles in modern life.
+            {t('islamic_solutions_struggles')}
           </p>
         </div>
 
@@ -642,7 +644,7 @@ const Home: React.FC<HomeProps> = ({
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ummah-icon-inactive-light group-focus-within:text-ummah-icon-active-light transition-colors" size={14} />
           <input 
             type="text" 
-            placeholder="Search a struggle… (e.g. marriage, faith)"
+            placeholder={t('search_struggle')}
             value={guidanceSearch}
             onChange={(e) => setGuidanceSearch(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-ummah-card-dark border border-black/[0.03] dark:border-white/[0.05] rounded-xl outline-none focus:ring-1 focus:ring-ummah-icon-active-light/20 transition-all shadow-soft text-[10px] font-bold text-ummah-text-light dark:text-ummah-text-dark"
@@ -660,7 +662,7 @@ const Home: React.FC<HomeProps> = ({
                   : 'bg-white dark:bg-ummah-card-dark border-black/[0.03] dark:border-white/[0.05] text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 hover:border-ummah-icon-active-light/20'
               }`}
             >
-              {filter}
+              {t(filter.toLowerCase())}
             </button>
           ))}
         </div>
@@ -697,7 +699,7 @@ const Home: React.FC<HomeProps> = ({
                   </p>
                   <div className="mt-6 flex items-center justify-between">
                     <div className="flex items-center gap-1 text-[9px] font-black text-ummah-text-light/20 dark:text-white/20 uppercase tracking-widest">
-                      <Timer size={12} /> 12 MIN READ
+                      <Timer size={12} /> 12 {t('min_read')}
                     </div>
                     <div className="w-8 h-8 rounded-full bg-ummah-mint dark:bg-white/5 flex items-center justify-center text-ummah-icon-active-light">
                       <ArrowRight size={14} />
@@ -707,18 +709,18 @@ const Home: React.FC<HomeProps> = ({
               ))}
 
               <div className="mt-12 mb-20 p-8 bg-ummah-mint dark:bg-white/5 rounded-[2.5rem] border border-black/5 dark:border-white/5 animate-fade-up">
-                 <h4 className="text-sm font-black uppercase tracking-widest text-ummah-icon-active-light dark:text-ummah-icon-active-dark mb-4">Didn’t find your question?</h4>
+                 <h4 className="text-sm font-black uppercase tracking-widest text-ummah-icon-active-light dark:text-ummah-icon-active-dark mb-4">{t('didnt_find_question')}</h4>
                  <div className="space-y-4">
                     <p className="text-[11px] text-ummah-text-light/70 dark:text-ummah-text-secondary-dark leading-relaxed font-medium">
-                      We are constantly expanding this section to address real struggles faced by the Ummah. If there is a topic you want us to cover, please send it through the feedback section.
+                      {t('expanding_section')}
                     </p>
                     <p className="text-[11px] text-ummah-text-light/70 dark:text-ummah-text-secondary-dark leading-relaxed font-black">
-                      Your question may help others who are silently struggling. We will try to add the question as fast as we can.
+                      {t('question_help_others')}
                     </p>
                     <div className="pt-2">
                        <div className="flex items-center gap-2 opacity-20">
                           <MessageSquareQuote size={18} className="text-ummah-gold" />
-                          <span className="text-[8px] font-black uppercase tracking-[0.3em]">Sincere Community Support</span>
+                          <span className="text-[8px] font-black uppercase tracking-[0.3em]">{t('sincere_community_support')}</span>
                        </div>
                     </div>
                  </div>
@@ -729,9 +731,9 @@ const Home: React.FC<HomeProps> = ({
                <div className="w-16 h-16 bg-slate-50 dark:bg-white/5 rounded-[1.5rem] flex items-center justify-center text-ummah-icon-inactive-light mb-6 border border-black/5 dark:border-white/5">
                  <AlertCircle size={32} />
                </div>
-               <h3 className="text-sm font-black text-ummah-text-light dark:text-ummah-text-dark uppercase tracking-widest mb-3">No results found</h3>
+               <h3 className="text-sm font-black text-ummah-text-light dark:text-ummah-text-dark uppercase tracking-widest mb-3">{t('no_results_found')}</h3>
                <p className="text-[11px] text-ummah-text-light/40 dark:text-ummah-text-secondary-dark font-medium leading-relaxed mb-8 max-w-[240px]">
-                 We couldn’t find this topic yet. Submit it through feedback and we will add it, inshaAllah.
+                 {t('couldnt_find_topic')}
                </p>
             </div>
           )}
@@ -746,7 +748,7 @@ const Home: React.FC<HomeProps> = ({
         case 'duas': return <DuaCollection language={settings.language} />;
         case 'calendar': return <IslamicCalendar onAskAgent={onAskAgent} />;
         case 'fasting': return <FastingTracker onAskAgent={onAskAgent} />;
-        case 'hadith': return <HadithBrowser onAskAgent={onAskAgent} />;
+        case 'hadith': return <HadithBrowser onAskAgent={onAskAgent} language={settings.language} />;
         case 'tasbih': return <TasbihCounter />;
         case 'ask-learn': return <AskAndLearn onAskAgent={onAskAgent} />;
         case 'zakat': return <ZakatCalculator onAskAgent={onAskAgent} />;
@@ -775,18 +777,18 @@ const Home: React.FC<HomeProps> = ({
             className="flex items-center gap-2 p-2 rounded-2xl bg-ummah-mint dark:bg-white/5 text-ummah-icon-active-light dark:text-ummah-icon-active-dark transition-all"
           >
             <ChevronLeft size={20} strokeWidth={2.5} />
-            <span className="text-xs font-bold uppercase tracking-widest">Home</span>
+            <span className="text-xs font-bold uppercase tracking-widest">{t('home')}</span>
           </button>
           <h3 className="premium-header text-base font-bold text-ummah-text-light dark:text-ummah-text-dark">
-            {activeSubFeature === 'prayers' ? 'Prayer Times' : 
-              activeSubFeature === 'hadith' ? 'Hadith Library' :
-              activeSubFeature === 'fasting' ? 'Ramadan Log' :
-              activeSubFeature === 'tasbih' ? 'Digital Tasbih' :
-              activeSubFeature === 'ask-learn' ? 'Ask & Learn' :
-              activeSubFeature === 'zakat' ? 'Zakat Tool' :
-              activeSubFeature === 'names' ? '99 Names of Allah' :
-              activeSubFeature === 'stories' ? 'Prophet Stories' :
-              activeSubFeature === 'life-guidance' ? 'Life & Guidance' :
+            {activeSubFeature === 'prayers' ? t('prayer_times') : 
+              activeSubFeature === 'hadith' ? t('hadith_library') :
+              activeSubFeature === 'fasting' ? t('ramadan_log') :
+              activeSubFeature === 'tasbih' ? t('digital_tasbih') :
+              activeSubFeature === 'ask-learn' ? t('ask_learn') :
+              activeSubFeature === 'zakat' ? t('zakat_tool') :
+              activeSubFeature === 'names' ? t('names_of_allah') :
+              activeSubFeature === 'stories' ? t('prophet_stories') :
+              activeSubFeature === 'life-guidance' ? t('life_guidance') :
               activeSubFeature.charAt(0).toUpperCase() + activeSubFeature.slice(1)}
           </h3>
           <div className="w-16"></div>
@@ -802,10 +804,10 @@ const Home: React.FC<HomeProps> = ({
     <div className="h-full overflow-y-auto green-scrollbar bg-ummah-bg-light dark:bg-ummah-bg-dark pattern-bg pb-32 scroll-smooth">
       <div className="pt-12 pb-6 text-center flex flex-col items-center">
         <h1 className="premium-header text-xl md:text-2xl font-bold uppercase tracking-[0.3em] text-black dark:text-white">
-          Welcome to UMMAH
+          {t('welcome_to_ummah')}
         </h1>
         <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.4em] text-ummah-gold mt-2">
-          UMMAH Is Your Islamic Lifestyle Companion
+          {t('ummah_lifestyle_companion')}
         </p>
       </div>
 
@@ -815,30 +817,30 @@ const Home: React.FC<HomeProps> = ({
 
       <div className="px-6 py-10 space-y-12">
         <section className="animate-fade-up [animation-delay:100ms]">
-          <SectionTitle title="Daily Essentials" />
+          <SectionTitle title={t('daily_essentials')} />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            <DashboardCard icon={Clock} label="Prayers" onClick={() => setActiveSubFeature('prayers')} />
-            <DashboardCard icon={Zap} label="Tasbih" onClick={() => setActiveSubFeature('tasbih')} />
-            <DashboardCard icon={BookMarked} label="Duas" onClick={() => setActiveSubFeature('duas')} />
-            <DashboardCard icon={CalendarCheck} label="Fasting" onClick={() => setActiveSubFeature('fasting')} />
-            <DashboardCard icon={Star} label="99 Names of Allah" onClick={() => setActiveSubFeature('names')} fullWidth accent />
-            <DashboardCard icon={CalendarIcon} label="Calendar" onClick={() => setActiveSubFeature('calendar')} fullWidth />
+            <DashboardCard icon={Clock} label={t('prayers')} onClick={() => setActiveSubFeature('prayers')} />
+            <DashboardCard icon={Zap} label={t('tasbih')} onClick={() => setActiveSubFeature('tasbih')} />
+            <DashboardCard icon={BookMarked} label={t('duas')} onClick={() => setActiveSubFeature('duas')} />
+            <DashboardCard icon={CalendarCheck} label={t('fasting')} onClick={() => setActiveSubFeature('fasting')} />
+            <DashboardCard icon={Star} label={t('names_of_allah')} onClick={() => setActiveSubFeature('names')} fullWidth accent />
+            <DashboardCard icon={CalendarIcon} label={t('calendar')} onClick={() => setActiveSubFeature('calendar')} fullWidth />
           </div>
         </section>
 
         <section className="animate-fade-up [animation-delay:150ms]">
-          <SectionTitle title="Struggles & Solutions" />
+          <SectionTitle title={t('struggles_solutions')} />
           <HorizontalCard 
             icon={Compass} 
-            label="Life & Guidance" 
-            subtitle="Islamic solutions for real struggles."
+            label={t('life_guidance')} 
+            subtitle={t('islamic_solutions_struggles')}
             onClick={() => setActiveSubFeature('life-guidance')}
             accent
           />
         </section>
 
         <section className="animate-fade-up [animation-delay:200ms]">
-          <SectionTitle title="Wealth & Guidance" />
+          <SectionTitle title={t('wealth_guidance')} />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <button 
               onClick={() => setActiveSubFeature('zakat')}
@@ -848,8 +850,8 @@ const Home: React.FC<HomeProps> = ({
                 <Calculator size={32} strokeWidth={1.5} />
               </div>
               <div className="flex-1 text-left">
-                <h4 className="font-black text-lg uppercase tracking-tight">Zakat Calculator</h4>
-                <p className="text-[10px] text-emerald-100/60 font-bold uppercase tracking-widest mt-1">Purify your wealth • 2.5% Charity</p>
+                <h4 className="font-black text-lg uppercase tracking-tight">{t('zakat_calculator')}</h4>
+                <p className="text-[10px] text-emerald-100/60 font-bold uppercase tracking-widest mt-1">{t('purify_wealth_charity')}</p>
               </div>
               <ArrowRight size={20} className="text-emerald-300 group-hover:translate-x-1 transition-transform" />
             </button>
@@ -857,23 +859,23 @@ const Home: React.FC<HomeProps> = ({
         </section>
 
         <section className="animate-fade-up [animation-delay:250ms]">
-          <SectionTitle title="Learn & Reflect" />
+          <SectionTitle title={t('learn_reflect')} />
           <div className="space-y-4">
             <HorizontalCard 
               icon={BookOpen} 
-              label="Prophet Stories" 
-              subtitle="25 stories of inspiration and faith."
+              label={t('prophet_stories')} 
+              subtitle={t('stories_inspiration')}
               onClick={() => setActiveSubFeature('stories')} 
             />
             <HorizontalCard 
               icon={Library} 
-              label="Hadith Library" 
+              label={t('hadith_library')} 
               onClick={() => setActiveSubFeature('hadith')} 
             />
             <HorizontalCard 
               icon={MessageCircle} 
-              label="Ask & Learn" 
-              subtitle="Explore common Islamic questions and answers."
+              label={t('ask_learn')} 
+              subtitle={t('explore_islamic_questions')}
               onClick={() => setActiveSubFeature('ask-learn')}
             />
           </div>
@@ -881,7 +883,7 @@ const Home: React.FC<HomeProps> = ({
 
         <div className="py-8 flex flex-col items-center text-center opacity-20">
           <Sparkles size={18} className="text-ummah-gold mb-3" />
-          <p className="text-[9px] font-black uppercase tracking-[0.6em] text-ummah-text-light dark:text-ummah-text-dark">Sincere Guidance • Sanctuary</p>
+          <p className="text-[9px] font-black uppercase tracking-[0.6em] text-ummah-text-light dark:text-ummah-text-dark">{t('sincere_guidance_sanctuary')}</p>
         </div>
       </div>
     </div>

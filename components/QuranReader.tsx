@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { fetchSurahs, fetchSurahDetail, fetchAyahDetail } from '../services/api';
 import { Surah, Ayah, AppLanguage } from '../types';
 import { SUPPORTED_LANGUAGES } from '../constants';
+import { useTranslation } from '../hooks/useTranslation';
 import { 
   Search, 
   Headphones, 
@@ -24,6 +25,7 @@ interface QuranReaderProps {
 const STORAGE_KEY = 'ummah_hub_quran_bookmarks';
 
 const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
+  const { t } = useTranslation(currentLanguage);
   const [surahs, setSurahs] = useState<Surah[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSurah, setSelectedSurah] = useState<Surah | null>(null);
@@ -232,7 +234,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
         <div className="flex-1 flex flex-col overflow-hidden animate-in fade-in duration-300">
           <div className="shrink-0 bg-white/90 dark:bg-black/90 backdrop-blur-md z-40 p-4 border-b border-slate-100 dark:border-zinc-800 flex items-center justify-between">
             <button onClick={() => setSelectedSurah(null)} className="flex items-center gap-1 text-slate-500 dark:text-zinc-400 font-bold text-sm">
-              <ChevronLeft size={20}/>Back
+              <ChevronLeft size={20}/>{t('back')}
             </button>
             <div className="text-center">
               <h3 className="font-bold text-slate-800 dark:text-white">{selectedSurah.englishName}</h3>
@@ -242,14 +244,14 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
               <button 
                 onClick={() => setShowTransliteration(!showTransliteration)} 
                 className={`p-2 rounded-xl transition-all ${showTransliteration ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
-                title="Toggle Pronunciation"
+                title={t('toggle_pronunciation')}
               >
                 <Volume2 size={18}/>
               </button>
               <button 
                 onClick={() => setShowTranslation(!showTranslation)} 
                 className={`p-2 rounded-xl transition-all ${showTranslation ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
-                title="Toggle Translation"
+                title={t('toggle_translation')}
               >
                 <Languages size={18}/>
               </button>
@@ -289,7 +291,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
                         <span className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${isPlaying ? 'bg-emerald-600 text-white' : 'bg-emerald-50 dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400'}`}>
                           {ayah.numberInSurah}
                         </span>
-                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Juz {ayah.juz}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t('juz')} {ayah.juz}</span>
                       </div>
                       <div className="flex gap-4">
                         <button 
@@ -341,7 +343,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
                     </div>
 
                     <div className="absolute bottom-6 left-0 right-0 flex justify-center pointer-events-none opacity-40">
-                       <span className="text-[8px] font-black text-slate-300 dark:text-zinc-700 uppercase tracking-[0.4em]">End of Ayah {ayah.numberInSurah}</span>
+                       <span className="text-[8px] font-black text-slate-300 dark:text-zinc-700 uppercase tracking-[0.4em]">{t('end_of_ayah')} {ayah.numberInSurah}</span>
                     </div>
                   </div>
                 );
@@ -352,10 +354,10 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
       ) : (
         <div className="flex-1 overflow-y-auto green-scrollbar p-5 pb-24 scroll-smooth">
           <div className="flex items-center justify-between mb-8">
-            <h1 className="text-2xl font-black text-slate-800 dark:text-white uppercase tracking-tight">The Holy Quran</h1>
+            <h1 className="text-2xl font-black text-slate-800 dark:text-white uppercase tracking-tight">{t('the_holy_quran')}</h1>
             <div className="bg-slate-100 dark:bg-zinc-900 p-1 rounded-xl flex gap-1">
-              <button onClick={() => setViewMode('surahs')} className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${viewMode === 'surahs' ? 'bg-white dark:bg-zinc-800 text-emerald-700' : 'text-slate-400'}`}>Surahs</button>
-              <button onClick={() => setViewMode('bookmarks')} className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${viewMode === 'bookmarks' ? 'bg-white dark:bg-zinc-800 text-emerald-700' : 'text-slate-400'}`}>Bookmarks</button>
+              <button onClick={() => setViewMode('surahs')} className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${viewMode === 'surahs' ? 'bg-white dark:bg-zinc-800 text-emerald-700' : 'text-slate-400'}`}>{t('surahs')}</button>
+              <button onClick={() => setViewMode('bookmarks')} className={`px-4 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${viewMode === 'bookmarks' ? 'bg-white dark:bg-zinc-800 text-emerald-700' : 'text-slate-400'}`}>{t('bookmarks')}</button>
             </div>
           </div>
 
@@ -367,7 +369,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
                 <div className="w-full flex justify-between items-center mb-4">
                   <div className="flex items-center gap-2 px-3 py-1 bg-emerald-500/20 rounded-full border border-emerald-500/30 backdrop-blur-sm">
                     <Sparkles className="text-emerald-400" size={10}/>
-                    <span className="text-[8px] font-black uppercase tracking-[0.2em] text-emerald-100">Ayah of the Day</span>
+                    <span className="text-[8px] font-black uppercase tracking-[0.2em] text-emerald-100">{t('ayah_of_the_day')}</span>
                   </div>
                   
                   <div className="flex items-center gap-2">
@@ -388,7 +390,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
                 ) : featuredError ? (
                   <div className="py-6 flex flex-col items-center gap-2 text-center">
                     <AlertCircle className="text-white/20" size={24} />
-                    <p className="text-[10px] text-white/40 font-bold uppercase">Ayah loading paused. Check connection.</p>
+                    <p className="text-[10px] text-white/40 font-bold uppercase">{t('ayah_loading_paused')}</p>
                   </div>
                 ) : featuredAyah && (
                   <div className="w-full text-center space-y-3">
@@ -416,7 +418,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
 
           <div className="relative mb-6">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-            <input type="text" placeholder="Search Surah..." className="w-full pl-12 pr-4 py-4 bg-slate-100 dark:bg-zinc-900 border-none rounded-2xl outline-none font-bold text-slate-800 dark:text-white" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <input type="text" placeholder={t('search_surah')} className="w-full pl-12 pr-4 py-4 bg-slate-100 dark:bg-zinc-900 border-none rounded-2xl outline-none font-bold text-slate-800 dark:text-white" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-3">
@@ -431,7 +433,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
                 </div>
                 <div className="text-right">
                   <p className="arabic-text text-xl text-emerald-600 dark:text-emerald-400">{surah.name}</p>
-                  <p className="text-[9px] text-slate-400 font-bold">{surah.numberOfAyahs} Ayahs</p>
+                  <p className="text-[9px] text-slate-400 font-bold">{surah.numberOfAyahs} {t('ayahs')}</p>
                 </div>
               </button>
             ))}

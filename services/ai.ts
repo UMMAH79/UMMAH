@@ -23,7 +23,9 @@ const GET_VOICE_NAME = (voice: VoiceType) => 'Charon';
  */
 export async function searchGlobalHadiths(query: string, category?: string): Promise<GlobalHadith[]> {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    if (!apiKey) return [];
+    const ai = new GoogleGenAI({ apiKey });
     
     const contents = category 
       ? `Provide 10 highly authentic Hadiths related to "${category}". Search terms: "${query}" if relevant.`
@@ -69,7 +71,9 @@ export async function reciteHadith(
   voice: VoiceType = 'male'
 ): Promise<Uint8Array | null> {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    if (!apiKey) return null;
+    const ai = new GoogleGenAI({ apiKey });
     
     const voiceName = GET_VOICE_NAME(voice);
     const prompt = `Narrate: Category: ${category}. Source: From ${source}. Text: ${text}.`;
@@ -103,7 +107,9 @@ export async function reciteDuaPart(
   voice: VoiceType = 'male'
 ): Promise<Uint8Array | null> {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    if (!apiKey) return null;
+    const ai = new GoogleGenAI({ apiKey });
     const voiceName = GET_VOICE_NAME(voice);
     
     const prompt = `[ROLE: WORLD-CLASS QARI] Recite Arabic text exactly: "${text}"`;
@@ -134,7 +140,9 @@ export async function reciteDuaPart(
 
 export async function getHadithExplanation(text: string, source: string): Promise<HadithInsight | null> {
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    if (!apiKey) return null;
+    const ai = new GoogleGenAI({ apiKey });
     
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",

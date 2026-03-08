@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PrayerTimes as IPrayerTimes, LocationData, UserSettings } from '../types';
 import { CALCULATION_METHODS, ADHAN_VOICES } from '../constants';
+import { useTranslation } from '../hooks/useTranslation';
 import { 
   MapPin, 
   Loader2, 
@@ -26,6 +27,7 @@ interface Props {
 }
 
 const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUpdateSettings, onAskAgent, setActiveAdhan }) => {
+  const { t } = useTranslation(settings.language);
   const [isEditing, setIsEditing] = useState(false);
   const [currentPrayerInfo, setCurrentPrayerInfo] = useState<{ 
     name: string; 
@@ -121,7 +123,7 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
       <div className="flex flex-col items-center justify-center h-full min-h-[400px] bg-ummah-bg-light dark:bg-ummah-bg-dark">
         <Loader2 className="animate-spin text-ummah-icon-active-light mb-4" size={40} />
         <p className="text-[10px] text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 uppercase tracking-[0.3em] font-black">
-          Syncing Sacred Timings...
+          {t('syncing_sacred_timings')}
         </p>
       </div>
     );
@@ -132,11 +134,11 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
       {/* Header */}
       <div className="p-8 flex justify-between items-center bg-white/80 dark:bg-ummah-bg-dark/80 backdrop-blur-md sticky top-0 z-30 border-b border-black/5 dark:border-white/5">
         <div>
-          <h1 className="premium-header text-2xl font-black text-ummah-text-light dark:text-ummah-text-dark tracking-tight uppercase">Prayer Times</h1>
+          <h1 className="premium-header text-2xl font-black text-ummah-text-light dark:text-ummah-text-dark tracking-tight uppercase">{t('prayer_times')}</h1>
           <div className="flex items-center gap-1.5 mt-1">
             <MapPin size={10} className="text-ummah-icon-active-light" />
             <p className="text-[9px] font-black text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 uppercase tracking-widest truncate max-w-[150px]">
-              {location?.city || 'Detecting Location...'}
+              {location?.city || t('detecting_location')}
             </p>
           </div>
         </div>
@@ -157,7 +159,7 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
             <div className="relative z-10 text-center">
               <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 bg-white/10 rounded-full border border-white/20 backdrop-blur-md">
                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_#34d399]"></div>
-                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-100">Next Prayer</span>
+                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-100">{t('next_prayer')}</span>
               </div>
               
               <div className="mb-2">
@@ -167,11 +169,11 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
               </div>
               
               <h2 className="premium-header text-6xl font-black tracking-widest uppercase mb-6 text-white drop-shadow-2xl">
-                {currentPrayerInfo.nextName}
+                {t(currentPrayerInfo.nextName.toLowerCase() as any)}
               </h2>
               
               <div className="inline-block py-6 px-10 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-inner mb-10">
-                 <p className="text-[10px] font-black text-emerald-100/40 uppercase tracking-[0.4em] mb-2">Begins In</p>
+                 <p className="text-[10px] font-black text-emerald-100/40 uppercase tracking-[0.4em] mb-2">{t('begins_in')}</p>
                  <p className="text-4xl font-black text-white tracking-tighter tabular-nums leading-none">
                    {currentPrayerInfo.remainingText}
                  </p>
@@ -179,8 +181,8 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
 
               <div className="space-y-4">
                 <div className="flex justify-between text-[10px] font-black uppercase tracking-[0.2em] opacity-40">
-                   <span>{currentPrayerInfo.name}</span>
-                   <span>{currentPrayerInfo.nextName}</span>
+                   <span>{t(currentPrayerInfo.name.toLowerCase() as any)}</span>
+                   <span>{t(currentPrayerInfo.nextName.toLowerCase() as any)}</span>
                 </div>
                 <div className="h-2 bg-black/20 rounded-full overflow-hidden p-0.5 border border-white/10">
                   <div 
@@ -197,10 +199,10 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
       {/* Prayer List */}
       <div className="px-6 space-y-4">
         <div className="flex items-center justify-between px-2 mb-4">
-          <h3 className="text-[11px] font-black text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/30 uppercase tracking-[0.4em]">Daily Schedule</h3>
+          <h3 className="text-[11px] font-black text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/30 uppercase tracking-[0.4em]">{t('daily_schedule')}</h3>
           <div className="flex items-center gap-2">
             <Clock size={12} className="text-ummah-gold" />
-            <span className="text-[9px] font-black text-ummah-gold uppercase tracking-widest">Time: {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+            <span className="text-[9px] font-black text-ummah-gold uppercase tracking-widest">{t('time')}: {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
           </div>
         </div>
         
@@ -229,7 +231,7 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className={`text-lg font-black tracking-tight ${isNext ? 'text-ummah-gold' : 'text-ummah-text-light dark:text-ummah-text-dark'}`}>{name}</h4>
+                    <h4 className={`text-lg font-black tracking-tight ${isNext ? 'text-ummah-gold' : 'text-ummah-text-light dark:text-ummah-text-dark'}`}>{t(name.toLowerCase() as any)}</h4>
                     {isNext && <Sparkles size={12} className="text-ummah-gold animate-pulse" />}
                   </div>
                   <p dir="rtl" className="arabic-text text-2xl font-bold mt-1 text-ummah-gold opacity-90 leading-none">{arabicNames[name]}</p>
@@ -258,14 +260,14 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
            <div className="absolute inset-0 bg-ummah-bg-dark/60 backdrop-blur-xl" onClick={() => setIsEditing(false)}></div>
            <div className="absolute inset-x-4 bottom-10 animate-fade-up bg-white dark:bg-ummah-card-dark rounded-[4rem] p-10 shadow-2xl border border-black/5 dark:border-white/10 max-h-[85vh] overflow-y-auto no-scrollbar">
               <div className="flex justify-between items-center mb-10">
-                 <h3 className="premium-header text-xl font-black text-ummah-text-light dark:text-ummah-text-dark uppercase tracking-tight">Preferences</h3>
+                 <h3 className="premium-header text-xl font-black text-ummah-text-light dark:text-ummah-text-dark uppercase tracking-tight">{t('preferences')}</h3>
                  <button onClick={() => setIsEditing(false)} className="p-3 bg-ummah-mint dark:bg-white/5 rounded-2xl text-ummah-icon-inactive-light active:scale-90 transition-all"><X size={20} /></button>
               </div>
 
               <div className="space-y-12">
                  <div>
                     <label className="block text-[10px] font-black text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 uppercase tracking-[0.5em] mb-8 flex items-center gap-3">
-                       <BellRing size={16} className="text-ummah-icon-active-light" /> Notification Sound
+                       <BellRing size={16} className="text-ummah-icon-active-light" /> {t('notification_sound')}
                     </label>
                     <div className="grid grid-cols-1 gap-4">
                        {ADHAN_VOICES.map(voice => (
@@ -290,7 +292,7 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
 
                  <div>
                     <label className="block text-[10px] font-black text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 uppercase tracking-[0.5em] mb-8 flex items-center gap-3">
-                       <Clock size={16} className="text-ummah-icon-active-light" /> Calculation Method
+                       <Clock size={16} className="text-ummah-icon-active-light" /> {t('calculation_method')}
                     </label>
                     <div className="grid grid-cols-1 gap-4">
                        {CALCULATION_METHODS.map(method => (
@@ -313,7 +315,7 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
                     onClick={() => setIsEditing(false)}
                     className="w-full py-6 bg-ummah-icon-active-light dark:bg-ummah-icon-active-dark text-white rounded-[3rem] font-black text-xs uppercase tracking-[0.4em] shadow-premium active:scale-95 transition-all"
                  >
-                    Save & Sync
+                    {t('save_sync')}
                  </button>
               </div>
            </div>

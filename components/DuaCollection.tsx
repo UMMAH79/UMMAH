@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { DUAS, SUPPORTED_LANGUAGES } from '../constants';
 import { Dua, AppLanguage } from '../types';
+import { useTranslation } from '../hooks/useTranslation';
 import { GoogleGenAI } from "@google/genai";
 import { 
   Search, 
@@ -18,6 +19,7 @@ interface DuaCollectionProps {
 }
 
 const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
+  const { t } = useTranslation(language);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDua, setSelectedDua] = useState<Dua | null>(null);
@@ -123,10 +125,10 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
       {/* Search & Category Header */}
       <div className="bg-ummah-bg-light dark:bg-ummah-bg-dark p-8 space-y-6 shrink-0 border-b border-black/5 dark:border-white/5">
         <div className="flex items-center justify-between mb-2">
-           <h2 className="premium-header text-2xl font-black text-ummah-text-light dark:text-ummah-text-dark">Supplications</h2>
+           <h2 className="premium-header text-2xl font-black text-ummah-text-light dark:text-ummah-text-dark">{t('supplications')}</h2>
            <div className="flex items-center gap-2 px-3 py-1 bg-ummah-emerald/10 rounded-full border border-ummah-emerald/20">
               <BookMarked size={12} className="text-ummah-emerald" />
-              <span className="text-[10px] font-black text-ummah-emerald uppercase tracking-widest">{DUAS.length} Total</span>
+              <span className="text-[10px] font-black text-ummah-emerald uppercase tracking-widest">{DUAS.length} {t('total')}</span>
            </div>
         </div>
         
@@ -134,7 +136,7 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
           <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-ummah-icon-inactive-light group-focus-within:text-ummah-icon-active-light transition-colors" size={20} />
           <input 
             type="text" 
-            placeholder="Search Supplications..."
+            placeholder={t('search_supplications')}
             className="w-full pl-16 pr-6 py-4 bg-white dark:bg-ummah-card-dark border border-black/5 dark:border-white/5 rounded-[2rem] focus:ring-2 focus:ring-ummah-emerald outline-none transition-all shadow-soft text-sm font-medium text-ummah-text-light dark:text-ummah-text-dark"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -146,7 +148,7 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
             onClick={() => setSelectedCategory(null)}
             className={`px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${!selectedCategory ? 'bg-ummah-emerald text-white shadow-premium' : 'bg-white dark:bg-ummah-card-dark text-ummah-text-light/40 border border-black/5 dark:border-white/5'}`}
           >
-            All Duas
+            {t('all_duas')}
           </button>
           {categories.map(cat => (
             <button
@@ -165,7 +167,7 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
         {filteredDuas.length === 0 ? (
           <div className="py-20 text-center opacity-30 flex flex-col items-center gap-4">
             <Sparkles size={48} className="text-ummah-icon-inactive-light" />
-            <p className="text-xs font-black uppercase tracking-widest">No matching supplications found</p>
+            <p className="text-xs font-black uppercase tracking-widest">{t('no_matching_supplications')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -214,7 +216,7 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
                       {isTranslating ? (
                         <div className="flex items-center gap-2 text-ummah-text-light/20 dark:text-white/10">
                           <Loader2 size={14} className="animate-spin" />
-                          <span className="text-[9px] font-black uppercase tracking-widest">Translating Transliteration...</span>
+                          <span className="text-[9px] font-black uppercase tracking-widest">{t('translating_transliteration')}</span>
                         </div>
                       ) : translationError ? (
                         <p className="text-sm font-medium text-rose-500 italic text-center">{dua.transliteration}</p>
@@ -229,14 +231,14 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
                       <div className="flex items-center justify-center gap-2 mb-3">
                         <Languages size={14} className="text-ummah-emerald" />
                         <span className="text-[10px] font-black uppercase tracking-widest text-ummah-emerald">
-                          {SUPPORTED_LANGUAGES.find(l => l.id === language)?.name.toUpperCase() || 'ENGLISH'} Translation
+                          {SUPPORTED_LANGUAGES.find(l => l.id === language)?.name.toUpperCase() || 'ENGLISH'} {t('guidance')}
                         </span>
                       </div>
                       
                       {isTranslating ? (
                         <div className="flex flex-col items-center gap-4 py-4">
                           <Loader2 size={24} className="animate-spin text-ummah-emerald opacity-20" />
-                          <span className="text-[8px] font-black text-ummah-emerald/40 uppercase tracking-[0.3em]">AI Syncing Language...</span>
+                          <span className="text-[8px] font-black text-ummah-emerald/40 uppercase tracking-[0.3em]">{t('ai_syncing_language')}</span>
                         </div>
                       ) : translationError ? (
                         <div className="flex flex-col items-center gap-2 py-2">
@@ -255,7 +257,7 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
 
                   <div className="flex justify-center pt-2">
                     <span className="text-[8px] font-black text-ummah-text-light/20 dark:text-white/10 uppercase tracking-[0.3em]">
-                      Authentic • {language === 'en' ? "Static Content" : "AI Translated for You"}
+                      {t('authentic')} • {language === 'en' ? t('static_content') : t('ai_translated_for_you')}
                     </span>
                   </div>
                 </div>

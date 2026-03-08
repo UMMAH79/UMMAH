@@ -40,11 +40,13 @@ import {
 
 interface HadithBrowserProps {
   onAskAgent?: (query: string) => void;
+  language: string;
 }
 
 const BOOKMARKS_KEY = 'ummah_hub_hadith_bookmarks';
 
-const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
+const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent, language }) => {
+  const { t } = useTranslation(language);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'all' | 'bookmarks'>('all');
@@ -294,7 +296,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
           <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-ummah-icon-inactive-light dark:text-ummah-icon-inactive-dark group-focus-within:text-ummah-icon-active-light transition-colors" size={18} />
           <input 
             type="text" 
-            placeholder="Search 10,000+ authentic narrations..."
+            placeholder={t('search_hadith_placeholder')}
             className="w-full pl-16 pr-24 py-5 bg-white dark:bg-ummah-card-dark border border-black/5 dark:border-white/5 rounded-[2.5rem] focus:ring-4 focus:ring-ummah-mint outline-none transition-all shadow-soft text-ummah-text-light dark:text-ummah-text-dark font-medium"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -304,7 +306,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
               type="submit"
               className="absolute right-3 top-3 bottom-3 px-4 bg-ummah-icon-active-light dark:bg-ummah-icon-active-dark text-white rounded-[1.5rem] text-[9px] font-black uppercase tracking-widest shadow-premium active:scale-95 transition-all"
             >
-              Search
+              {t('search')}
             </button>
           )}
         </form>
@@ -316,14 +318,14 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
               className={`flex items-center gap-2 px-4 py-2 rounded-2xl border transition-all ${viewMode === 'bookmarks' ? 'bg-ummah-emerald text-white border-ummah-emerald shadow-glow scale-105' : 'bg-ummah-mint dark:bg-ummah-icon-active-dark/10 border-ummah-icon-active-light/10 text-ummah-icon-active-light dark:text-ummah-icon-active-dark'}`}
             >
               {viewMode === 'bookmarks' ? <BookMarked size={14} /> : <Bookmark size={14} />}
-              <span className="text-[10px] font-black uppercase tracking-widest">{viewMode === 'bookmarks' ? `Saved (${bookmarks.length})` : 'Bookmarks'}</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">{viewMode === 'bookmarks' ? `${t('saved')} (${bookmarks.length})` : t('bookmarks')}</span>
             </button>
             <button 
                 onClick={handleLucky}
                 className="flex items-center gap-2 bg-ummah-gold/10 dark:bg-ummah-gold/5 px-4 py-2 rounded-2xl border border-ummah-gold/20 text-ummah-gold active:scale-95 transition-all"
             >
               <Dices size={14} />
-              <span className="text-[10px] font-black uppercase tracking-widest text-nowrap">Random</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-nowrap">{t('random')}</span>
             </button>
           </div>
           {viewMode === 'bookmarks' && bookmarks.length > 0 && (
@@ -337,7 +339,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
           {viewMode === 'all' && (
             <div className="text-[10px] font-black text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/40 uppercase tracking-widest flex items-center gap-2 text-right">
               <Globe size={12} className="text-ummah-icon-active-light" />
-              10,000+ Online
+              10,000+ {t('online')}
             </div>
           )}
         </div>
@@ -349,7 +351,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
             onClick={() => setSelectedCategory(null)}
             className={`px-5 py-2.5 rounded-full text-[9px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${!selectedCategory ? 'bg-ummah-icon-active-light text-white shadow-premium' : 'bg-white dark:bg-ummah-card-dark text-ummah-text-light/40 border border-black/5 dark:border-white/5'}`}
           >
-            All Topics
+            {t('all_topics')}
           </button>
           {categories.map(cat => (
             <button
@@ -369,7 +371,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
           <div className="animate-fade-up">
             <div className="flex items-center gap-3 mb-4 px-2">
               <Star size={14} className="text-ummah-gold fill-ummah-gold/20" />
-              <h3 className="text-[10px] font-black text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 uppercase tracking-[0.4em]">Hadith of the Day</h3>
+              <h3 className="text-[10px] font-black text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 uppercase tracking-[0.4em]">{t('hadith_of_the_day')}</h3>
             </div>
             
             <div 
@@ -405,11 +407,11 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                   "{dailyHadith.text}"
                 </p>
 
-                {expandedId === dailyHadith.id && explanations[dailyHadith.id] && (
+                {isExpanded && explanations[dailyHadith.id] && (
                   <div className="space-y-6 animate-in fade-in slide-in-from-top-4 py-6 border-t border-ummah-gold/10">
                      <div className="flex items-center gap-3">
                         <Sparkles size={14} className="text-ummah-gold" />
-                        <span className="text-[9px] font-black text-ummah-gold uppercase tracking-[0.3em]">AI Reflection</span>
+                        <span className="text-[9px] font-black text-ummah-gold uppercase tracking-[0.3em]">{t('ai_reflection')}</span>
                      </div>
                      <p className="text-xs font-bold italic text-ummah-text-light/80 dark:text-ummah-text-secondary-dark/80 leading-relaxed">
                         {explanations[dailyHadith.id].explanation}
@@ -424,7 +426,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                       onClick={(e) => handleDeeperDive(e, dailyHadith.text)}
                       className="px-3 py-1.5 bg-ummah-gold/5 text-ummah-gold rounded-lg text-[8px] font-black uppercase tracking-widest flex items-center gap-1.5"
                     >
-                      <Sparkles size={10} /> Deeper Dive
+                      <Sparkles size={10} /> {t('deeper_dive')}
                     </button>
                     <button 
                       onClick={(e) => handleShare(e, dailyHadith.id, dailyHadith.text, dailyHadith.source)}
@@ -446,7 +448,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
             <div className="w-16 h-16 bg-ummah-mint dark:bg-white/5 rounded-3xl flex items-center justify-center text-ummah-icon-active-light">
               <Loader2 size={32} className="animate-spin" />
             </div>
-            <p className="text-[11px] font-black text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/40 uppercase tracking-[0.3em]">Browsing Global Corpus...</p>
+            <p className="text-[11px] font-black text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/40 uppercase tracking-[0.3em]">{t('browsing_global_corpus')}</p>
           </div>
         )}
 
@@ -457,12 +459,12 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
              </div>
              <div className="space-y-2">
                 <h3 className="text-xl font-black text-ummah-text-light dark:text-ummah-text-dark tracking-tight">
-                  {viewMode === 'bookmarks' ? 'Your sanctuary is empty' : 'Expand your library'}
+                  {viewMode === 'bookmarks' ? t('your_sanctuary_empty') : t('expand_your_library')}
                 </h3>
                 <p className="text-xs text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 leading-relaxed max-w-xs mx-auto italic">
                     {viewMode === 'bookmarks' 
-                      ? 'Save narrations that touch your heart to find them here later.' 
-                      : 'We couldn\'t find any local results. Try the Global Corpus for 10,000+ authentic reports.'}
+                      ? t('save_narrations_heart') 
+                      : t('no_local_results')}
                 </p>
              </div>
              {viewMode === 'all' && (
@@ -471,7 +473,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                   className="w-full py-5 bg-ummah-icon-active-light dark:bg-ummah-icon-active-dark text-white rounded-[2rem] text-[11px] font-black uppercase tracking-[0.2em] shadow-premium flex items-center justify-center gap-3 active:scale-95 transition-all"
               >
                   <CloudLightning size={16} />
-                  Search Global Library
+                  {t('search_global_library')}
               </button>
              )}
              {viewMode === 'bookmarks' && (
@@ -479,7 +481,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                   onClick={() => setViewMode('all')}
                   className="w-full py-5 bg-ummah-icon-active-light dark:bg-ummah-icon-active-dark text-white rounded-[2rem] text-[11px] font-black uppercase tracking-[0.2em] shadow-premium flex items-center justify-center gap-3 active:scale-95 transition-all"
               >
-                  Discover New Hadiths
+                  {t('discover_new_hadiths')}
               </button>
              )}
           </div>
@@ -509,7 +511,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                         </span>
                         {hadith.type === 'global' && (
                           <span className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 text-emerald-600 rounded-full border border-emerald-500/10 text-[8px] font-black uppercase tracking-widest">
-                            <Check size={10} strokeWidth={3} /> Global Corpus
+                            <Check size={10} strokeWidth={3} /> {t('global_corpus')}
                           </span>
                         )}
                       </div>
@@ -546,13 +548,13 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                             <div className="p-2.5 bg-ummah-icon-active-light rounded-xl text-white shadow-premium">
                               <Sparkles size={16} />
                             </div>
-                            <span className="text-[11px] font-black uppercase tracking-[0.3em] text-ummah-icon-active-light dark:text-ummah-icon-active-dark">Spiritual Reflection</span>
+                            <span className="text-[11px] font-black uppercase tracking-[0.3em] text-ummah-icon-active-light dark:text-ummah-icon-active-dark">{t('spiritual_reflection')}</span>
                           </div>
                           
                           {loadingExplanationId === hadith.id ? (
                             <div className="py-20 flex flex-col items-center gap-6">
                                <Loader2 size={32} className="animate-spin text-ummah-icon-active-light" />
-                               <p className="text-[10px] font-black text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/40 uppercase tracking-widest">Consulting Knowledge Base...</p>
+                               <p className="text-[10px] font-black text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/40 uppercase tracking-widest">{t('consulting_knowledge_base')}</p>
                             </div>
                           ) : insight ? (
                             <div className="space-y-12">
@@ -560,7 +562,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                                 <div className="p-6 bg-ummah-mint/50 dark:bg-white/5 rounded-3xl border border-ummah-icon-active-light/5">
                                   <div className="flex items-center gap-2 mb-3 text-ummah-icon-active-light dark:text-ummah-icon-active-dark">
                                     <User size={14} />
-                                    <span className="text-[9px] font-black uppercase tracking-widest">Narrator</span>
+                                    <span className="text-[9px] font-black uppercase tracking-widest">{t('narrator')}</span>
                                   </div>
                                   <p className="text-xs font-bold text-ummah-text-light/70 dark:text-ummah-text-secondary-dark leading-relaxed">
                                     {insight.narrator}
@@ -569,7 +571,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                                 <div className="p-6 bg-amber-50/50 dark:bg-amber-950/10 rounded-3xl border border-amber-500/10">
                                   <div className="flex items-center gap-2 mb-3 text-amber-600 dark:text-amber-500">
                                     <History size={14} />
-                                    <span className="text-[9px] font-black uppercase tracking-widest">Context</span>
+                                    <span className="text-[9px] font-black uppercase tracking-widest">{t('context')}</span>
                                   </div>
                                   <p className="text-xs font-bold text-ummah-text-light/70 dark:text-ummah-text-secondary-dark leading-relaxed">
                                     {insight.context}
@@ -581,7 +583,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                                 <Quote className="absolute top-4 right-4 text-ummah-icon-active-light/10" size={32} />
                                 <div className="flex items-center gap-3 mb-4">
                                    <Info size={16} className="text-ummah-icon-active-light" />
-                                   <span className="text-[10px] font-black uppercase tracking-widest text-ummah-icon-active-light">Explanation</span>
+                                   <span className="text-[10px] font-black uppercase tracking-widest text-ummah-icon-active-light">{t('explanation')}</span>
                                 </div>
                                 <p className="text-base text-ummah-text-light dark:text-ummah-text-dark leading-relaxed font-bold italic">
                                   {insight.explanation}
@@ -591,7 +593,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                               <div className="space-y-5">
                                 <div className="flex items-center gap-3 px-2">
                                   <Lightbulb size={18} className="text-ummah-gold" />
-                                  <span className="text-[11px] font-black uppercase tracking-widest text-ummah-text-light/40 dark:text-ummah-text-secondary-dark">Modern Practice</span>
+                                  <span className="text-[11px] font-black uppercase tracking-widest text-ummah-text-light/40 dark:text-ummah-text-secondary-dark">{t('modern_practice')}</span>
                                 </div>
                                 <div className="grid gap-4">
                                   {insight.lessons.map((lesson, lIdx) => (
@@ -610,13 +612,13 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                                 className="w-full flex items-center justify-center gap-4 py-6 bg-ummah-gold text-white rounded-[2.5rem] text-[11px] font-black uppercase tracking-widest shadow-premium hover:shadow-glow transition-all active:scale-95"
                               >
                                 <Sparkles size={20} />
-                                Deeper Dive with AI
+                                {t('deeper_dive_ai')}
                               </button>
                             </div>
                           ) : (
                             <div className="p-6 bg-rose-50 rounded-3xl flex items-center gap-4 text-rose-700">
                               <Info size={20} />
-                              <p className="text-[11px] font-bold">Insight generation paused. Please try again soon.</p>
+                              <p className="text-[11px] font-bold">{t('insight_generation_paused')}</p>
                             </div>
                           )}
                         </div>
@@ -632,14 +634,14 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                           onClick={(e) => handleDeeperDive(e, hadith.text)}
                           className="flex items-center gap-2 px-3 py-2 bg-ummah-gold/10 text-ummah-gold rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-ummah-gold hover:text-white transition-all"
                         >
-                          <BrainCircuit size={14} /> AI Dive
+                          <BrainCircuit size={14} /> {t('ai_dive')}
                         </button>
                         <button 
                           onClick={(e) => handleShare(e, hadith.id, hadith.text, hadith.source)}
                           className={`p-3 rounded-2xl transition-all duration-300 flex items-center gap-2 ${isCopied ? 'bg-emerald-500 text-white shadow-premium' : 'bg-slate-50 dark:bg-white/5 text-ummah-icon-inactive-light hover:text-ummah-icon-active-light'}`}
                         >
                           {isCopied ? <Check size={18} /> : (navigator.share ? <Share2 size={18} /> : <Copy size={18} />)}
-                          {isCopied && <span className="text-[8px] font-black uppercase tracking-widest">Shared</span>}
+                          {isCopied && <span className="text-[8px] font-black uppercase tracking-widest">{t('shared')}</span>}
                         </button>
                         <ChevronDown size={24} className={`text-ummah-icon-inactive-light transition-transform duration-500 ${isExpanded ? 'rotate-180 text-ummah-icon-active-light' : ''}`} />
                       </div>
@@ -658,10 +660,10 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent }) => {
                   className="px-8 py-5 bg-ummah-icon-active-light dark:bg-ummah-icon-active-dark text-white rounded-[2rem] text-[10px] font-black uppercase tracking-[0.2em] shadow-premium flex items-center justify-center gap-3 active:scale-95 transition-all disabled:opacity-50"
               >
                   {isSearchingGlobal ? <Loader2 size={16} className="animate-spin" /> : <Plus size={16} />}
-                  Load More from Global Corpus
+                  {t('load_more_global')}
               </button>
               <p className="text-[9px] text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/30 font-bold uppercase tracking-widest">
-                  Browsing through 10,000+ Verified Narrations
+                  {t('browsing_verified_narrations')}
               </p>
             </div>
           )}

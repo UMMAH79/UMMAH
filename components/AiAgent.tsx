@@ -93,6 +93,7 @@ const AiAgent: React.FC<AiAgentProps> = ({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [hasApiKey, setHasApiKey] = useState(true);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<{ data: string; mimeType: string } | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -147,6 +148,25 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
     }
   }, [initialQuery]);
 
+  useEffect(() => {
+    const checkKey = async () => {
+      if (window.aistudio) {
+        const hasKey = await window.aistudio.hasSelectedApiKey();
+        setHasApiKey(hasKey || !!process.env.GEMINI_API_KEY || !!process.env.API_KEY);
+      } else {
+        setHasApiKey(!!process.env.GEMINI_API_KEY || !!process.env.API_KEY);
+      }
+    };
+    checkKey();
+  }, []);
+
+  const handleSelectKey = async () => {
+    if (window.aistudio) {
+      await window.aistudio.openSelectKey();
+      setHasApiKey(true);
+    }
+  };
+
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -181,7 +201,12 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
     onUpdateSettings({ dailyChatCount: { date: today, count: currentCount + 1 } });
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+      if (!apiKey) {
+        setHasApiKey(false);
+        throw new Error("API Key missing");
+      }
+      const ai = new GoogleGenAI({ apiKey });
       
       // OPTIMIZATION: Limit history context to the last 6 messages to reduce latency
       const historyToInclude = messages.slice(-6);
@@ -229,9 +254,14 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("AI Error:", error);
-      setMessages(prev => [...prev, { role: 'model', content: "**Connection issue.** Please try again." }]);
+      let errorMsg = "**Connection issue.** Please try again.";
+      if (error?.message?.includes("API_KEY_INVALID") || error?.message?.includes("entity was not found")) {
+        setHasApiKey(false);
+        errorMsg = "**API Key Error.** Please connect your API key to continue.";
+      }
+      setMessages(prev => [...prev, { role: 'model', content: errorMsg }]);
     } finally {
       setIsLoading(false);
     }
@@ -248,6 +278,30 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
   return (
     <div className="flex flex-col h-full bg-ummah-bg-light dark:bg-ummah-bg-dark relative overflow-hidden transition-colors">
       
+      {(!hasApiKey && !chatStatus.reachedLimit) && (
+        <div className="fixed inset-0 z-[150] flex items-center justify-center p-8 animate-in fade-in duration-300">
+           <div className="absolute inset-0 bg-ummah-bg-dark/60 backdrop-blur-md"></div>
+           <div className="relative w-full max-w-xs bg-white dark:bg-ummah-card-dark rounded-[3rem] p-10 shadow-premium border border-black/5 dark:border-white/5 text-center animate-in zoom-in-95 duration-500">
+              <div className="w-16 h-16 bg-amber-50 dark:bg-amber-950/20 text-amber-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner">
+                 <Lock size={32} />
+              </div>
+              <h3 className="premium-header text-xl font-black text-ummah-text-light dark:text-ummah-text-dark mb-4 tracking-tight">AI Connection</h3>
+              <p className="text-[10px] text-ummah-text-light/50 dark:text-ummah-text-secondary-dark/50 font-medium leading-relaxed mb-8">
+                 To enable Ummah AI, please connect your Gemini API key. This ensures a secure and private connection for your queries.
+              </p>
+              <button 
+                onClick={handleSelectKey}
+                className="w-full py-4 bg-ummah-icon-active-light text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-glow"
+              >
+                Connect API Key
+              </button>
+              <p className="mt-4 text-[8px] text-ummah-text-light/30 dark:text-ummah-text-secondary-dark/30">
+                Requires a paid Google Cloud project key.
+              </p>
+           </div>
+        </div>
+      )}
+
       {chatStatus.reachedLimit && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center p-8 animate-in fade-in duration-300">
            <div className="absolute inset-0 bg-ummah-bg-dark/60 backdrop-blur-md"></div>
