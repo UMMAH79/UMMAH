@@ -1,6 +1,5 @@
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { GoogleGenAI, GenerateContentResponse, ThinkingLevel } from "@google/genai";
 import { 
   Send, 
   Bot, 
@@ -150,12 +149,22 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
 
   useEffect(() => {
     const checkKey = async () => {
-      if (window.aistudio) {
-        const hasKey = await window.aistudio.hasSelectedApiKey();
-        setHasApiKey(hasKey || !!process.env.GEMINI_API_KEY || !!process.env.API_KEY);
-      } else {
-        setHasApiKey(!!process.env.GEMINI_API_KEY || !!process.env.API_KEY);
+      // First check if key is in browser env (AI Studio preview)
+      let hasKey = !!process.env.GEMINI_API_KEY || !!process.env.API_KEY;
+      
+      if (!hasKey && window.aistudio) {
+        hasKey = await window.aistudio.hasSelectedApiKey();
       }
+
+      // If still no key, check if server has it
+      if (!hasKey) {
+        try {
+          const res = await fetch("/api/ai/chat", { method: "POST", body: JSON.stringify({ check: true }), headers: { "Content-Type": "application/json" } });
+          if (res.status !== 500) hasKey = true;
+        } catch (e) {}
+      }
+
+      setHasApiKey(hasKey);
     };
     checkKey();
   }, []);
@@ -201,14 +210,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
     onUpdateSettings({ dailyChatCount: { date: today, count: currentCount + 1 } });
 
     try {
-      const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
-      if (!apiKey) {
-        setHasApiKey(false);
-        throw new Error("API Key missing");
-      }
-      const ai = new GoogleGenAI({ apiKey });
-      
-      // OPTIMIZATION: Limit history context to the last 6 messages to reduce latency
+      // Use the new server-side API
       const historyToInclude = messages.slice(-6);
       
       const contents: any[] = historyToInclude.map(msg => ({
@@ -229,35 +231,31 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
 
       contents.push({ role: 'user', parts: currentTurnParts });
 
-      const result = await ai.models.generateContentStream({
-        model: 'gemini-3-flash-preview',
-        contents: contents,
-        config: { 
-          systemInstruction: SYSTEM_INSTRUCTION,
-          temperature: 0.1,
-          // OPTIMIZATION: Disable thinking to maximize response speed
-          thinkingConfig: { thinkingLevel: ThinkingLevel.LOW }
-        }
+      const response = await fetch("/api/ai/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents,
+          systemInstruction: SYSTEM_INSTRUCTION
+        })
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to get response from server");
+      }
+
+      const data = await response.json();
       
-      setMessages(prev => [...prev, { role: 'model', content: '' }]);
-      
-      let fullText = '';
-      for await (const chunk of result) {
-        const c = chunk as GenerateContentResponse;
-        if (c.text) {
-          fullText += c.text;
-          setMessages(prev => {
-            const newMessages = [...prev];
-            newMessages[newMessages.length - 1] = { role: 'model', content: fullText };
-            return newMessages;
-          });
-        }
+      if (data.text) {
+        setMessages(prev => [...prev, { role: 'model', content: data.text }]);
+      } else {
+        throw new Error("Empty response from AI");
       }
     } catch (error: any) {
       console.error("AI Error:", error);
       let errorMsg = "**Connection issue.** Please try again.";
-      if (error?.message?.includes("API_KEY_INVALID") || error?.message?.includes("entity was not found")) {
+      if (error?.message?.includes("API Key missing") || error?.message?.includes("not configured")) {
         setHasApiKey(false);
         errorMsg = "**API Key Error.** Please connect your API key to continue.";
       }
