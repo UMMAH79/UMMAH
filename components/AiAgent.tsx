@@ -260,7 +260,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
       contents.push({ role: 'user', parts: currentTurnParts });
 
       const result = await ai.models.generateContentStream({
-        model: 'gemini-3-flash-preview',
+       model: 'gemini-1.5-flash',
         contents: contents,
         config: { 
           systemInstruction: SYSTEM_INSTRUCTION,
