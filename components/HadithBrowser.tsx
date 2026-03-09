@@ -37,6 +37,7 @@ import {
   HadithInsight,
   GlobalHadith
 } from '../services/ai';
+import { useTranslation } from '../hooks/useTranslation';
 
 interface HadithBrowserProps {
   onAskAgent?: (query: string) => void;
@@ -407,7 +408,7 @@ const HadithBrowser: React.FC<HadithBrowserProps> = ({ onAskAgent, language }) =
                   "{dailyHadith.text}"
                 </p>
 
-                {isExpanded && explanations[dailyHadith.id] && (
+                {expandedId === dailyHadith.id && explanations[dailyHadith.id] && (
                   <div className="space-y-6 animate-in fade-in slide-in-from-top-4 py-6 border-t border-ummah-gold/10">
                      <div className="flex items-center gap-3">
                         <Sparkles size={14} className="text-ummah-gold" />
