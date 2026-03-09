@@ -158,19 +158,42 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
       const key = process.env.GEMINI_API_KEY || process.env.API_KEY;
       let hasKey = isValidKey(key);
       
-      if (!hasKey && window.aistudio) {
-        hasKey = await window.aistudio.hasSelectedApiKey();
+      const aiStudio = (window as any).aistudio;
+      if (!hasKey && aiStudio && aiStudio.hasSelectedApiKey) {
+        try {
+          hasKey = await aiStudio.hasSelectedApiKey();
+        } catch (e) {
+          console.error("Error checking AI Studio key status:", e);
+        }
       }
 
       setHasApiKey(hasKey);
     };
+    
+    // Check immediately and then again after a short delay to ensure window.aistudio is ready
     checkKey();
+    const timer = setTimeout(checkKey, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleSelectKey = async () => {
-    if (window.aistudio) {
-      await window.aistudio.openSelectKey();
-      setHasApiKey(true);
+    const aiStudio = (window as any).aistudio;
+    console.log("Connect API Key clicked. aistudio status:", !!aiStudio);
+    
+    if (aiStudio && aiStudio.openSelectKey) {
+      try {
+        await aiStudio.openSelectKey();
+        // After opening, we assume success as per guidelines
+        setHasApiKey(true);
+        // Small delay then reload to ensure environment is refreshed
+        setTimeout(() => window.location.reload(), 500);
+      } catch (e) {
+        console.error("Failed to open key selector", e);
+        alert("Could not open the key selector. Please try again.");
+      }
+    } else {
+      console.warn("window.aistudio not found");
+      alert("Key selection tool not found. Please ensure you are using the AI Studio preview environment and that your browser isn't blocking the connection.");
     }
   };
 
