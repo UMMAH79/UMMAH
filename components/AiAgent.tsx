@@ -44,6 +44,10 @@ const DEVELOPERS = [
   'JubaerUmmahDeveloper20111003'
 ];
 
+const isValidKey = (key: any): boolean => {
+  return typeof key === 'string' && key.length > 10 && key !== 'undefined' && key !== 'null';
+};
+
 /**
  * Premium Markdown Parser
  */
@@ -151,7 +155,8 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
   useEffect(() => {
     const checkKey = async () => {
       // First check if key is in browser env (AI Studio preview)
-      let hasKey = !!process.env.GEMINI_API_KEY || !!process.env.API_KEY;
+      const key = process.env.GEMINI_API_KEY || process.env.API_KEY;
+      let hasKey = isValidKey(key);
       
       if (!hasKey && window.aistudio) {
         hasKey = await window.aistudio.hasSelectedApiKey();
@@ -204,9 +209,9 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
 
     try {
       const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
-      if (!apiKey) {
+      if (!isValidKey(apiKey)) {
         setHasApiKey(false);
-        throw new Error("API Key missing");
+        throw new Error("API Key missing or invalid");
       }
       
       const ai = new GoogleGenAI({ apiKey });
@@ -259,8 +264,16 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
       console.error("AI Error:", error);
       let errorMsg = "**Connection issue.** Please try again.";
       
-      const errorStr = error?.message || "";
-      if (errorStr.includes("API Key missing") || errorStr.includes("API_KEY_INVALID") || errorStr.includes("entity was not found")) {
+      // Stringify error to catch nested API_KEY_INVALID messages
+      const errorStr = String(error?.message || "") + String(error?.stack || "") + JSON.stringify(error);
+      
+      if (
+        errorStr.includes("API Key missing") || 
+        errorStr.includes("API_KEY_INVALID") || 
+        errorStr.includes("not valid") || 
+        errorStr.includes("INVALID_ARGUMENT") ||
+        errorStr.includes("entity was not found")
+      ) {
         setHasApiKey(false);
         errorMsg = "**API Key Error.** Please connect your API key to continue.";
       }
