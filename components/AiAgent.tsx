@@ -37,7 +37,7 @@ interface AiAgentProps {
   onRedirectToAskLearn?: () => void;
 }
 
-const DAILY_LIMIT = 20;
+const DAILY_LIMIT = 10;
 const DEVELOPERS = [
   'SahilUmmahDeveloper347743437',
   'TahmidUmmahDeveloper201110047',
@@ -260,7 +260,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
       contents.push({ role: 'user', parts: currentTurnParts });
 
       const result = await ai.models.generateContentStream({
-       model: 'gemini-1.5-flash',
+        model: 'gemini-3-flash-preview',
         contents: contents,
         config: { 
           systemInstruction: SYSTEM_INSTRUCTION,

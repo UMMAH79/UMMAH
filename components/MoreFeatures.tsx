@@ -33,11 +33,13 @@ import {
   Moon,
   Footprints,
   Facebook,
-  Youtube
+  Youtube,
+  Star
 } from 'lucide-react';
 import { AppLanguage, UserSettings, AppMode } from '../types';
+import AboutUs from './AboutUs';
 
-type FeatureState = 'main' | 'notifications' | 'privacy' | 'language' | 'donate' | 'upgrade' | 'profile';
+type FeatureState = 'main' | 'notifications' | 'privacy' | 'language' | 'donate' | 'upgrade' | 'profile' | 'about' | 'contact';
 
 interface MoreFeaturesProps {
   isDarkMode?: boolean;
@@ -355,6 +357,47 @@ const MoreFeatures: React.FC<MoreFeaturesProps> = ({
             )}
           </div>
         );
+      case 'about':
+        return <AboutUs onBack={() => setActiveFeature('main')} />;
+      case 'contact':
+        return (
+          <div className="p-6 space-y-6">
+            <div className="bg-white dark:bg-ummah-card-dark rounded-[2.5rem] p-8 border border-black/5 dark:border-white/5 shadow-soft">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2.5 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 rounded-2xl">
+                  <Mail size={20} />
+                </div>
+                <h2 className="font-black text-slate-800 dark:text-white uppercase tracking-widest text-xs">Contact Us</h2>
+              </div>
+              <div className="space-y-6">
+                <p className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-relaxed">
+                  If you have any questions, feedback, or inquiries related to Ummah, feel free to contact us. For any general reason or business purpose, please reach out to us at:
+                </p>
+                <div className="py-4 px-6 bg-slate-50 dark:bg-ummah-bg-dark rounded-2xl border border-black/5 dark:border-white/5 flex items-center gap-3 group">
+                  <div className="p-2 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 rounded-xl">
+                    <Mail size={16} />
+                  </div>
+                  <a href="mailto:ummahbusiness349@gmail.com" className="text-emerald-600 dark:text-emerald-400 font-bold text-sm hover:underline">
+                    ummahbusiness349@gmail.com
+                  </a>
+                </div>
+                <p className="text-[11px] text-slate-400 dark:text-slate-500 font-medium leading-relaxed italic">
+                  For general feedback or reports, please use the appropriate sections available on the website.
+                </p>
+                <p className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-relaxed">
+                  We will try our best to respond as soon as possible. Thank you for supporting Ummah.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-8 bg-ummah-mint/30 dark:bg-white/5 rounded-[2.5rem] border border-ummah-icon-active-light/5 text-center">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-ummah-icon-active-light mb-2">Response Time</p>
+              <p className="text-[11px] text-ummah-text-light/60 dark:text-ummah-text-secondary-dark/60 leading-relaxed font-medium">
+                Our team typically responds within 24-48 hours. We appreciate your patience.
+              </p>
+            </div>
+          </div>
+        );
       default: return null;
     }
   };
@@ -448,6 +491,22 @@ const MoreFeatures: React.FC<MoreFeaturesProps> = ({
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400"><Shield size={16} /></div>
             <span className="font-bold text-slate-700 dark:text-white text-xs">Privacy & Security</span>
+          </div>
+          <ChevronRight size={14} className="text-slate-300 group-hover:translate-x-1 transition-all" />
+        </button>
+
+        <button onClick={() => setActiveFeature('about')} className="w-full flex items-center justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all group mb-1 text-left">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600"><Star size={16} /></div>
+            <span className="font-bold text-slate-700 dark:text-white text-xs">About Ummah</span>
+          </div>
+          <ChevronRight size={14} className="text-slate-300 group-hover:translate-x-1 transition-all" />
+        </button>
+
+        <button onClick={() => setActiveFeature('contact')} className="w-full flex items-center justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all group mb-1 text-left">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600"><Mail size={16} /></div>
+            <span className="font-bold text-slate-700 dark:text-white text-xs">Contact Us</span>
           </div>
           <ChevronRight size={14} className="text-slate-300 group-hover:translate-x-1 transition-all" />
         </button>
