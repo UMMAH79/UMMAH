@@ -225,16 +225,41 @@ const ADDICTION_ARTICLES: Article[] = [
 ];
 
 const DOUBT_ARTICLES: Article[] = [
-  {
-    id: 'hijab-struggle',
-    title: 'I Believe in Islam, But I Struggle With Wearing Hijab',
-    category: 'Doubt',
-    intro: 'Many Muslim women deeply believe in Allah yet struggle with hijab. The struggle is often internal and emotional rather than rebellious.',
-    sections: [
-      { heading: 'INTRODUCTION', content: 'Many Muslim women deeply believe in Allah yet struggle with hijab. The struggle is often internal and emotional rather than rebellious. Some feel pressure from society, friends, or workplace environments. Others fear judgment or loss of confidence.' }
-    ],
-    tags: ['hijab', 'headscarf', 'struggle', 'modesty', 'pressure', 'confidence', 'judgment', 'identity']
-  },
+{
+  id: 'hijab-struggle',
+  title: 'I Believe in Islam, But I Struggle With Wearing Hijab',
+  category: 'Doubt',
+  intro: 'Many Muslim women deeply believe in Allah yet struggle with hijab. The struggle is often internal and emotional rather than rebellious.',
+  sections: [
+    {
+      heading: 'INTRODUCTION',
+      content: 'Many Muslim women deeply believe in Allah yet struggle with hijab. The struggle is often internal and emotional rather than rebellious. Some feel pressure from society, friends, or workplace environments. Others fear judgment or loss of confidence. For some, the struggle comes from feeling unready rather than rejecting the command of Allah.'
+    },
+    {
+      heading: 'WHAT THIS STRUGGLE REALLY MEANS',
+      content: 'Struggling with hijab does not automatically mean someone lacks faith. Often it means the person is caught between belief and fear. They know what Islam teaches, but they are also navigating social expectations, personal insecurities, and cultural pressures. This inner conflict can create guilt, confusion, and emotional exhaustion.'
+    },
+    {
+      heading: 'WHY THIS STRUGGLE HAPPENS',
+      content: 'There are several reasons why a believer may struggle with wearing hijab. In some environments, hijab can bring unwanted attention, criticism, or misunderstanding. Social media can also create unrealistic beauty standards that make modesty feel isolating. Sometimes the issue is not belief but confidence, fear of judgment, or worry about how life might change after wearing it.'
+    },
+    {
+      heading: 'ISLAMIC PERSPECTIVE',
+      content: 'In Islam, hijab is a command intended to promote modesty, dignity, and spiritual identity. But Islam also recognizes the human journey of growth. Faith often develops step by step. Many companions of the Prophet ﷺ gradually transformed their lives as their faith deepened. The presence of struggle does not cancel belief; it often shows that the heart still cares about pleasing Allah.'
+    },
+    {
+      heading: 'A HEALTHIER WAY TO APPROACH IT',
+      content: 'Instead of viewing hijab only as a burden or sudden change, it may help to approach it as a personal spiritual journey. Learning more about the wisdom behind modesty, surrounding yourself with supportive people, and strengthening your relationship with Allah can gradually make the decision easier. Growth in faith usually happens through patience and reflection rather than pressure or shame.'
+    },
+    {
+      heading: 'IF YOU STILL FEEL CONFLICTED',
+      content: 'If the struggle continues, it is important not to let guilt turn into distance from Allah. Continue building your connection through prayer, learning, and sincere reflection. Faith is not a single moment of perfection but a lifelong journey. Many believers grow slowly but sincerely, and that growth matters.'
+    }
+  ],
+  reflection: 'Struggling with something in Islam does not mean your faith is fake. Sometimes it means your heart is wrestling between fear and obedience. Growth takes time. What matters most is that you continue turning toward Allah rather than turning away.',
+  tags: ['hijab', 'headscarf', 'struggle', 'modesty', 'pressure', 'confidence', 'judgment', 'identity']
+}
+];
   {
     id: 'teenage-adult-love',
     title: 'Is teenage/adult love haram in Islam?',
