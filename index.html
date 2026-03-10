@@ -6,6 +6,13 @@
     <title>UMMAH</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+      window.process = window.process || { env: {} };
+      window.process.env = window.process.env || {};
+      // Try to sync with platform injected variables if any
+      if (typeof API_KEY !== 'undefined') window.process.env.API_KEY = API_KEY;
+      if (typeof GEMINI_API_KEY !== 'undefined') window.process.env.GEMINI_API_KEY = GEMINI_API_KEY;
+    </script>
+    <script>
       tailwind.config = {
         darkMode: 'class',
         theme: {

@@ -18,12 +18,31 @@ export interface GlobalHadith {
 
 const GET_VOICE_NAME = (voice: VoiceType) => 'Charon';
 
+const getApiKey = async (): Promise<string | undefined> => {
+  // Try process.env first
+  let key = process.env.GEMINI_API_KEY || process.env.API_KEY;
+  if (key && typeof key === 'string' && key.length > 10 && key !== 'undefined' && key !== 'null') return key;
+
+  // Try window.aistudio if available
+  const aiStudio = (window as any).aistudio;
+  if (aiStudio && aiStudio.getApiKey) {
+    try {
+      key = await aiStudio.getApiKey();
+      if (key && typeof key === 'string' && key.length > 10) return key;
+    } catch (e) {
+      console.error("Error getting key from AI Studio:", e);
+    }
+  }
+
+  return undefined;
+};
+
 /**
  * Searches the global corpus of 10,000+ Hadiths.
  */
 export async function searchGlobalHadiths(query: string, category?: string): Promise<GlobalHadith[]> {
   try {
-    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    const apiKey = await getApiKey();
     if (!apiKey) return [];
     const ai = new GoogleGenAI({ apiKey });
     
@@ -71,7 +90,7 @@ export async function reciteHadith(
   voice: VoiceType = 'male'
 ): Promise<Uint8Array | null> {
   try {
-    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    const apiKey = await getApiKey();
     if (!apiKey) return null;
     const ai = new GoogleGenAI({ apiKey });
     
@@ -107,7 +126,7 @@ export async function reciteDuaPart(
   voice: VoiceType = 'male'
 ): Promise<Uint8Array | null> {
   try {
-    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    const apiKey = await getApiKey();
     if (!apiKey) return null;
     const ai = new GoogleGenAI({ apiKey });
     const voiceName = GET_VOICE_NAME(voice);
@@ -140,7 +159,7 @@ export async function reciteDuaPart(
 
 export async function getHadithExplanation(text: string, source: string): Promise<HadithInsight | null> {
   try {
-    const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+    const apiKey = await getApiKey();
     if (!apiKey) return null;
     const ai = new GoogleGenAI({ apiKey });
     

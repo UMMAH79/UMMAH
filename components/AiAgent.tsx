@@ -86,6 +86,25 @@ const MarkdownText: React.FC<{ content: string }> = ({ content }) => {
   );
 };
 
+const getApiKey = async (): Promise<string | undefined> => {
+  // Try process.env first (injected by Vite or platform)
+  let key = process.env.GEMINI_API_KEY || process.env.API_KEY;
+  if (isValidKey(key)) return key;
+
+  // Try window.aistudio if available
+  const aiStudio = (window as any).aistudio;
+  if (aiStudio && aiStudio.getApiKey) {
+    try {
+      key = await aiStudio.getApiKey();
+      if (isValidKey(key)) return key;
+    } catch (e) {
+      console.error("Error getting key from AI Studio:", e);
+    }
+  }
+
+  return undefined;
+};
+
 const AiAgent: React.FC<AiAgentProps> = ({ 
   initialQuery, 
   onClearInitialQuery, 
@@ -154,9 +173,8 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
 
   useEffect(() => {
     const checkKey = async () => {
-      // First check if key is in browser env (AI Studio preview)
-      const key = process.env.GEMINI_API_KEY || process.env.API_KEY;
-      let hasKey = isValidKey(key);
+      const key = await getApiKey();
+      let hasKey = !!key;
       
       const aiStudio = (window as any).aistudio;
       if (!hasKey && aiStudio && aiStudio.hasSelectedApiKey) {
@@ -170,30 +188,24 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
       setHasApiKey(hasKey);
     };
     
-    // Check immediately and then again after a short delay to ensure window.aistudio is ready
     checkKey();
-    const timer = setTimeout(checkKey, 1000);
+    const timer = setTimeout(checkKey, 1500);
     return () => clearTimeout(timer);
   }, []);
 
   const handleSelectKey = async () => {
     const aiStudio = (window as any).aistudio;
-    console.log("Connect API Key clicked. aistudio status:", !!aiStudio);
-    
     if (aiStudio && aiStudio.openSelectKey) {
       try {
         await aiStudio.openSelectKey();
-        // After opening, we assume success as per guidelines
+        // Assume success as per guidelines
         setHasApiKey(true);
-        // Small delay then reload to ensure environment is refreshed
-        setTimeout(() => window.location.reload(), 500);
       } catch (e) {
         console.error("Failed to open key selector", e);
         alert("Could not open the key selector. Please try again.");
       }
     } else {
-      console.warn("window.aistudio not found");
-      alert("Key selection tool not found. Please ensure you are using the AI Studio preview environment and that your browser isn't blocking the connection.");
+      alert("Key selection tool not found. Please ensure you are using the AI Studio preview environment.");
     }
   };
 
@@ -231,10 +243,10 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
     onUpdateSettings({ dailyChatCount: { date: today, count: currentCount + 1 } });
 
     try {
-      const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
-      if (!isValidKey(apiKey)) {
+      const apiKey = await getApiKey();
+      if (!apiKey) {
         setHasApiKey(false);
-        throw new Error("API Key missing or invalid");
+        throw new Error("API Key missing or invalid. Please connect your key.");
       }
       
       const ai = new GoogleGenAI({ apiKey });
@@ -285,20 +297,24 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
       }
     } catch (error: any) {
       console.error("AI Error:", error);
-      let errorMsg = "**Connection issue.** Please try again.";
       
-      // Stringify error to catch nested API_KEY_INVALID messages
+      // Detailed error detection
       const errorStr = String(error?.message || "") + String(error?.stack || "") + JSON.stringify(error);
-      
-      if (
-        errorStr.includes("API Key missing") || 
+      const isKeyError = 
         errorStr.includes("API_KEY_INVALID") || 
         errorStr.includes("not valid") || 
         errorStr.includes("INVALID_ARGUMENT") ||
-        errorStr.includes("entity was not found")
-      ) {
+        errorStr.includes("API Key missing") ||
+        errorStr.includes("entity was not found") ||
+        error?.status === 400;
+
+      let errorMsg = "**Connection issue.** Please try again.";
+      
+      if (isKeyError) {
         setHasApiKey(false);
-        errorMsg = "**API Key Error.** Please connect your API key to continue.";
+        errorMsg = "**API Key Error.** Your connection is not authorized. Please reconnect your API key.";
+      } else if (errorStr.includes("quota") || error?.status === 429) {
+        errorMsg = "**Quota exceeded.** Please wait a moment before trying again.";
       }
       
       setMessages(prev => [...prev, { role: 'model', content: errorMsg }]);
