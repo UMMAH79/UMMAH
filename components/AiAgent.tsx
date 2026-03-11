@@ -87,9 +87,13 @@ const MarkdownText: React.FC<{ content: string }> = ({ content }) => {
 };
 
 const getApiKey = async (): Promise<string | undefined> => {
-  // Try process.env first (injected by Vite or platform)
-  let key = process.env.GEMINI_API_KEY || process.env.API_KEY;
+  // Try process.env first (defined by Vite config)
+  let key = process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY1 || process.env.API_KEY;
   if (isValidKey(key)) return key;
+
+  // Try import.meta.env (Vite standard)
+  const metaKey = (import.meta as any).env?.VITE_GEMINI_API_KEY || (import.meta as any).env?.VITE_GEMINI_API_KEY1 || (import.meta as any).env?.VITE_API_KEY;
+  if (isValidKey(metaKey)) return metaKey;
 
   // Try window.aistudio if available
   const aiStudio = (window as any).aistudio;
