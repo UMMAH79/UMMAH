@@ -123,6 +123,7 @@ const AiAgent: React.FC<AiAgentProps> = ({
   const [hasApiKey, setHasApiKey] = useState(true);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<{ data: string; mimeType: string } | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const hasTriggeredInitial = useRef(false);
@@ -140,8 +141,8 @@ const AiAgent: React.FC<AiAgentProps> = ({
     return { count: userCount, reachedLimit };
   }, [settings.dailyChatCount, isDeveloper]);
 
-  const SYSTEM_INSTRUCTION = `You are UMMAH AI. Format text clearly and professionally.
-
+  const SYSTEM_INSTRUCTION = `You are UMMAH AI. Be concise and fast.
+  
 IMAGE RULE:
 - IF an image is provided: Start with **I CAN BE WRONG BUT HERE IS MY OPINION** and add a line break.
 
@@ -159,7 +160,7 @@ FORMATTING:
    *Surah : Ayah*
    **Translation: [English Text]**
 
-Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
+Tone: Sincere teacher. Language: ${activeLangName}.`;
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -230,6 +231,13 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
+  const stopGeneration = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      setIsLoading(false);
+    }
+  };
+
   const handleSend = async (text: string = input) => {
     if ((!text.trim() && !selectedImage) || isLoading || chatStatus.reachedLimit) return;
     
@@ -255,7 +263,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
       
       const ai = new GoogleGenAI({ apiKey });
       
-      const historyToInclude = messages.slice(-6);
+      const historyToInclude = messages.slice(-4); // Shorter history for speed
       
       const contents: any[] = historyToInclude.map(msg => ({
         role: msg.role,
@@ -300,9 +308,9 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
         }
       }
     } catch (error: any) {
+      if (error.name === 'AbortError') return;
       console.error("AI Error:", error);
       
-      // Detailed error detection
       const errorStr = String(error?.message || "") + String(error?.stack || "") + JSON.stringify(error);
       const isKeyError = 
         errorStr.includes("API_KEY_INVALID") || 
@@ -318,7 +326,7 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
         setHasApiKey(false);
         errorMsg = "**API Key Error.** Your connection is not authorized. Please reconnect your API key.";
       } else if (errorStr.includes("quota") || error?.status === 429) {
-        errorMsg = "**Quota exceeded.** Please wait a moment before trying again.";
+        errorMsg = "**Quota exceeded.** You've reached the limit for your Google AI Studio key. Please check your [billing/plan](https://aistudio.google.com/app/plan_and_billing) or wait a moment before trying again.";
       }
       
       setMessages(prev => [...prev, { role: 'model', content: errorMsg }]);
@@ -400,7 +408,16 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
                 <span className={`text-[8px] font-black ${chatStatus.reachedLimit ? 'text-rose-500' : 'text-ummah-icon-active-light'}`}>{chatStatus.count}/{DAILY_LIMIT}</span>
              </div>
            )}
-           <button onClick={() => setMessages([])} className="p-2 text-ummah-icon-inactive-light hover:text-ummah-icon-active-light transition-colors"><RefreshCcw size={18} /></button>
+           <button 
+             onClick={() => {
+               setMessages([]);
+               setIsLoading(false);
+             }} 
+             className="p-2 text-ummah-icon-inactive-light hover:text-rose-500 transition-colors"
+             title="Reset Conversation"
+           >
+             <RefreshCcw size={18} />
+           </button>
         </div>
       </div>
 
@@ -408,11 +425,17 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center min-h-full text-center space-y-8 animate-in fade-in py-10">
             <div className="w-20 h-20 bg-white dark:bg-ummah-card-dark rounded-[2.5rem] border border-black/5 dark:border-white/5 flex items-center justify-center text-ummah-icon-active-light dark:text-ummah-icon-active-dark shadow-xl">
-              <MessageCircleQuestion size={40} />
+              <Sparkles size={40} />
             </div>
             <div className="max-w-xs space-y-2">
-              <h3 className="premium-header text-xl font-black text-ummah-text-light dark:text-ummah-text-dark tracking-tight">How can I help you today?</h3>
-              <p className="text-xs text-ummah-text-light/60 dark:text-ummah-text-secondary-dark font-medium italic">Seek knowledge based on authentic sources.</p>
+              <h3 className="premium-header text-xl font-black text-ummah-text-light dark:text-ummah-text-dark tracking-tight">Ummah AI is Ready</h3>
+              <p className="text-xs text-ummah-text-light/60 dark:text-ummah-text-secondary-dark font-medium italic">Ask about prayer, Quran, or Islamic lifestyle.</p>
+              <button 
+                onClick={() => handleSend("Assalamu Alaikum! Are you working now?")}
+                className="mt-4 px-4 py-2 bg-ummah-mint dark:bg-white/5 text-ummah-icon-active-light rounded-xl text-[10px] font-bold uppercase tracking-widest border border-ummah-icon-active-light/10"
+              >
+                Test Connection
+              </button>
             </div>
           </div>
         ) : (
@@ -457,13 +480,28 @@ Tone: Sincere teacher. Use hyphen (-) lists. Language: ${activeLangName}.`;
               type="text" 
               value={input} 
               onChange={(e) => setInput(e.target.value)} 
-              placeholder={chatStatus.reachedLimit ? 'Daily limit reached' : 'Ask Ummah AI...'} 
+              placeholder={chatStatus.reachedLimit ? 'Daily limit reached' : isLoading ? 'Ummah AI is thinking...' : 'Ask Ummah AI...'} 
               className="flex-1 bg-transparent border-none outline-none text-sm font-semibold text-ummah-text-light dark:text-ummah-text-dark placeholder:text-ummah-text-light/30" 
               disabled={isLoading || chatStatus.reachedLimit} 
             />
-            <button type="submit" disabled={(!input.trim() && !selectedImage) || isLoading || chatStatus.reachedLimit} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${(!input.trim() && !selectedImage) || isLoading || chatStatus.reachedLimit ? 'bg-black/5 text-black/10' : 'bg-ummah-icon-active-light text-white shadow-glow hover:scale-105'}`}>
-              {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} className="ml-0.5" />}
-            </button>
+            {isLoading ? (
+              <button 
+                type="button" 
+                onClick={stopGeneration}
+                className="w-10 h-10 rounded-full flex items-center justify-center bg-rose-500 text-white shadow-glow animate-pulse"
+                title="Stop Generation"
+              >
+                <X size={16} />
+              </button>
+            ) : (
+              <button 
+                type="submit" 
+                disabled={(!input.trim() && !selectedImage) || isLoading || chatStatus.reachedLimit} 
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${(!input.trim() && !selectedImage) || isLoading || chatStatus.reachedLimit ? 'bg-black/5 text-black/10' : 'bg-ummah-icon-active-light text-white shadow-glow hover:scale-105'}`}
+              >
+                <Send size={16} className="ml-0.5" />
+              </button>
+            )}
           </div>
         </form>
       </div>

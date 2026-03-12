@@ -12,6 +12,8 @@ if (process.env.GEMINI_API_KEY) {
 }
 
 async function main() {
+  console.log("API call skipped in index.ts to save your Gemini quota.");
+  /*
   const result = streamText({
     model: google('gemini-3-flash-preview'), 
     prompt: 'Invent a new holiday and describe its traditions.',
@@ -23,6 +25,7 @@ async function main() {
 
   console.log();
   console.log('Token usage:', await result.usage);
+  */
 }
 
 main().catch(console.error);
