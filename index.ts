@@ -5,6 +5,8 @@ import { google } from '@ai-sdk/google';
 // Map platform key to what the SDK expects
 if (process.env.GEMINI_API_KEY) {
   process.env.GOOGLE_GENERATIVE_AI_API_KEY = process.env.GEMINI_API_KEY;
+} else if (process.env.GEMINI_API_KEY8) {
+  process.env.GOOGLE_GENERATIVE_AI_API_KEY = process.env.GEMINI_API_KEY8;
 } else if (process.env.GEMINI_API_KEY1) {
   process.env.GOOGLE_GENERATIVE_AI_API_KEY = process.env.GEMINI_API_KEY1;
 } else if (process.env.API_KEY) {
