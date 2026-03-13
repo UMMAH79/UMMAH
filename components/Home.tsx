@@ -240,7 +240,7 @@ const DOUBT_ARTICLES: Article[] = [
   ],
   reflection: 'Struggling with a command of Islam does not automatically mean weak faith. Sometimes it means the heart is caught between fear and obedience. Growth takes time, but continuing to turn toward Allah is always the right direction.',
   tags: ['hijab', 'headscarf', 'struggle', 'modesty', 'faith', 'confidence', 'pressure', 'identity']
-}
+},
   {
     id: 'teenage-adult-love',
     title: 'Is teenage/adult love haram in Islam?',
