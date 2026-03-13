@@ -226,9 +226,19 @@ const ADDICTION_ARTICLES: Article[] = [
     category: 'Addiction',
     intro: 'Many teenagers and even adults silently struggle with pornography and masturbation. It often begins with curiosity and slowly turns into habit.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'Many teenagers and even adults silently struggle with pornography and masturbation. It often begins with curiosity and slowly turns into habit. Over time, guilt increases but stopping feels difficult. The shame can make a person feel isolated and spiritually distant.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam commands modesty and lowering the gaze. Protecting chastity is a serious responsibility. Pornography is clearly forbidden because it harms the heart, mind, and society. However, Islam does not close the door of repentance.' },
-      { heading: 'PRIMARY SOLUTION: PRAYER', content: 'Consistent prayer is the strongest shield against this addiction. Salah disciplines the body and purifies the heart. When prayer becomes sincere and focused, the desire for sin weakens.' }
+      { heading: 'INTRODUCTION', content: 'Many teenagers and even adults silently struggle with pornography and masturbation. It often begins with curiosity and slowly turns into habit. Over time, guilt increases but stopping feels difficult. A person may promise themselves that it will be the last time, but the cycle repeats. The shame can make a person feel isolated and spiritually distant. Because of embarrassment, most people never talk about it with anyone, which makes the struggle even heavier.' },
+
+      { heading: 'WHY THIS ADDICTION BECOMES SO STRONG', content: 'Pornography addiction is powerful because it affects the brain’s reward system. Every time a person watches it, the brain releases chemicals that create temporary pleasure. Over time, the brain begins to crave that stimulation again and again. Stress, boredom, loneliness, and late-night phone usage often become triggers. Because the habit is private and easily accessible through phones and the internet, it becomes difficult to control without strong discipline and changes in lifestyle.' },
+
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam commands modesty, lowering the gaze, and protecting chastity. Pornography is harmful because it distorts the understanding of intimacy, weakens the heart, and encourages desires outside of halal boundaries. For this reason, scholars clearly state that it is forbidden. However, Islam also teaches that no matter how many times a person falls into sin, the door of repentance remains open. Allah’s mercy is greater than any sin when a person sincerely turns back.' },
+
+      { heading: 'THE DAMAGE IT CAN CAUSE', content: 'Over time, pornography addiction can damage concentration, motivation, and emotional health. It can weaken self-control and make real relationships more difficult. Many people begin to feel constant guilt, which can harm their confidence and spiritual connection. Recognizing these harms is not meant to create despair but to help a person understand why breaking the habit is important.' },
+
+      { heading: 'PRACTICAL STEPS TO BREAK THE HABIT', content: 'Breaking the addiction requires practical action. Reduce privacy when using devices, especially late at night. Install website blockers or filters that limit access to harmful content. Keep yourself busy with beneficial activities such as exercise, learning, work, or hobbies. Avoid triggers like boredom, isolation, or endless scrolling on social media. Surround yourself with positive influences and supportive friends who encourage healthy habits.' },
+
+      { heading: 'PRIMARY SOLUTION: PRAYER', content: 'Consistent prayer is one of the strongest protections against this addiction. Salah disciplines the body and reminds the heart of its purpose. When a person focuses on improving their prayers, their awareness of Allah increases throughout the day. This awareness creates strength to resist temptation and gradually weakens the urge to return to harmful habits.' },
+
+      { heading: 'DO NOT LOSE HOPE', content: 'Many people who once struggled deeply with this addiction eventually overcame it through patience, discipline, and sincere repentance. Progress may not be perfect. There may be setbacks. But every sincere effort to improve is valuable. What matters most is continuing to stand back up after falling and continuing to seek a cleaner and stronger life.' }
     ],
     tags: ['porn', 'pornography', 'addiction', 'masturbation', 'lust', 'sexual temptation', 'haram content', 'shame', 'guilt', 'habit']
   },
@@ -238,7 +248,17 @@ const ADDICTION_ARTICLES: Article[] = [
     category: 'Addiction',
     intro: 'Smoking and drug addiction affect many teenagers and adults. It may begin due to peer pressure, curiosity, or stress relief.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'Smoking and drug addiction affect many teenagers and adults. It may begin due to peer pressure, curiosity, or stress relief. What starts casually can quickly become dependency. BREAKING IT REQUIRES more than willpower alone.' }
+      { heading: 'INTRODUCTION', content: 'Smoking and drug addiction affect many teenagers and adults. It may begin due to peer pressure, curiosity, stress relief, or simply trying to fit in with friends. What starts casually can quickly become dependency. At first it feels like a choice, but over time the body and mind begin to crave it. Many people want to stop but feel trapped by the habit.' },
+
+      { heading: 'WHY QUITTING FEELS SO HARD', content: 'Nicotine and many drugs create physical and psychological dependency. The body becomes used to the substance, and when it is absent, withdrawal symptoms appear. These may include irritability, anxiety, difficulty concentrating, and strong cravings. Because the brain associates the substance with relief or pleasure, the urge to return becomes very strong, especially during stressful moments.' },
+
+      { heading: 'THE HARM IT CAUSES', content: 'Smoking and drug use damage both physical and mental health. They can harm the lungs, heart, brain, and overall energy levels. Addiction can also affect relationships, finances, and personal goals. Over time it can make a person feel controlled by a habit instead of being in control of their own life.' },
+
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam encourages believers to protect their bodies and avoid substances that cause harm or intoxication. The body is considered a trust from Allah, and harming it intentionally is discouraged. While addiction is a serious struggle, Islam emphasizes personal responsibility and encourages believers to seek help, discipline, and repentance to overcome harmful behaviors.' },
+
+      { heading: 'PRACTICAL STEPS TO QUIT', content: 'Breaking addiction often requires a structured plan. Gradually reducing usage, avoiding environments where the habit is common, and replacing the behavior with healthier alternatives can help. Exercise, productive work, and supportive friendships can reduce cravings. Many people also benefit from professional help such as counseling or support programs that guide them through the recovery process.' },
+
+      { heading: 'BUILDING A STRONGER LIFE', content: 'Recovery is not only about stopping a substance; it is about building a healthier lifestyle. When a person focuses on meaningful goals, physical health, spiritual growth, and positive relationships, the desire to return to harmful habits becomes weaker. Every step toward self-control strengthens confidence and independence.' }
     ],
     tags: ['smoking', 'drugs', 'addiction', 'dependency', 'health', 'habit', 'stop', 'quit', 'cigarettes', 'vape']
   }
@@ -261,20 +281,21 @@ const DOUBT_ARTICLES: Article[] = [
   reflection: 'Struggling with a command of Islam does not automatically mean weak faith. Sometimes it means the heart is caught between fear and obedience. Growth takes time, but continuing to turn toward Allah is always the right direction.',
   tags: ['hijab', 'headscarf', 'struggle', 'modesty', 'faith', 'confidence', 'pressure', 'identity']
 },
+const DOUBT_ARTICLES: Article[] = [
   {
     id: 'teenage-adult-love',
     title: 'Is teenage/adult love haram in Islam?',
     category: 'Doubt',
     intro: 'Love is one of the strongest human emotions. The challenge is not the emotion, it is managing it responsibly within Islamic boundaries.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'Love is one of the strongest human emotions. Teenagers especially experience it intensely due to emotional and biological development. Adults also feel deep attachment. The question is not whether love exists — it is how Islam regulates its expression.' },
-      { heading: 'WHAT DOES THIS MEAN?', content: 'Often, this question comes from someone feeling attraction and fearing they are sinful just for feeling it. Attraction itself is not a crime. Islam does not punish involuntary emotions. Accountability begins with action.' },
-      { heading: 'WHY DOES THIS HAPPEN?', content: 'Teenage years bring hormonal intensity, curiosity, and desire for validation. Media romanticizes relationships. Without strong spiritual grounding, emotional attachment forms quickly. Adults also experience loneliness, workplace interactions, or online connections that trigger feelings. The challenge is not the emotion. It is managing it responsibly.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam acknowledges love as natural. The Prophet (PBUH) loved deeply. However, Islam strictly forbids zina, physical intimacy outside marriage, private seclusion, and ongoing romantic relationships without nikah. Even if zina does not occur, prolonged emotional intimacy between non-mahram individuals is discouraged because it weakens boundaries and leads toward greater sin.' },
-      { heading: 'STEP-BY-STEP SOLUTION', content: 'If you are young and not ready for marriage, protect your heart. Lower your gaze. Limit unnecessary private conversation. Avoid environments that increase temptation. If you are ready for marriage, channel feelings properly. Involve family. Keep interaction dignified. Move toward commitment quickly instead of building years of emotional attachment without direction.' }
+      { heading: 'INTRODUCTION', content: 'Love is one of the most powerful human experiences. Teenagers feel it intensely due to hormonal and emotional development. Adults also experience deep attachment. Islam does not prohibit the feeling of love; it regulates how it is expressed to prevent harm and maintain dignity.' },
+      { heading: 'WHAT DOES THIS MEAN?', content: 'Many feel guilt simply for experiencing attraction. Islam does not punish involuntary feelings. Accountability begins with actions taken in response to those emotions. Feeling love is natural; acting on it responsibly is key.' },
+      { heading: 'WHY DOES THIS HAPPEN?', content: 'Teenage years are marked by curiosity, hormonal changes, and desire for validation. Media and peers romanticize early relationships. Adults may develop feelings due to loneliness, work interactions, or online connections. The challenge lies in managing emotions responsibly, not in feeling them.' },
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam acknowledges love as natural and honorable when kept within boundaries. The Prophet ﷺ experienced love, but Islam forbids zina, physical intimacy outside marriage, and ongoing private romantic relationships without nikah. Emotional closeness without marriage, especially between non-mahram individuals, is discouraged as it can lead to sin.' },
+      { heading: 'STEP-BY-STEP SOLUTION', content: 'If you are young and not ready for marriage: protect your heart, lower your gaze, limit private interactions, and avoid tempting environments. If ready for marriage: involve family early, keep interactions dignified, and move toward formal commitment rather than prolonged emotional attachment without direction. Discipline preserves love.' }
     ],
-    reflection: 'Love is not haram. Losing discipline is. Islam does not kill emotion — it protects it until it can exist in a stable, lawful structure.',
-    tags: ['love', 'teenagers', 'attraction', 'feelings', 'haram', 'boundaries', 'emotions', 'crush']
+    reflection: 'Love itself is not haram; lack of discipline is. Islam safeguards emotion until it can exist within a lawful, stable structure.',
+    tags: ['love', 'teenagers', 'adults', 'attraction', 'feelings', 'haram', 'boundaries', 'emotions', 'crush']
   },
   {
     id: 'gf-bf-haram',
@@ -282,13 +303,13 @@ const DOUBT_ARTICLES: Article[] = [
     category: 'Doubt',
     intro: 'Modern culture normalizes boyfriend-girlfriend relationships as casual steps. But Islam approaches intimacy differently.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'Modern culture normalizes boyfriend-girlfriend relationships as casual, necessary steps before marriage. But Islam approaches intimacy differently. It prioritizes commitment before emotional and physical closeness.' },
-      { heading: 'WHAT DOES THIS MEAN?', content: 'A boyfriend/girlfriend relationship usually involves romantic communication, private messaging, emotional dependency, and often physical interaction — without marriage. The question is whether this structure aligns with Islamic teachings.' },
-      { heading: 'WHY DOES THIS HAPPEN?', content: 'Humans desire companionship. Delayed marriage increases temptation. Media presents dating as placeholder exploration. Peer pressure makes abstaining feel strange. Gradually, what Islam restricts becomes socially normalized.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam does not permit romantic relationships outside marriage. The Qur’an commands believers not to approach zina. This includes behaviors that emotionally and physically lead toward it. Even if a couple claims “we won’t cross limits,” continuous romantic involvement softens boundaries. Emotional intimacy often becomes stronger than physical restraint.' },
-      { heading: 'STEP-BY-STEP SOLUTION', content: 'If someone is in such a relationship, evaluate honestly. Is marriage realistic soon? If yes, correct the path immediately — involve families, reduce secrecy, establish boundaries. If marriage is not realistic, end the relationship respectfully. Repent sincerely. It will hurt temporarily, but prolonged attachment outside halal structure causes deeper harm. Replace the emotional void with growth.' }
+      { heading: 'INTRODUCTION', content: 'In modern culture, casual boyfriend-girlfriend relationships are often normalized as a “necessary” step before marriage. Islam, however, prioritizes commitment and proper boundaries before emotional and physical closeness.' },
+      { heading: 'WHAT DOES THIS MEAN?', content: 'A boyfriend/girlfriend relationship usually involves romantic messaging, emotional dependency, and sometimes physical interaction — all without marriage. The concern is whether this aligns with Islamic guidance.' },
+      { heading: 'WHY DOES THIS HAPPEN?', content: 'Humans naturally seek companionship. Delayed marriage increases temptation. Media and peer influence normalize dating. What Islam restricts becomes socially accepted, making young people confused about what is halal.' },
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam forbids romantic relationships outside marriage. The Qur’an commands believers to avoid actions leading to zina. Even “harmless” romantic interactions weaken boundaries. Emotional intimacy can easily overshadow physical restraint. Continuous boyfriend/girlfriend involvement without commitment is discouraged.' },
+      { heading: 'STEP-BY-STEP SOLUTION', content: 'Evaluate your relationship honestly. If marriage is realistic soon, involve families, limit secrecy, and establish boundaries. If marriage is not realistic, end the relationship respectfully and sincerely repent. Replace emotional attachment with productive growth and spiritual focus. Following this prevents prolonged harm and preserves dignity.' }
     ],
-    reflection: 'Islam does not deny the need for love. It insists that love be honored with commitment. Temporary romance may feel exciting, but halal commitment carries barakah, stability, and dignity.',
+    reflection: 'Islam does not deny the human need for love; it insists that love be honored with commitment. Temporary romance may feel exciting, but halal commitment carries barakah, stability, and protection.',
     tags: ['girlfriend', 'boyfriend', 'dating', 'commitment', 'intimacy', 'relationship', 'haram', 'dating culture']
   },
   {
@@ -297,16 +318,16 @@ const DOUBT_ARTICLES: Article[] = [
     category: 'Doubt',
     intro: 'There are moments when prayers feel unanswered. Hardship continues despite dua. The heart begins to whisper questions.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'There are moments when prayers feel unanswered. Hardship continues despite dua. The heart begins to whisper questions. You may feel guilty for even thinking this way. Doubting whether Allah is listening can feel frightening. This internal struggle is more common than many admit.' },
-      { heading: 'WHAT IS THIS DOUBT REALLY ABOUT?', content: 'This doubt is usually about expectation versus reality. When outcomes do not match desires, logic is often absent. When results do not match desires, confusion grows. It is less about denying Allah’s existence and more about misunderstanding divine wisdom. Emotional pain clouds spiritual clarity. The heart seeks immediate results.' },
-      { heading: 'WHY DOES THIS DOUBT DEVELOP?', content: 'Repeated hardship without visible relief weakens patience. Comparing your life to others increases frustration. Lack of deeper knowledge about divine wisdom creates confusion. Emotional exhaustion amplifies negative thoughts. Shaytan exploits vulnerable moments to plant whispers.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Allah promises that He hears every supplication. However, response does not always mean immediate fulfillment. Sometimes dua is answered by delay, protection from harm, or reward in the hereafter. Hardship is not abandonment. Tests are part of spiritual growth.' },
-      { heading: 'DEEP CLARIFICATION', content: 'Listening does not always mean granting exactly what we want. A parent may deny a child something harmful out of love. Similarly, divine wisdom may withhold what appears good but is not beneficial. Faith requires trust beyond immediate emotion.' },
-      { heading: 'STEP-BY-STEP STRENGTHENING PLAN', content: 'Improve focus during prayer. Reflect on past moments where difficulties later revealed wisdom. Increase gratitude practice daily. Read stories of prophets who endured hardship. Reduce comparison with others. Make dua with humility rather than demand. Seek knowledge about divine decree. Surround yourself with positive believers. Maintain consistency even when feelings fluctuate.' },
-      { heading: 'IF YOU STILL FEEL UNSURE', content: 'Doubts do not destroy faith unless you choose to feed them. Seek knowledge instead of isolating yourself. Talk to knowledgeable people. Continue praying even when emotionally tired. Faith strengthens through persistence.' }
+      { heading: 'INTRODUCTION', content: 'During hardship, prayers may feel unanswered. The heart may question whether Allah is truly listening. Feeling guilty for such thoughts is common, but these doubts are part of human emotional experience and do not necessarily reflect lack of faith.' },
+      { heading: 'WHAT IS THIS DOUBT REALLY ABOUT?', content: 'This doubt arises from expectation versus reality. Outcomes often do not match desires, creating confusion. The issue is rarely disbelief; it is misunderstanding divine wisdom and immediate outcomes. Emotional pain clouds spiritual clarity.' },
+      { heading: 'WHY DOES THIS DOUBT DEVELOP?', content: 'Repeated difficulties without visible relief weaken patience. Comparison with others amplifies frustration. Lack of deeper knowledge about divine wisdom creates uncertainty. Emotional exhaustion makes one more vulnerable to whispers of Shaytan.' },
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Allah hears every supplication. Answer may not be immediate or in the desired form. Dua can be answered with delay, protection from harm, or reward in the hereafter. Hardship is not abandonment; it is part of spiritual growth.' },
+      { heading: 'DEEP CLARIFICATION', content: 'Listening does not always mean granting what seems best to us. A loving parent may deny harmful things; similarly, divine wisdom may withhold apparent “good” for ultimate benefit. Faith requires trust beyond immediate emotions.' },
+      { heading: 'STEP-BY-STEP STRENGTHENING PLAN', content: 'Focus during prayer. Reflect on past lessons from hardship. Increase daily gratitude. Read stories of prophets enduring trials. Avoid unhealthy comparison. Make dua with humility, not demands. Seek knowledge on divine decree. Surround yourself with positive believers. Maintain consistency even when emotionally challenged.' },
+      { heading: 'IF YOU STILL FEEL UNSURE', content: 'Doubts do not destroy faith unless nurtured. Seek guidance, knowledge, and support from knowledgeable people. Continue praying consistently. Faith strengthens with persistence and trust in Allah’s wisdom.' }
     ],
-    reflection: 'Moments of doubt do not mean loss of belief. They often signal emotional exhaustion. Allah hears even the silent whisper of your heart. Continue turning toward Him, especially when confused. Clarity often follows patience.',
-    tags: ['doubt', 'listening', 'prayer', 'unanswered', 'hardship', 'testing', 'wisdom', 'atheism', 'faith', 'waswas']
+    reflection: 'Doubts signal emotional exhaustion, not disbelief. Allah hears even silent whispers. Continue turning to Him, practice patience, and clarity will follow.',
+    tags: ['doubt', 'listening', 'prayer', 'unanswered', 'hardship', 'testing', 'wisdom', 'faith', 'waswas', 'trust']
   },
   {
     id: 'question-scholars',
@@ -314,19 +335,18 @@ const DOUBT_ARTICLES: Article[] = [
     category: 'Doubt',
     intro: 'In many communities, questioning a scholar is seen as disrespect. People are sometimes told that asking too many questions shows weak faith.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'In many communities, questioning a scholar is seen as disrespect. People are sometimes told that asking too many questions shows weak faith. This creates confusion because Islam itself encourages seeking knowledge. So where is the line between respectful inquiry and arrogance?' },
-      { heading: 'WHAT DOES THIS MEAN?', content: 'This question usually comes from someone who heard a ruling or opinion that did not fully make sense to them. They are not necessarily rejecting it. They simply want clarification. But they fear being labeled rebellious or disrespectful.' },
-      { heading: 'WHY DOES THIS HAPPEN?', content: 'Some communities confuse respect with silence. There is also fear that questioning scholars might lead to doubting religion itself. However, history shows that Islamic scholarship developed through questions, debates, and intellectual discussion. The great imams themselves differed in opinions respectfully.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam does not forbid asking questions. In fact, the companions asked the Prophet ﷺ many questions for clarity. Scholars are human beings who interpret evidence. They are respected for their knowledge, but they are not infallible. Questioning with sincerity and humility is part of learning.' },
-      { heading: 'CONT.', content: 'What is wrong is questioning with arrogance, mockery, or the intention to prove oneself superior. There is a difference between seeking understanding and seeking ego satisfaction. The heart’s intention defines the action.' },
-      { heading: 'STEP-BY-STEP SOLUTION', content: 'If you want to question a scholar, do it respectfully. Ask for evidence. Request clarification gently. Be open to learning rather than debating for victory. If you still disagree after sincere effort, understand that scholarly differences exist in Islamic tradition.' },
-      { heading: 'IF THINGS DO NOT CHANGE', content: 'If communities suppress sincere questions, people may seek answers from unreliable sources. Open, respectful dialogue protects faith.' }
+      { heading: 'INTRODUCTION', content: 'Some communities equate questioning scholars with disrespect. People are told asking too many questions shows weak faith. Islam, however, encourages knowledge-seeking, reflection, and understanding.' },
+      { heading: 'WHAT DOES THIS MEAN?', content: 'This question comes from wanting clarity. Hearing rulings that don’t fully make sense prompts inquiry. Fear of being labeled rebellious or disrespectful often prevents asking important questions.' },
+      { heading: 'WHY DOES THIS HAPPEN?', content: 'Respect is often confused with silence. Fear exists that questioning may lead to disbelief. Yet Islamic scholarship has always developed through respectful questions, debate, and reasoning. Even great imams differed in opinion but remained respectful.' },
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam does not forbid sincere questions. Companions asked the Prophet ﷺ for clarity. Scholars are respected but human. Questioning with sincerity and humility is part of learning.' },
+      { heading: 'CONT.', content: 'What is wrong is questioning with arrogance, mockery, or ego. Sincere inquiry seeks understanding, not victory over others. Intention of the heart defines the action.' },
+      { heading: 'STEP-BY-STEP SOLUTION', content: 'Question respectfully, seek evidence, request gentle clarification, and remain open to learning. If disagreement persists, recognize scholarly differences exist within Islamic tradition.' },
+      { heading: 'IF THINGS DO NOT CHANGE', content: 'If communities suppress sincere questioning, individuals may turn to unreliable sources. Open, respectful dialogue safeguards faith and encourages proper learning.' }
     ],
-    reflection: 'Questioning is not disbelief. Arrogance is. Islam encourages thinking, reflecting, and understanding. Respect and inquiry can coexist beautifully.',
+    reflection: 'Questioning is not disbelief; arrogance is. Islam encourages thinking, reflection, and understanding. Respectful inquiry and knowledge-seeking coexist beautifully.',
     tags: ['scholars', 'questioning', 'respect', 'inquiry', 'knowledge', 'logic', 'rebellion', 'disagreement', 'learning']
   }
 ];
-
 const FAMILY_ARTICLES: Article[] = [
   {
     id: 'parental-distance',
@@ -334,74 +354,77 @@ const FAMILY_ARTICLES: Article[] = [
     category: 'Family',
     intro: 'Emotional distance inside a family is one of the most painful experiences a person can go through.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'Emotional distance inside a family is one of the most painful experiences a person can go through. A home is supposed to be a place of safety, understanding and comfort, yet sometimes it becomes a place where silence feels heavy.' }
+      { heading: 'INTRODUCTION', content: 'Emotional distance from parents is deeply painful. Even when they provide physically, the absence of warmth, understanding, or validation can feel like a void. Silence can weigh heavier than words, and unspoken feelings often build unnoticed tension.' },
+      { heading: 'WHAT DOES THIS MEAN?', content: 'Feeling distant usually reflects unmet emotional needs. You may crave attention, empathy, or connection. This does not mean your parents are bad—it often means life circumstances, personality differences, or generational gaps interfere with emotional closeness.' },
+      { heading: 'WHY DOES THIS HAPPEN?', content: 'Parents may be busy, stressed, or emotionally unaware. Cultural or generational norms may discourage open expression. Trauma, past conflict, or personality differences may create invisible walls. Children may interpret absence of emotional expression as neglect.' },
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam emphasizes respect, kindness, and maintaining ties with parents. Feeling emotionally distant is not sinful. Protect your heart and maintain prayer, patience, and good manners. Islam encourages seeking peace and understanding, even when the relationship is challenging.' },
+      { heading: 'STEP-BY-STEP SOLUTION', content: '1. Recognize your emotions without self-blame. 2. Initiate small, positive interactions. 3. Express gratitude for what they do. 4. Share your thoughts gradually without confrontation. 5. Strengthen your relationship with Allah for emotional support. 6. Seek trusted guidance or counseling if needed.' }
     ],
+    reflection: 'Distance from parents can hurt, but it can also teach patience, empathy, and reliance on Allah. Even if they cannot fully meet your emotional needs, Allah always understands and supports you.',
     tags: ['parents', 'distance', 'lonely', 'family', 'emotional', 'hurt', 'silence', 'estrangement']
   },
   {
     id: 'toxic-home',
     title: 'My home feels toxic. How do I protect my peace without breaking my family?',
     category: 'Family',
-    intro: 'Not every home feels peaceful. Some homes are filled with constant tension, criticism, or emotional pressure.',
+    intro: 'Some homes are filled with tension, criticism, or emotional pressure. Protecting your mental health is crucial while preserving family bonds.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'Not every home feels peaceful. Some homes are filled with constant tension, criticism, or emotional pressure. When negativity becomes normal, a person begins to feel drained inside their own house. This creates deep exhaustion because home should be a place of safety, not survival.' },
-      { heading: 'WHAT DOES IT MEAN', content: 'Toxicity in a family can mean constant shouting, emotional manipulation, favoritism, unfair comparison, or harsh criticism. It may not always be physical harm, but emotional harm can be just as heavy. Words repeated over time shape self-worth and create invisible scars.' },
-      { heading: 'WHY DOES THIS HAPPEN', content: 'Many times this behavior comes from stress, unhealed trauma, financial pressure, or lack of emotional education. Some parents repeat patterns they experienced in their own childhood. Others misunderstand authority and think control equals respect. Often there is pain behind the harshness.' },
-      { heading: 'DEEP REALITY', content: 'Living in such an environment can slowly damage confidence, increase anxiety, and even affect faith. A person may begin doubting their own value. They may struggle with anger or sadness but feel unable to speak. The hardest part is feeling trapped between wanting peace and wanting to preserve family bonds.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam does not allow oppression, even within families. Obedience has limits when harm becomes serious. Justice and mercy are foundations of Islamic teaching. Protecting one’s mental well-being is not rebellion. It is responsibility. However, Islam also encourages patience and wisdom before cutting ties.' },
-      { heading: 'SOLUTION', content: 'Protecting peace begins with emotional control. Reacting with anger fuels conflict. Responding with calm firmness sets boundaries. It is important to recognize what is your responsibility and what is not. Strengthen your connection with Allah through prayer, especially in quiet moments. Build personal growth, education, and independence. Seek trusted guidance if needed. Respect does not mean accepting humiliation. Boundaries can exist without hatred.' }
+      { heading: 'INTRODUCTION', content: 'Not all homes feel peaceful. Constant tension, criticism, or emotional pressure creates exhaustion. Living in such an environment can feel like survival instead of comfort.' },
+      { heading: 'WHAT DOES IT MEAN?', content: 'A toxic home often involves shouting, favoritism, manipulation, or criticism. Emotional harm can be as damaging as physical harm. Words repeated over time shape self-worth and leave invisible scars.' },
+      { heading: 'WHY DOES THIS HAPPEN?', content: 'Stress, unhealed trauma, financial pressure, or lack of emotional awareness can cause toxic behaviors. Parents may repeat patterns from their own upbringing or misunderstand authority as control. Pain often underlies harshness.' },
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam forbids oppression, even within families. Obedience has limits when serious harm occurs. Justice, mercy, and self-protection are emphasized. Protecting mental well-being is responsibility, not rebellion. Patience and wisdom should be exercised before cutting ties.' },
+      { heading: 'STEP-BY-STEP SOLUTION', content: '1. Recognize what is your responsibility and what is not. 2. Respond calmly instead of reacting with anger. 3. Set firm but respectful boundaries. 4. Strengthen personal connection with Allah through prayer. 5. Build independence, education, and personal growth. 6. Seek trusted guidance when necessary. 7. Maintain respect without accepting humiliation.' }
     ],
-    reflection: 'Family tests are among the hardest tests in life. But hardship does not last forever. With patience, wisdom, and faith, peace can be built slowly. Protect your heart while maintaining dignity. Allah knows what happens behind closed doors.',
+    reflection: 'Toxic family dynamics are difficult, but patience, wisdom, and faith allow you to protect your heart and maintain dignity. Peace can be nurtured gradually, and Allah knows all struggles behind closed doors.',
     tags: ['toxic', 'home', 'family', 'shouting', 'manipulation', 'pressure', 'peace', 'abuse', 'control', 'safety']
   },
   {
     id: 'disagree-parents',
     title: 'Can I disagree with my parents respectfully?',
     category: 'Family',
-    intro: 'Disagreeing with parents can feel like standing on the edge of guilt. You fear hurting them, disappointing them, or being labeled ungrateful.',
+    intro: 'Disagreeing with parents can feel like walking a fine line between honesty and guilt. Respectful communication is possible.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'Disagreeing with parents can feel like standing on the edge of guilt. You fear hurting them, disappointing them, or being labeled ungrateful. At the same time, you feel a strong need to express your own thoughts and choices. The tension between obedience and individuality becomes emotionally exhausting.' },
-      { heading: 'WHAT DOES THIS MEAN?', content: 'This question usually means you are growing. As you mature, you develop independent thinking. Having different views does not mean you love your parents less. It means you are transitioning from dependence to responsibility. The struggle is not about rebellion; it is about balance.' },
-      { heading: 'WHY DOES THIS HAPPEN?', content: 'Parents often see disagreement as rejection of their experience and sacrifice. They fear you will make mistakes. On the other hand, you may feel unheard or controlled. Generational gaps, cultural expectations, and emotional attachment intensify conflict. Both sides may speak from fear rather than understanding.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam commands kindness, humility, and respect toward parents. However, obedience is not absolute in every personal decision. If something is not sinful and relates to your life choices, you are allowed to think independently. Islam teaches firmness with gentleness. Disrespect is prohibited, but thoughtful disagreement is not.' },
-      { heading: 'STEP-BY-STEP SOLUTION', content: 'Clarify your intention first. Your goal should be preserving both truth and relationship. Choose the right timing for discussion. Speak calmly and avoid emotional reactions. Acknowledge their sacrifices before expressing your view. Explain your reasoning logically, not defensively. Continue showing respect in actions even if disagreement remains. Consistent kindness reduces resistance over time.' },
-      { heading: 'IF THINGS DO NOT CHANGE', content: 'If they remain firm, assess whether patience or compromise is wiser. Not every disagreement requires immediate victory. In serious matters, seek advice from a trusted elder or scholar. Avoid cutting ties over differences unless there is real harm involved.' }
+      { heading: 'INTRODUCTION', content: 'Disagreement with parents often causes guilt or fear of hurting them. At the same time, you may need to express your own opinions and make independent choices. Balancing obedience and individuality can be emotionally challenging.' },
+      { heading: 'WHAT DOES THIS MEAN?', content: 'This reflects personal growth. Developing independent thought is natural as you mature. Disagreeing does not reduce love for your parents—it shows responsibility and critical thinking.' },
+      { heading: 'WHY DOES THIS HAPPEN?', content: 'Parents may see disagreement as rejection of experience. Children may feel unheard or controlled. Generational, cultural, and emotional factors intensify conflicts. Both sides often act from fear rather than understanding.' },
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam commands respect and kindness toward parents, but obedience is not absolute in every personal choice. Thoughtful, respectful disagreement in matters that are not sinful is permitted. Firmness can coexist with gentleness and respect.' },
+      { heading: 'STEP-BY-STEP SOLUTION', content: '1. Clarify your intention: truth and relationship preservation. 2. Choose an appropriate time. 3. Speak calmly, avoiding emotional reactions. 4. Acknowledge sacrifices and love. 5. Explain reasoning logically. 6. Maintain respect in actions. 7. Seek compromise or advice from elders if needed.' }
     ],
-    reflection: 'You can honor your parents without silencing yourself. True maturity is standing firm without becoming harsh. Respect is not weakness, and independence is not rebellion.',
+    reflection: 'You can honor your parents while maintaining your individuality. True maturity is standing firm without harshness. Respect is not weakness, and independence is not rebellion.',
     tags: ['disagree', 'parents', 'respectfully', 'obedience', 'independence', 'boundaries', 'guilt', 'growth']
   },
   {
     id: 'alone-in-house',
     title: 'Why do I feel alone in my own house?',
     category: 'Family',
-    intro: 'Feeling lonely outside is painful. Feeling lonely at home is heavier. You may sit in the same room as your family yet feel emotionally invisible.',
+    intro: 'Home should feel safe and comforting. Feeling invisible at home can be heavier than loneliness outside.',
     sections: [
-      { heading: 'INTRODUCTION', content: 'Feeling lonely outside is painful. Feeling lonely at home is heavier. You may sit in the same room as your family yet feel emotionally invisible. Conversations happen, but connection feels absent. You are physically present, but internally distant.' },
-      { heading: 'WHAT DOES THIS MEAN?', content: 'This does not automatically mean your family does not care. It often means emotional needs are not being met. You may crave deeper understanding, empathy, or meaningful conversation. When those needs remain unfulfilled, loneliness grows even in crowded spaces.' },
-      { heading: 'WHY DOES THIS HAPPEN?', content: 'Family members may be busy, stressed, or emotionally unavailable. Generational differences can make vulnerability uncommon. Past misunderstandings may have created silent walls. Sometimes personal struggles like anxiety or overthinking intensify feelings of isolation. The issue is often emotional disconnect, not lack of love.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam values family bonds but acknowledges human imperfection. Emotional hardship within family does not mean weak faith. The Prophet ﷺ experienced family-related difficulties as well. Islam encourages maintaining ties while seeking emotional strength through connection with Allah and righteous companionship.' },
-      { heading: 'STEP-BY-STEP SOLUTION', content: 'Start by building small bridges. Initiate light but meaningful conversations. Express appreciation openly. Share your thoughts gradually instead of expecting instant understanding. Strengthen your relationship with Allah; spiritual connection reduces emotional emptiness. Build healthy friendships outside the home while maintaining family respect.' },
-      { heading: 'IF THINGS DO NOT CHANGE', content: 'If emotional distance continues, focus on internal growth rather than forcing transformation. Not every household becomes deeply expressive. Acceptance sometimes brings more peace than constant struggle. If loneliness becomes overwhelming, consider seeking counseling or trusted guidance.' }
+      { heading: 'INTRODUCTION', content: 'Feeling alone at home can be heavier than feeling lonely outside. You may share space with family yet feel emotionally invisible. Conversations may occur, but connection and empathy feel absent.' },
+      { heading: 'WHAT DOES THIS MEAN?', content: 'Loneliness at home often indicates unmet emotional needs. You may crave understanding, validation, or empathy. When these needs are not met, the feeling of isolation grows even when surrounded by family.' },
+      { heading: 'WHY DOES THIS HAPPEN?', content: 'Family members may be busy, stressed, or emotionally unavailable. Generational gaps and past conflicts can create silent barriers. Personal struggles like anxiety may heighten perception of emotional distance.' },
+      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam values family bonds and encourages maintaining ties. Emotional difficulties at home do not indicate weak faith. The Prophet ﷺ experienced family-related challenges, yet maintained compassion and patience. Strengthening your connection with Allah provides emotional support.' },
+      { heading: 'STEP-BY-STEP SOLUTION', content: '1. Build small connections gradually. 2. Initiate light but meaningful conversations. 3. Express appreciation openly. 4. Share thoughts gradually. 5. Strengthen spiritual connection with Allah. 6. Build healthy friendships while respecting family. 7. Seek counseling if needed.' }
     ],
-    reflection: 'Even if people around you do not fully understand you, Allah understands you completely. You are never truly unseen. Sometimes loneliness becomes a doorway to a deeper relationship with your Creator.',
+    reflection: 'Even if family does not fully understand you, Allah always does. Loneliness at home can guide you toward deeper faith, patience, and self-understanding.',
     tags: ['alone', 'home', 'house', 'family', 'connection', 'isolation', 'disconnect', 'invisible', 'lonely']
   },
-  {
-    id: 'toxic-parents',
-    title: 'How to deal with toxic parents?',
-    category: 'Family',
-    intro: 'This is one of the most painful struggles a person can face. Islam teaches immense respect, obedience, and kindness toward parents. But what happens when the parents themselves are abusive?',
-    sections: [
-      { heading: 'INTRODUCTION', content: 'This is one of the most painful struggles a person can face. Islam teaches immense respect, obedience, and kindness toward parents. But what happens when the parents themselves are emotionally abusive, manipulative, controlling, or constantly humiliating? The heart becomes torn between religious duty and personal emotional survival. Many people suffer silently because they fear that even acknowledging parental toxicity is sinful.' },
-      { heading: 'WHAT DOES THIS MEAN?', content: 'When someone asks this question, they usually mean parents who insult constantly, invalidate feelings, compare unfairly, manipulate with guilt, control adult decisions excessively, or create a home environment filled with fear rather than peace. Toxicity does not necessarily mean physical abuse. Sometimes it is emotional suffocation, constant criticism, or religious manipulation. The person feels trapped — unable to speak and unable to breathe.' },
-      { heading: 'WHY DOES THIS HAPPEN?', content: 'Toxic behavior often comes from unresolved trauma, cultural expectations, generational wounds, or misunderstanding of authority. Some parents believe strict control equals good parenting. Some project their own failures onto their children. Others use religion incorrectly to demand blind obedience. None of this justifies harm, but understanding the roots can reduce hatred in the heart. Hurt people sometimes hurt others without realizing the damage they cause.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam commands kindness to parents, even if they are difficult. The Quran tells believers not to even say “uff” to them. But Islam does not command enduring injustice without boundaries. If parents command something sinful, obedience is not required. If parents are emotionally damaging, maintaining respect does not mean allowing abuse. Respect is an attitude of dignity, not submission to harm. The Prophet ﷺ faced hostility from his own uncle Abu Lahab, yet he maintained composure. Islam balances mercy with justice. You are required to honor your parents, but you are not required to destroy your mental health to prove loyalty. Setting boundaries respectfully is not rebellion. It is wisdom.' },
-      { heading: 'STEP-BY-STEP SOLUTION', content: 'The first step is internal stability. Do not respond with anger. Emotional reactions usually worsen toxicity. Speak calmly, choose timing wisely, and avoid confrontation in moments of high tension. If direct communication fails, reduce unnecessary engagement in topics that trigger conflict. Seek support from a trusted elder, counselor, or scholar who understands family dynamics. If you are financially independent and the environment is severely damaging, creating healthy distance can be permissible while still maintaining basic respect and communication. Continue making dua for them. Sometimes Allah changes hearts slowly. But also protect your own heart. Islam does not ask you to hate yourself to prove you love your parents.' },
-      { heading: 'IF THINGS DO NOT CHANGE', content: 'If parents refuse to change, your responsibility remains respectful conduct, not fixing their personality. You will not be questioned about their behavior on the Day of Judgment. You will be questioned about yours. Maintaining dignity without hatred is spiritual strength.' }
-    ],
-    reflection: 'You can honor your parents while also honoring your own mental well-being. Boundaries with respect are not disobedience. They are balance. And Allah sees the silent patience you carry.',
-    tags: ['toxic', 'abusive', 'manipulative', 'parents', 'boundaries', 'respect', 'obedience', 'abuse', 'mental health', 'humiliating']
-  }
+
+{
+  id: 'toxic-parents',
+  title: 'How to deal with toxic parents?',
+  category: 'Family',
+  intro: 'This is one of the most painful struggles a person can face. Islam teaches immense respect, obedience, and kindness toward parents. But what happens when the parents themselves are abusive?',
+  sections: [
+    { heading: 'INTRODUCTION', content: 'This is one of the most painful struggles a person can face. Islam teaches immense respect, obedience, and kindness toward parents. But what happens when the parents themselves are emotionally abusive, manipulative, controlling, or constantly humiliating? The heart becomes torn between religious duty and personal emotional survival. Many people suffer silently because they fear that even acknowledging parental toxicity is sinful.' },
+    { heading: 'WHAT DOES THIS MEAN?', content: 'When someone asks this question, they usually mean parents who insult constantly, invalidate feelings, compare unfairly, manipulate with guilt, control adult decisions excessively, or create a home environment filled with fear rather than peace. Toxicity does not necessarily mean physical abuse. Sometimes it is emotional suffocation, constant criticism, or religious manipulation. The person feels trapped — unable to speak and unable to breathe.' },
+    { heading: 'WHY DOES THIS HAPPEN?', content: 'Toxic behavior often comes from unresolved trauma, cultural expectations, generational wounds, or misunderstanding of authority. Some parents believe strict control equals good parenting. Some project their own failures onto their children. Others use religion incorrectly to demand blind obedience. None of this justifies harm, but understanding the roots can reduce hatred in the heart. Hurt people sometimes hurt others without realizing the damage they cause.' },
+    { heading: 'ISLAMIC PERSPECTIVE', content: 'Islam commands kindness to parents, even if they are difficult. The Quran tells believers not to even say “uff” to them. But Islam does not command enduring injustice without boundaries. If parents command something sinful, obedience is not required. If parents are emotionally damaging, maintaining respect does not mean allowing abuse. Respect is an attitude of dignity, not submission to harm. The Prophet ﷺ faced hostility from his own uncle Abu Lahab, yet he maintained composure. Islam balances mercy with justice. You are required to honor your parents, but you are not required to destroy your mental health to prove loyalty. Setting boundaries respectfully is not rebellion. It is wisdom.' },
+    { heading: 'STEP-BY-STEP SOLUTION', content: 'The first step is internal stability. Do not respond with anger. Emotional reactions usually worsen toxicity. Speak calmly, choose timing wisely, and avoid confrontation in moments of high tension. If direct communication fails, reduce unnecessary engagement in topics that trigger conflict. Seek support from a trusted elder, counselor, or scholar who understands family dynamics. If you are financially independent and the environment is severely damaging, creating healthy distance can be permissible while still maintaining basic respect and communication. Continue making dua for them. Sometimes Allah changes hearts slowly. But also protect your own heart. Islam does not ask you to hate yourself to prove you love your parents.' },
+    { heading: 'IF THINGS DO NOT CHANGE', content: 'If parents refuse to change, your responsibility remains respectful conduct, not fixing their personality. You will not be questioned about their behavior on the Day of Judgment. You will be questioned about yours. Maintaining dignity without hatred is spiritual strength.' }
+  ],
+  reflection: 'You can honor your parents while also honoring your own mental well-being. Boundaries with respect are not disobedience. They are balance. And Allah sees the silent patience you carry.',
+  tags: ['toxic', 'abusive', 'manipulative', 'parents', 'boundaries', 'respect', 'obedience', 'abuse', 'mental health', 'humiliating']
+}
 ];
 
 const FAITH_ARTICLES: Article[] = [
