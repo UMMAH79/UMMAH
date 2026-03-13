@@ -120,19 +120,27 @@ const MARRIAGE_ARTICLES: Article[] = [
     reflection: 'Proposing is not haram. Playing with hearts is. When done with sincerity and modesty, proposal is the first step toward halal companionship.',
     tags: ['proposing', 'interest', 'modesty', 'marriage', 'initiative', 'khadijah', 'halal', 'asking']
   },
-  {
-    id: 'alone-in-marriage',
-    title: 'I Feel Completely Alone in My Marriage',
-    category: 'Marriage',
-    intro: 'There are marriages where two people share the same home yet feel emotionally distant. You may fulfill responsibilities yet feel invisible.',
-    sections: [
-      { heading: 'INTRODUCTION', content: 'There are marriages where two people share the same home yet feel emotionally distant. You may speak every day and fulfill responsibilities, yet feel invisible inside the relationship. The loneliness is not physical absence but emotional absence. Over time, this quiet distance becomes heavier than open conflict.' },
-      { heading: 'WHAT DOES THIS MEAN?', content: 'Feeling alone in marriage often means emotional connection has weakened. Conversations may have become transactional rather than meaningful. You might hesitate to share your struggles because you expect dismissal or indifference. Emotional safety may no longer exist.' },
-      { heading: 'ISLAMIC PERSPECTIVE', content: 'Marriage in Islam is meant to provide tranquility, love, and mercy. Emotional presence is part of responsibility, not optional kindness. The Prophet demonstrated gentleness, attentiveness, and emotional warmth. Islam does not define marriage as simply sharing a household.' }
-    ],
-    reflection: 'Loneliness in marriage is painful but not always permanent. Many relationships revive when humility replaces pride. Turn to Allah for guidance while taking practical steps.',
-    tags: ['marriage', 'alone', 'lonely', 'distance', 'disconnect', 'invisible', 'communication', 'unhappy']
-  },
+{
+  id: 'alone-in-marriage',
+  title: 'I Feel Completely Alone in My Marriage',
+  category: 'Marriage',
+  intro: 'There are marriages where two people share the same home yet feel emotionally distant. You may fulfill responsibilities yet feel invisible.',
+  sections: [
+    { heading: 'INTRODUCTION', content: 'There are marriages where two people share the same home yet feel emotionally distant. You may speak every day and fulfill responsibilities, yet feel invisible inside the relationship. The loneliness is not physical absence but emotional absence. Over time, this quiet distance becomes heavier than open conflict.' },
+
+    { heading: 'WHAT DOES THIS MEAN?', content: 'Feeling alone in marriage often means emotional connection has weakened. Conversations may have become transactional rather than meaningful. You might hesitate to share your struggles because you expect dismissal or indifference. Emotional safety may no longer exist, even though the marriage technically continues.' },
+
+    { heading: 'WHY DOES THIS HAPPEN?', content: 'Emotional distance in marriage usually develops slowly. Stress, work pressure, unresolved arguments, lack of communication, and unmet expectations can gradually create walls between spouses. Sometimes both partners assume the other person no longer cares, so they withdraw even more. In other cases, one partner may simply be unaware of how lonely the other feels.' },
+
+    { heading: 'ISLAMIC PERSPECTIVE', content: 'Marriage in Islam is meant to provide tranquility, love, and mercy. Emotional presence is part of responsibility, not optional kindness. The Prophet ﷺ showed patience, gentleness, and emotional attentiveness toward his family. Islam does not define marriage as simply sharing a household. A healthy marriage requires compassion, communication, and mutual care.' },
+
+    { heading: 'WHAT CAN YOU DO?', content: 'If you feel alone in your marriage, try to address the problem calmly rather than silently carrying the pain. Honest conversation can sometimes reveal misunderstandings that built up over time. Express your feelings clearly without accusation. Focus on rebuilding small moments of connection such as shared time, respectful conversation, and mutual understanding.' },
+
+    { heading: 'WHEN THE PROBLEM CONTINUES', content: 'If the loneliness continues despite sincere effort, it may help to involve a trusted mediator, counselor, or family elder who understands the importance of fairness and privacy. Islam encourages reconciliation and wise guidance when a marriage faces emotional difficulty.' }
+  ],
+  reflection: 'Loneliness in marriage is painful but not always permanent. Many relationships revive when humility replaces pride and when both partners become willing to listen again. Turn to Allah for guidance while also taking thoughtful steps toward healing.',
+  tags: ['marriage', 'alone', 'lonely', 'distance', 'disconnect', 'invisible', 'communication', 'unhappy']
+},
   {
     id: 'lost-attraction',
     title: 'I Have Lost Emotional and Physical Attraction Toward My Spouse',
