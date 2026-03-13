@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accurate Prayer Times</title>
+    <style>
+        :root {
+            --primary: #10b981;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .location-info {
+            text-align: center;
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1.5rem;
+        }
+        .prayer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .prayer-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f1f5f9;
+            border-radius: 1rem;
+            transition: transform 0.2s;
+        }
+        .prayer-item:hover {
+            transform: scale(1.02);
+        }
+        .prayer-name {
+            font-weight: 600;
+        }
+        .prayer-time {
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .controls {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        input {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        #loading {
+            text-align: center;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prayer Times</h1>
+        <div id="location-display" class="location-info">Detecting location...</div>
+        
+        <div id="loading">Fetching timings...</div>
+        
+        <div id="prayer-container" style="display: none;">
+            <div class="prayer-list" id="prayer-list">
+                <!-- Prayer items will be injected here -->
+            </div>
+        </div>
+
+        <div class="controls">
+            <p style="font-size: 0.75rem; text-align: center; color: #64748b;">Or enter manually:</p>
+            <input type="text" id="city-input" placeholder="City (e.g. London)">
+            <button onclick="fetchByCity()">Get Times</button>
+            <button onclick="getLocation()" style="background: #64748b;">Use My Location</button>
+        </div>
+        <div id="error-display" class="error"></div>
+    </div>
+
+    <script>
+        const prayerList = document.getElementById('prayer-list');
+        const locationDisplay = document.getElementById('location-display');
+        const errorDisplay = document.getElementById('error-display');
+        const loading = document.getElementById('loading');
+        const prayerContainer = document.getElementById('prayer-container');
+
+        async function fetchPrayerTimes(lat, lng) {
+            try {
+                showLoading(true);
+                const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const response = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=2`);
+                const data = await response.json();
+                
+                if (data.code === 200) {
+                    displayTimings(data.data.timings);
+                    locationDisplay.innerText = `Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)} (${data.data.meta.timezone})`;
+                } else {
+                    throw new Error("Failed to fetch timings");
+                }
+            } catch (err) {
+                showError(err.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function fetchByCity() {
+            const city = document.getElementById('city-input').value;
+            if (!city) return;
+            
+            try {
+                showLoading(true);
+                const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=&method=2`);
+                const data = await response.json();
+                
+                if (data.code === 200) {
+                    displayTimings(data.data.timings);
+                    locationDisplay.innerText = `${city} (${data.data.meta.timezone})`;
+                } else {
+                    throw new Error("City not found");
+                }
+            } catch (err) {
+                showError(err.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function displayTimings(timings) {
+            const prayers = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+            prayerList.innerHTML = '';
+            
+            prayers.forEach(name => {
+                const div = document.createElement('div');
+                div.className = 'prayer-item';
+                div.innerHTML = `
+                    <span class="prayer-name">${name}</span>
+                    <span class="prayer-time">${timings[name]}</span>
+                `;
+                prayerList.appendChild(div);
+            });
+            
+            prayerContainer.style.display = 'block';
+            errorDisplay.innerText = '';
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        fetchPrayerTimes(position.coords.latitude, position.coords.longitude);
+                    },
+                    (error) => {
+                        showError("Location access denied. Please enter city manually.");
+                        locationDisplay.innerText = "Location access denied";
+                    }
+                );
+            } else {
+                showError("Geolocation not supported by browser.");
+            }
+        }
+
+        function showLoading(isLoading) {
+            loading.style.display = isLoading ? 'block' : 'none';
+            if (isLoading) prayerContainer.style.display = 'none';
+        }
+
+        function showError(msg) {
+            errorDisplay.innerText = msg;
+        }
+
+        // Initial load
+        getLocation();
+
+        // Auto update every 24 hours
+        setInterval(() => {
+            getLocation();
+        }, 24 * 60 * 60 * 1000);
+    </script>
+</body>
+</html>

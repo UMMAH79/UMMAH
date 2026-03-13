@@ -51,6 +51,13 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const detectLocation = async () => {
+      // Check for saved manual location first
+      const savedManual = localStorage.getItem('ummah_hub_manual_location');
+      if (savedManual) {
+        setLocation(JSON.parse(savedManual));
+        return;
+      }
+
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -73,7 +80,8 @@ const App: React.FC = () => {
                 });
               }
             } catch (ipErr) {
-              setLocation({ latitude: 21.4225, longitude: 39.8262 });
+              // Default to Makkah if all fails
+              setLocation({ latitude: 21.4225, longitude: 39.8262, city: 'Makkah', country: 'Saudi Arabia' });
             }
           },
           { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
@@ -82,6 +90,11 @@ const App: React.FC = () => {
     };
     detectLocation();
   }, []);
+
+  const handleSetLocation = (newLocation: LocationData) => {
+    setLocation(newLocation);
+    localStorage.setItem('ummah_hub_manual_location', JSON.stringify(newLocation));
+  };
 
   const loadTimings = useCallback(async () => {
     if (!location) return;
@@ -102,6 +115,19 @@ const App: React.FC = () => {
 
   useEffect(() => {
     loadTimings();
+    
+    // Refresh at midnight
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    const msUntilMidnight = tomorrow.getTime() - now.getTime();
+    
+    const timer = setTimeout(() => {
+      loadTimings();
+    }, msUntilMidnight);
+    
+    return () => clearTimeout(timer);
   }, [loadTimings]);
 
   useEffect(() => {
@@ -142,6 +168,7 @@ const App: React.FC = () => {
             timings={timings} 
             settings={settings}
             onUpdateSettings={handleUpdateSettings}
+            onSetLocation={handleSetLocation}
             onAskAgent={handleAskAgent} 
             setActiveAdhan={setActiveAdhan}
             initialSubFeature={homeSubFeature}
@@ -174,7 +201,7 @@ const App: React.FC = () => {
           />
         );
       default:
-        return <Home location={location} timings={timings} settings={settings} onUpdateSettings={handleUpdateSettings} onAskAgent={handleAskAgent} setActiveAdhan={setActiveAdhan} appMode={settings.appMode} />;
+        return <Home location={location} timings={timings} settings={settings} onUpdateSettings={handleUpdateSettings} onSetLocation={handleSetLocation} onAskAgent={handleAskAgent} setActiveAdhan={setActiveAdhan} appMode={settings.appMode} />;
     }
   };
 

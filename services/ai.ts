@@ -194,6 +194,61 @@ export async function getHadithExplanation(text: string, source: string): Promis
   }
 }
 
+/**
+ * Translates Quranic transliteration and translation into the target language script.
+ */
+export async function translateQuranicAyah(
+  arabic: string,
+  translation: string,
+  targetLanguage: string
+): Promise<{ translation: string; transliteration: string } | null> {
+  try {
+    const apiKey = await getApiKey();
+    if (!apiKey) return null;
+    const ai = new GoogleGenAI({ apiKey });
+
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: `You are a Quranic expert. Provide the translation and phonetic transliteration for the following Ayah into ${targetLanguage}.
+      
+      Arabic: "${arabic}"
+      Current Translation: "${translation}"
+      
+      Requirements:
+      1. If the Current Translation is already in ${targetLanguage}, refine it for better clarity and spiritual depth.
+      2. Provide a phonetic transliteration specifically adapted for ${targetLanguage} speakers. 
+         - CRITICAL: Use the ${targetLanguage} script (e.g., Devanagari for Hindi, Urdu script for Urdu, Cyrillic for Russian, Bengali script for Bengali, etc.).
+         - If ${targetLanguage} uses the Latin script (like English, Indonesian, Turkish), provide a clear phonetic version.
+      
+      Return JSON ONLY:
+      {
+        "translation": "Refined meaning in ${targetLanguage}",
+        "transliteration": "Phonetic transliteration in ${targetLanguage} script"
+      }`,
+      config: {
+        responseMimeType: "application/json",
+        thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            translation: { type: Type.STRING },
+            transliteration: { type: Type.STRING }
+          },
+          required: ["translation", "transliteration"]
+        }
+      }
+    });
+
+    if (response.text) {
+      return JSON.parse(response.text.trim());
+    }
+    return null;
+  } catch (error) {
+    console.error("Quran translation error:", error);
+    return null;
+  }
+}
+
 function decodeBase64(base64: string): Uint8Array {
   const binaryString = atob(base64);
   const len = binaryString.length;

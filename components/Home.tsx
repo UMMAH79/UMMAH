@@ -527,6 +527,7 @@ interface HomeProps {
   timings: IPrayerTimes | null;
   settings: UserSettings;
   onUpdateSettings: (s: Partial<UserSettings>) => void;
+  onSetLocation: (l: LocationData) => void;
   onAskAgent: (query: string) => void;
   setActiveAdhan: (adhan: {name: string, voiceId: string} | null) => void;
   initialSubFeature?: HomeSubFeature;
@@ -538,6 +539,7 @@ const Home: React.FC<HomeProps> = ({
   timings, 
   settings, 
   onUpdateSettings, 
+  onSetLocation,
   onAskAgent, 
   setActiveAdhan,
   initialSubFeature = 'main'
@@ -761,6 +763,7 @@ const Home: React.FC<HomeProps> = ({
             initialTimings={timings} 
             settings={settings}
             onUpdateSettings={onUpdateSettings}
+            onSetLocation={onSetLocation}
             onAskAgent={onAskAgent} 
             setActiveAdhan={setActiveAdhan}
           />

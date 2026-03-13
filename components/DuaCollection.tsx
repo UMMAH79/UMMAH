@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { DUAS, SUPPORTED_LANGUAGES } from '../constants';
 import { Dua, AppLanguage } from '../types';
 import { useTranslation } from '../hooks/useTranslation';
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel, Type } from "@google/genai";
 import { 
   Search, 
   Sparkles, 
@@ -55,42 +55,70 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
       return;
     }
 
-    // If English is selected, use default content (instantly)
-    if (language === 'en') {
-      setTranslatedContent({
-        title: selectedDua.title,
-        translation: selectedDua.translations['en'] || '',
-        transliteration: selectedDua.transliteration
-      });
-      setIsTranslating(false);
-      return;
-    }
-
+    // If English is selected, we still proceed to AI to get refined content if needed
+    // or we can just remove this block to let the translateDua handle it
+    
     const translateDua = async () => {
       setIsTranslating(true);
       setTranslationError(false);
       try {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-        const langName = SUPPORTED_LANGUAGES.find(l => l.id === language)?.name || language;
+        const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+        if (!apiKey) {
+          setTranslationError(true);
+          return;
+        }
+        const ai = new GoogleGenAI({ apiKey });
+        const lang = SUPPORTED_LANGUAGES.find(l => l.id === language);
+        const langName = lang ? `${lang.name} (${lang.native})` : language;
         
         const response = await ai.models.generateContent({
           model: "gemini-3-flash-preview",
-          contents: `Translate the following Islamic Dua details into ${langName}. 
-          Maintain technical religious terms accurately.
-          
-          Title: "${selectedDua.title}"
-          Arabic: "${selectedDua.arabic}"
-          English Meaning: "${selectedDua.translations['en']}"
-          
-          Return JSON ONLY:
-          {
-            "title": "Translated Title",
-            "translation": "Translated Meaning",
-            "transliteration": "Phonetic transliteration in ${langName} script"
-          }`,
+          contents: language === 'en' 
+            ? `Refine the English translation and provide a clear phonetic transliteration for this Dua.
+            
+            Title: "${selectedDua.title}"
+            Arabic: "${selectedDua.arabic}"
+            Current Meaning: "${selectedDua.translations['en']}"
+            
+            Requirements:
+            1. Provide a clear phonetic transliteration using Latin script for English speakers.
+            
+            Return JSON ONLY:
+            {
+              "title": "Refined Title",
+              "translation": "Refined Meaning",
+              "transliteration": "Clear English transliteration"
+            }`
+            : `Translate the following Islamic Dua details into ${langName}. 
+            Maintain technical religious terms accurately.
+            
+            Title: "${selectedDua.title}"
+            Arabic: "${selectedDua.arabic}"
+            English Meaning: "${selectedDua.translations['en']}"
+            
+            Requirements:
+            1. Provide a phonetic transliteration specifically adapted for ${langName} speakers. 
+               - CRITICAL: Use the ${langName} script (e.g., Devanagari for Hindi, Urdu script for Urdu, Cyrillic for Russian, Bengali script for Bengali, etc.).
+               - If ${langName} uses the Latin script, provide a clear phonetic version.
+            
+            Return JSON ONLY:
+            {
+              "title": "Translated Title",
+              "translation": "Translated Meaning",
+              "transliteration": "Phonetic transliteration in ${langName} script"
+            }`,
           config: {
             responseMimeType: "application/json",
-            thinkingConfig: { thinkingBudget: 0 }
+            thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
+            responseSchema: {
+              type: Type.OBJECT,
+              properties: {
+                title: { type: Type.STRING },
+                translation: { type: Type.STRING },
+                transliteration: { type: Type.STRING }
+              },
+              required: ["title", "translation", "transliteration"]
+            }
           }
         });
 

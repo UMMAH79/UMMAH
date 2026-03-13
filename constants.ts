@@ -747,6 +747,486 @@ export const DUAS: Dua[] = [
     arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ",
     transliteration: "Allahumma inni a'udhu bika min fitnatil-mahya wal-mamat.",
     translations: { en: "O Allah, I seek refuge in You from the trials of life and death." }
+  },
+  {
+    id: 81,
+    title: "Dua when entering the market",
+    category: "Daily Life",
+    arabic: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ، وَهُوَ حَيٌّ لَا يَمُوتُ، بِيَدِهِ الْخَيْرُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+    transliteration: "La ilaha illallahu wahdahu la sharika lahu, lahul-mulku wa lahul-hamdu, yuhyi wa yumitu, wa huwa hayyun la yamutu, biyadihil-khayru, wa huwa 'ala kulli shay'in qadir.",
+    translations: { en: "None has the right to be worshipped but Allah alone, Who has no partner. His is the dominion and His is the praise. He brings life and He causes death, and He is living and does not die. In His Hand is all good, and He is able to do all things." }
+  },
+  {
+    id: 82,
+    title: "Dua when looking in the mirror",
+    category: "Daily Life",
+    arabic: "اللَّهُمَّ أَنْتَ حَسَّنْتَ خَلْقِي فَحَسِّنْ خُلُقِي",
+    transliteration: "Allahumma anta hassanta khalqi fahassin khuluqi.",
+    translations: { en: "O Allah, You have made my creation perfect, so make my moral character perfect." }
+  },
+  {
+    id: 83,
+    title: "Dua when hearing thunder",
+    category: "Travel & Daily Life",
+    arabic: "سُبْحَانَ الَّذِي يُسَبِّحُ الرَّعْدُ بِحَمْدِهِ وَالْمَلَائِكَةُ مِنْ خِيفَتِهِ",
+    transliteration: "Subhanal-ladhi yusabbihur-ra'du bihamdihi wal-mala'ikatu min khifatih.",
+    translations: { en: "Glory is to Him whom the thunder glorifies with His praise and the angels from fear of Him." }
+  },
+  {
+    id: 84,
+    title: "Dua when it rains",
+    category: "Travel & Daily Life",
+    arabic: "اللَّهُمَّ صَيِّباً نَافِعاً",
+    transliteration: "Allahumma sayyiban nafi'an.",
+    translations: { en: "O Allah, may it be a beneficial rain." }
+  },
+  {
+    id: 85,
+    title: "Dua after it has rained",
+    category: "Travel & Daily Life",
+    arabic: "مُطِرْنَا بِفَضْلِ اللَّهِ وَرَحْمَتِهِ",
+    transliteration: "Mutirna bifadhlillahi wa rahmatih.",
+    translations: { en: "We have been given rain by the grace and mercy of Allah." }
+  },
+  {
+    id: 86,
+    title: "Dua for protection against the enemy",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنَّا نَجْعَلُكَ فِي نُحُورِهِمْ وَنَعُوذُ بِكَ مِنْ شُرُورِهِمْ",
+    transliteration: "Allahumma inna naj'aluka fi nuhurihim wa na'udhu bika min shururihim.",
+    translations: { en: "O Allah, we ask You to restrain them by their necks and we seek refuge in You from their evil." }
+  },
+  {
+    id: 87,
+    title: "Dua for someone who has done you a favor",
+    category: "Daily Life",
+    arabic: "جَزَاكَ اللَّهُ خَيْراً",
+    transliteration: "Jazakallahu khayran.",
+    translations: { en: "May Allah reward you with good." }
+  },
+  {
+    id: 88,
+    title: "Dua for the one who provides you with Iftar",
+    category: "Ramadan & Occasions",
+    arabic: "أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ، وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ، وَصَلَّتْ عَلَيْكُمُ الْمَلَائِكَةُ",
+    transliteration: "Aftara 'indakumus-sa'imuna, wa akala ta'amakumul-abraru, wa sallat 'alaykumul-mala'ikah.",
+    translations: { en: "May the fasting persons break their fast with you, may the pious eat your food, and may the angels pray for blessing on you." }
+  },
+  {
+    id: 89,
+    title: "Dua for fear of Shirk",
+    category: "Forgiveness & Taubah",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ أَنْ أُشْرِكَ بِكَ وَأَنَا أَعْلَمُ، وَأَسْتَغْفِرُكَ لِمَا لَا أَعْلَمُ",
+    transliteration: "Allahumma inni a'udhu bika an ushrika bika wa ana a'lamu, wa astaghfiruka lima la a'lamu.",
+    translations: { en: "O Allah, I seek refuge in You from knowingly associating partners with You, and I seek Your forgiveness for what I do not know." }
+  },
+  {
+    id: 90,
+    title: "Dua for protection from Dajjal",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ",
+    transliteration: "Allahumma inni a'udhu bika min 'adhabi jahannama, wa min 'adhabil-qabri, wa min fitnatil-mahya wal-mamat, wa min sharri fitnatil-masihid-dajjal.",
+    translations: { en: "O Allah, I seek refuge in You from the punishment of Hell, from the punishment of the grave, from the trials of life and death, and from the evil of the trial of the Dajjal." }
+  },
+  {
+    id: 91,
+    title: "Dua when visiting the sick",
+    category: "Health & Well-being",
+    arabic: "أَسْأَلُ اللَّهَ الْعَظِيمَ رَبَّ الْعَرْشِ الْعَظِيمِ أَنْ يَشْفِيَكَ",
+    transliteration: "As'alullahal-'Azima Rabbal-'Arshil-'Azimi an yashfiyaka.",
+    translations: { en: "I ask Allah the Almighty, Lord of the Magnificent Throne, to heal you." }
+  },
+  {
+    id: 92,
+    title: "Dua for the deceased during funeral prayer",
+    category: "Akhirah & Death",
+    arabic: "اللَّهُمَّ اغْفِرْ لَهُ وَارْحَمْهُ وَعَافِهِ وَاعْفُ عَنْهُ وَأَكْرِمْ نُزُلَهُ وَوَسِّعْ مُدْخَلَهُ",
+    transliteration: "Allahummagh-fir lahu warhamhu wa 'afihi wa'fu 'anhu wa akrim nuzulahu wa wassi' mudkhalahu.",
+    translations: { en: "O Allah, forgive him and have mercy on him, keep him safe and sound and forgive him, honor his rest and make his entrance wide." }
+  },
+  {
+    id: 93,
+    title: "Dua for the bereaved",
+    category: "Akhirah & Death",
+    arabic: "إِنَّ لِلَّهِ مَا أَخَذَ، وَلَهُ مَا أَعْطَى، وَكُلٌّ عِنْدَهُ بِأَجَلٍ مُسَمًّى... فَلْتَصْبِرْ وَلْتَحْتَسِبْ",
+    transliteration: "Inna lillahi ma akhadha, wa lahu ma a'ta, wa kullun 'indahu bi-ajalin musamma... faltasbir wal-tahtasib.",
+    translations: { en: "Surely, to Allah belongs what He has taken, and to Him belongs what He has given, and everything with Him has an appointed time... so be patient and hope for Allah's reward." }
+  },
+  {
+    id: 94,
+    title: "Dua when placing the deceased in the grave",
+    category: "Akhirah & Death",
+    arabic: "بِسْمِ اللَّهِ وَعَلَى مِلَّةِ رَسُولِ اللَّهِ",
+    transliteration: "Bismillahi wa 'ala millati Rasulillah.",
+    translations: { en: "In the name of Allah and upon the religion of the Messenger of Allah." }
+  },
+  {
+    id: 95,
+    title: "Dua after burying the deceased",
+    category: "Akhirah & Death",
+    arabic: "اللَّهُمَّ اغْفِرْ لَهُ اللَّهُمَّ ثَبِّتْهُ",
+    transliteration: "Allahummagh-fir lahu Allahumma thabbithu.",
+    translations: { en: "O Allah, forgive him. O Allah, strengthen him." }
+  },
+  {
+    id: 96,
+    title: "Dua for visiting graves",
+    category: "Akhirah & Death",
+    arabic: "السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ لَاحِقُونَ",
+    transliteration: "Assalamu 'alaykum ahlad-diyari minal-mu'minina wal-muslimina, wa inna in sha' Allahu bikum lahiqun.",
+    translations: { en: "Peace be upon you, O people of the dwellings, from among the believers and the Muslims, and indeed we, if Allah wills, shall be joining you." }
+  },
+  {
+    id: 97,
+    title: "Dua during a windstorm",
+    category: "Travel & Daily Life",
+    arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ خَيْرَهَا، وَأَعُوذُ بِكَ مِنْ شَرِّهَا",
+    transliteration: "Allahumma inni as'aluka khayraha, wa a'udhu bika min sharriha.",
+    translations: { en: "O Allah, I ask You for its goodness and seek refuge in You from its evil." }
+  },
+  {
+    id: 98,
+    title: "Dua when hearing a donkey bray or a dog bark",
+    category: "Daily Life",
+    arabic: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
+    transliteration: "A'udhu billahi minash-shaytanir-rajim.",
+    translations: { en: "I seek refuge in Allah from the accursed Satan." }
+  },
+  {
+    id: 99,
+    title: "Dua when hearing a rooster crow",
+    category: "Daily Life",
+    arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ",
+    transliteration: "Allahumma inni as'aluka min fadhlika.",
+    translations: { en: "O Allah, I ask for Your favor." }
+  },
+  {
+    id: 100,
+    title: "Dua for the one afflicted by a calamity",
+    category: "Difficulty & Hard Times",
+    arabic: "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْراً مِنْهَا",
+    transliteration: "Inna lillahi wa inna ilaihi raji'un, Allahumma-jurni fi musibati wa akhlif li khayran minha.",
+    translations: { en: "To Allah we belong and unto Him is our return. O Allah, reward me for my affliction and provide me with something better than it." }
+  },
+  {
+    id: 101,
+    title: "Dua when angry",
+    category: "Daily Life",
+    arabic: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
+    transliteration: "A'udhu billahi minash-shaytanir-rajim.",
+    translations: { en: "I seek refuge in Allah from the accursed Satan." }
+  },
+  {
+    id: 102,
+    title: "Dua for the one who sees someone in difficulty",
+    category: "Daily Life",
+    arabic: "الْحَمْدُ لِلَّهِ الَّذِي عَافَانِي مِمَّا ابْتَلَاكَ بِهِ وَفَضَّلَنِي عَلَى كَثِيرٍ مِمَّنْ خَلَقَ تَفْضِيلاً",
+    transliteration: "Alhamdu lillahil-ladhi 'afani mimmab-talaka bihi wa fadh-dhalani 'ala kathirin mimman khalaqa tafdhila.",
+    translations: { en: "Praise be to Allah Who has spared me from what He has afflicted you with, and for favoring me greatly over many of those whom He has created." }
+  },
+  {
+    id: 103,
+    title: "Dua when entering a town or city",
+    category: "Travel & Daily Life",
+    arabic: "اللَّهُمَّ رَبَّ السَّمَاوَاتِ السَّبْعِ وَمَا أَظْلَلْنَ، وَرَبَّ الْأَرَضِينَ السَّبْعِ وَمَا أَقْلَلْنَ...",
+    transliteration: "Allahumma Rabbas-samawatis-sab'i wa ma adhlalna, wa Rabbal-aradhinas-sab'i wa ma aqlalna...",
+    translations: { en: "O Allah, Lord of the seven heavens and all that they envelop, Lord of the seven earths and all that they carry..." }
+  },
+  {
+    id: 104,
+    title: "Dua when entering a house",
+    category: "Daily Life",
+    arabic: "بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى رَبِّنَا تَوَكَّلْنَا",
+    transliteration: "Bismillahi walajna, wa bismillahi kharajna, wa 'ala Rabbina tawakkalna.",
+    translations: { en: "In the name of Allah we enter, in the name of Allah we leave, and upon our Lord we rely." }
+  },
+  {
+    id: 105,
+    title: "Dua when leaving a house",
+    category: "Daily Life",
+    arabic: "بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+    transliteration: "Bismillahi, tawakkaltu 'alallahi, wa la hawla wa la quwwata illa billah.",
+    translations: { en: "In the name of Allah, I place my trust in Allah, and there is no might nor power except with Allah." }
+  },
+  {
+    id: 106,
+    title: "Dua when boarding a vehicle",
+    category: "Travel & Daily Life",
+    arabic: "بِسْمِ اللَّهِ، الْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ",
+    transliteration: "Bismillahi, Alhamdu lillahi, Subhanal-ladhi sakh-khara lana hadha wa ma kunna lahu muqrinina.",
+    translations: { en: "In the name of Allah, praise be to Allah. Glory is to Him Who has subjected this to us, and we could not have [otherwise] subdued it." }
+  },
+  {
+    id: 107,
+    title: "Dua for travel (long version)",
+    category: "Travel & Daily Life",
+    arabic: "اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى، وَمِنَ الْعَمَلِ مَا تَرْضَى",
+    transliteration: "Allahumma inna nas'aluka fi safarina hadhal-birra wat-taqwa, wa minal-'amali ma tardha.",
+    translations: { en: "O Allah, we ask You on this journey of ours for righteousness and piety, and for deeds that please You." }
+  },
+  {
+    id: 108,
+    title: "Dua when the traveler returns",
+    category: "Travel & Daily Life",
+    arabic: "آيِبُونَ تَائِبُونَ عَابِدُونَ لِرَبِّنَا حَامِدُونَ",
+    transliteration: "Ayibuna ta'ibuna 'abiduna liRabbina hamidun.",
+    translations: { en: "We return, repenting, worshipping, and praising our Lord." }
+  },
+  {
+    id: 109,
+    title: "Dua for the one you have insulted",
+    category: "Daily Life",
+    arabic: "اللَّهُمَّ فَأَيُّمَا مُؤْمِنٍ سَبَبْتُهُ فَاجْعَلْ ذَلِكَ لَهُ قُرْبَةً إِلَيْكَ يَوْمَ الْقِيَامَةِ",
+    transliteration: "Allahumma fa-ay-yuma mu'minin sababtuhu faj'al dhalika lahu qurbatan ilaika yawmal-qiyamah.",
+    translations: { en: "O Allah, whichever believer I have insulted, let that be for him a source of nearness to You on the Day of Resurrection." }
+  },
+  {
+    id: 110,
+    title: "Dua for the expiation of a meeting",
+    category: "Daily Life",
+    arabic: "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ، أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
+    transliteration: "Subhanaka Allahumma wa bihamdika, ashhadu an la ilaha illa Anta, astaghfiruka wa atubu ilaik.",
+    translations: { en: "Glory is to You, O Allah, and praise is to You. I bear witness that there is no god but You. I seek Your forgiveness and repent to You." }
+  },
+  {
+    id: 111,
+    title: "Dua for protection from the evil of the soul",
+    category: "Protection",
+    arabic: "اللَّهُمَّ عَالِمَ الْغَيْبِ وَالشَّهَادَةِ فَاطِرَ السَّمَاوَاتِ وَالْأَرْضِ رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطَانِ وَشِرْكِهِ",
+    transliteration: "Allahumma 'alimal-ghaybi wash-shahadati fatiras-samawati wal-ardhi Rabba kulli shay'in wa malikahu, ashhadu an la ilaha illa Anta, a'udhu bika min sharri nafsi, wa min sharrish-shaytani wa shirkihi.",
+    translations: { en: "O Allah, Knower of the unseen and the seen, Creator of the heavens and the earth, Lord and Sovereign of all things. I bear witness that there is no god but You. I seek refuge in You from the evil of my soul and from the evil and shirk of the devil." }
+  },
+  {
+    id: 112,
+    title: "Dua for protection from the trial of the grave",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، وَمِنْ عَذَابِ جَهَنَّمَ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ",
+    transliteration: "Allahumma inni a'udhu bika min 'adhabil-qabri, wa min 'adhabi jahannama, wa min fitnatil-mahya wal-mamat, wa min sharri fitnatil-masihid-dajjal.",
+    translations: { en: "O Allah, I seek refuge in You from the punishment of the grave, from the punishment of Hell, from the trials of life and death, and from the evil of the trial of the Dajjal." }
+  },
+  {
+    id: 113,
+    title: "Dua for protection from worry and grief",
+    category: "Difficulty & Hard Times",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحُزْنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ",
+    transliteration: "Allahumma inni a'udhu bika minal-hammi wal-huzni, wal-'ajzi wal-kasali, wal-bukhli wal-jubni, wa dhala'id-dayni wa ghalabatir-rijal.",
+    translations: { en: "O Allah, I seek refuge in You from anxiety and sorrow, weakness and laziness, miserliness and cowardice, the burden of debts and from being overpowered by men." }
+  },
+  {
+    id: 114,
+    title: "Dua for protection from the withdrawal of favor",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ زَوَالِ نِعْمَتِكَ، وَتَحَوُّلِ عَافِيَتِكَ، وَفُجَاءَةِ نِقْمَتِكَ، وَجَمِيعِ سَخَطِكَ",
+    transliteration: "Allahumma inni a'udhu bika min zawali ni'matik, wa tahawwuli 'afiyatik, wa fuja'ati niqmatik, wa jami'i sakhatik.",
+    translations: { en: "O Allah, I seek refuge in You from the withdrawal of Your favor, the change of Your protection, the suddenness of Your punishment, and all Your anger." }
+  },
+  {
+    id: 115,
+    title: "Dua for protection from hunger and treachery",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْجُوعِ فَإِنَّهُ بِئْسَ الضَّجِيعُ، وَأَعُوذُ بِكَ مِنَ الْخِيَانَةِ فَإِنَّهَا بِئْسَتِ الْبِطَانَةُ",
+    transliteration: "Allahumma inni a'udhu bika minal-ju'i fa-innahu bi'sad-dhaji'u, wa a'udhu bika minal-khiyanati fa-innaha bi'satil-bitanah.",
+    translations: { en: "O Allah, I seek refuge in You from hunger, for it is an evil companion, and I seek refuge in You from treachery, for it is an evil inner trait." }
+  },
+  {
+    id: 116,
+    title: "Dua for protection from the evil of hearing and seeing",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ سَمْعِي، وَمِنْ شَرِّ بَصَرِي، وَمِنْ شَرِّ لِسَانِي، وَمِنْ شَرِّ قَلْبِي، وَمِنْ شَرِّ مَنِيِّي",
+    transliteration: "Allahumma inni a'udhu bika min sharri sam'i, wa min sharri basari, wa min sharri lisani, wa min sharri qalbi, wa min sharri maniyyi.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my hearing, from the evil of my seeing, from the evil of my tongue, from the evil of my heart, and from the evil of my semen." }
+  },
+  {
+    id: 117,
+    title: "Dua for protection from leprosy and madness",
+    category: "Health & Well-being",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْبَرَصِ، وَالْجُنُونِ، وَالْجُذَامِ، وَمِنْ سَيِّئِ الْأَسْقَامِ",
+    transliteration: "Allahumma inni a'udhu bika minal-barasi, wal-jununi, wal-judhami, wa min sayyi'il-asqam.",
+    translations: { en: "O Allah, I seek refuge in You from vitiligo, madness, leprosy, and from all evil diseases." }
+  },
+  {
+    id: 118,
+    title: "Dua for protection from poverty and humiliation",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْفَقْرِ، وَالْقِلَّةِ، وَالذِّلَّةِ، وَأَعُوذُ بِكَ مِنْ أَنْ أَظْلِمَ أَوْ أُظْلَمَ",
+    transliteration: "Allahumma inni a'udhu bika minal-faqri, wal-qillati, wadh-dhillati, wa a'udhu bika min an adhlima aw udhlama.",
+    translations: { en: "O Allah, I seek refuge in You from poverty, scarcity, and humiliation, and I seek refuge in You from being wronged or doing wrong to others." }
+  },
+  {
+    id: 119,
+    title: "Dua for protection from the evil of what one has done",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ مَا عَمِلْتُ، وَمِنْ شَرِّ مَا لَمْ أَعْمَلْ",
+    transliteration: "Allahumma inni a'udhu bika min sharri ma 'amiltu, wa min sharri ma lam a'mal.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of what I have done and from the evil of what I have not done." }
+  },
+  {
+    id: 120,
+    title: "Dua for protection from being overcome by debt",
+    category: "Daily Life",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ، وَغَلَبَةِ الْعَدُوِّ، وَشَمَاتَةِ الْأَعْدَاءِ",
+    transliteration: "Allahumma inni a'udhu bika min ghalabatid-dayni, wa ghalabatil-'aduwwi, wa shamatatil-a'da'.",
+    translations: { en: "O Allah, I seek refuge in You from being overcome by debt, from being overcome by the enemy, and from the rejoicing of enemies over my misfortune." }
+  },
+  {
+    id: 121,
+    title: "Dua for protection from the trial of wealth and poverty",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ فِتْنَةِ النَّارِ وَعَذَابِ النَّارِ، وَفِتْنَةِ الْقَبْرِ وَعَذَابِ الْقَبْرِ، وَشَرِّ فِتْنَةِ الْغِنَى، وَشَرِّ فِتْنَةِ الْفَقْرِ",
+    transliteration: "Allahumma inni a'udhu bika min fitnatin-nari wa 'adhabin-nari, wa fitnatil-qabri wa 'adhabil-qabri, wa sharri fitnatil-ghina, wa sharri fitnatil-faqri.",
+    translations: { en: "O Allah, I seek refuge in You from the trial of the Fire and the punishment of the Fire, from the trial of the grave and the punishment of the grave, from the evil of the trial of wealth and from the evil of the trial of poverty." }
+  },
+  {
+    id: 122,
+    title: "Dua for protection from the evil of the day and night",
+    category: "Morning & Evening",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ هَذَا الْيَوْمِ، وَشَرِّ مَا بَعْدَهُ، وَأَعُوذُ بِكَ مِنْ شَرِّ هَذِهِ اللَّيْلَةِ، وَشَرِّ مَا بَعْدَهَا",
+    transliteration: "Allahumma inni a'udhu bika min sharri hadhal-yawm, wa sharri ma ba'dahu, wa a'udhu bika min sharri hadhihil-laylah, wa sharri ma ba'daha.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of this day and the evil of what follows it, and I seek refuge in You from the evil of this night and the evil of what follows it." }
+  },
+  {
+    id: 123,
+    title: "Dua for protection from the evil of the soul and the devil",
+    category: "Protection",
+    arabic: "اللَّهُمَّ فَاطِرَ السَّمَاوَاتِ وَالْأَرْضِ عَالِمَ الْغَيْبِ وَالشَّهَادَةِ رَبَّ كُلِّ شَيْءٍ وَمَلِيكَهُ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ، أَعُوذُ بِكَ مِنْ شَرِّ نَفْسِي، وَمِنْ شَرِّ الشَّيْطَانِ وَشِرْكِهِ",
+    transliteration: "Allahumma fatiras-samawati wal-ardhi 'alimal-ghaybi wash-shahadati Rabba kulli shay'in wa malikahu, ashhadu an la ilaha illa Anta, a'udhu bika min sharri nafsi, wa min sharrish-shaytani wa shirkihi.",
+    translations: { en: "O Allah, Creator of the heavens and the earth, Knower of the unseen and the seen, Lord and Sovereign of all things. I bear witness that there is no god but You. I seek refuge in You from the evil of my soul and from the evil and shirk of the devil." }
+  },
+  {
+    id: 124,
+    title: "Dua for protection from the evil of the world and the afterlife",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ",
+    transliteration: "Allahumma inni as'alukal-'afwa wal-'afiyah fid-dunya wal-akhirah.",
+    translations: { en: "O Allah, I ask You for forgiveness and well-being in this world and the Hereafter." }
+  },
+  {
+    id: 125,
+    title: "Dua for protection from the evil of the heart and the tongue",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ قَلْبِي، وَمِنْ شَرِّ لِسَانِي، وَمِنْ شَرِّ سَمْعِي، وَمِنْ شَرِّ بَصَرِي",
+    transliteration: "Allahumma inni a'udhu bika min sharri qalbi, wa min sharri lisani, wa min sharri sam'i, wa min sharri basari.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my heart, from the evil of my tongue, from the evil of my hearing, and from the evil of my seeing." }
+  },
+  {
+    id: 126,
+    title: "Dua for protection from the evil of the private parts",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ مَنِيِّي",
+    transliteration: "Allahumma inni a'udhu bika min sharri maniyyi.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my semen." }
+  },
+  {
+    id: 127,
+    title: "Dua for protection from the evil of the mind and the soul",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ عَقْلِي، وَمِنْ شَرِّ نَفْسِي",
+    transliteration: "Allahumma inni a'udhu bika min sharri 'aqli, wa min sharri nafsi.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my mind and from the evil of my soul." }
+  },
+  {
+    id: 128,
+    title: "Dua for protection from the evil of the body and the wealth",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ جَسَدِي، وَمِنْ شَرِّ مَالِي",
+    transliteration: "Allahumma inni a'udhu bika min sharri jasadi, wa min sharri mali.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my body and from the evil of my wealth." }
+  },
+  {
+    id: 129,
+    title: "Dua for protection from the evil of the children and the spouse",
+    category: "Family & Relationships",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ وَلَدِي، وَمِنْ شَرِّ زَوْجِي",
+    transliteration: "Allahumma inni a'udhu bika min sharri waladi, wa min sharri zawji.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my children and from the evil of my spouse." }
+  },
+  {
+    id: 130,
+    title: "Dua for protection from the evil of the neighbors and the friends",
+    category: "Family & Relationships",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ جِيرَانِي، وَمِنْ شَرِّ أَصْحَابِي",
+    transliteration: "Allahumma inni a'udhu bika min sharri jirani, wa min sharri as-haabi.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my neighbors and from the evil of my friends." }
+  },
+  {
+    id: 131,
+    title: "Dua for protection from the evil of the enemies and the rulers",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ أَعْدَائِي، وَمِنْ شَرِّ حُكَّامِي",
+    transliteration: "Allahumma inni a'udhu bika min sharri a'da'i, wa min sharri hukkami.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my enemies and from the evil of my rulers." }
+  },
+  {
+    id: 132,
+    title: "Dua for protection from the evil of the judges and the scholars",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ قُضَاتِي، وَمِنْ شَرِّ عُلَمَائِي",
+    transliteration: "Allahumma inni a'udhu bika min sharri qudhati, wa min sharri 'ulama'i.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my judges and from the evil of my scholars." }
+  },
+  {
+    id: 133,
+    title: "Dua for protection from the evil of the ignorants and the hypocrites",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ جُهَّالِي، وَمِنْ شَرِّ مُنَافِقِي",
+    transliteration: "Allahumma inni a'udhu bika min sharri juhhali, wa min sharri munafiqi.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my ignorants and from the evil of my hypocrites." }
+  },
+  {
+    id: 134,
+    title: "Dua for protection from the evil of the disbelievers and the day",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ كَافِرِي، وَمِنْ شَرِّ هَذَا الْيَوْمِ",
+    transliteration: "Allahumma inni a'udhu bika min sharri kafiri, wa min sharri hadhal-yawm.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of my disbelievers and from the evil of this day." }
+  },
+  {
+    id: 135,
+    title: "Dua for protection from the evil of the night and the world",
+    category: "Morning & Evening",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ هَذِهِ اللَّيْلَةِ، وَمِنْ شَرِّ الدُّنْيَا",
+    transliteration: "Allahumma inni a'udhu bika min sharri hadhihil-laylah, wa min sharri dunya.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of this night and from the evil of the world." }
+  },
+  {
+    id: 136,
+    title: "Dua for protection from the evil of the afterlife and the grave",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ الْآخِرَةِ، وَمِنْ شَرِّ الْقَبْرِ",
+    transliteration: "Allahumma inni a'udhu bika min sharri akhirati, wa min sharri qabri.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of the afterlife and from the evil of the grave." }
+  },
+  {
+    id: 137,
+    title: "Dua for protection from the evil of the fire and the wealth",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ النَّارِ، وَمِنْ شَرِّ الْمَالِ",
+    transliteration: "Allahumma inni a'udhu bika min sharri nari, wa min sharri mali.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of the Fire and from the evil of wealth." }
+  },
+  {
+    id: 138,
+    title: "Dua for protection from the evil of poverty and the heart",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ الْفَقْرِ، وَمِنْ شَرِّ الْقَلْبِ",
+    transliteration: "Allahumma inni a'udhu bika min sharri faqri, wa min sharri qalbi.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of poverty and from the evil of the heart." }
+  },
+  {
+    id: 139,
+    title: "Dua for protection from the evil of the tongue and the hearing",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ اللِّسَانِ، وَمِنْ شَرِّ السَّمْعِ",
+    transliteration: "Allahumma inni a'udhu bika min sharri lisani, wa min sharri sam'i.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of the tongue and from the evil of the hearing." }
+  },
+  {
+    id: 140,
+    title: "Dua for protection from the evil of the seeing and the private parts",
+    category: "Protection",
+    arabic: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ الْبَصَرِ، وَمِنْ شَرِّ الْمَنِيِّ",
+    transliteration: "Allahumma inni a'udhu bika min sharri basari, wa min sharri maniyyi.",
+    translations: { en: "O Allah, I seek refuge in You from the evil of the seeing and from the evil of the private parts." }
   }
 ];
 

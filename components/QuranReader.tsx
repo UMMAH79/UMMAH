@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { fetchSurahs, fetchSurahDetail, fetchAyahDetail } from '../services/api';
+import { translateQuranicAyah } from '../services/ai';
 import { Surah, Ayah, AppLanguage } from '../types';
 import { SUPPORTED_LANGUAGES } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
@@ -37,15 +38,21 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
   const [isPlayingFeatured, setIsPlayingFeatured] = useState(false);
   const [viewMode, setViewMode] = useState<'surahs' | 'bookmarks'>('surahs');
   
-  const [showTranslation, setShowTranslation] = useState(false);
-  const [showTransliteration, setShowTransliteration] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(true);
+  const [showTransliteration, setShowTransliteration] = useState(true);
   
+  // AI translations state
+  const [aiContent, setAiContent] = useState<Record<number, { translation: string; transliteration: string }>>({});
+  const [isAiLoading, setIsAiLoading] = useState<Record<number, boolean>>({});
+
   const [bookmarks, setBookmarks] = useState<any[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : [];
   });
 
   const [playingAyahNumber, setPlayingAyahNumber] = useState<number | null>(null);
+  const translatedAyahs = useRef<Set<number>>(new Set());
+  const loadingAyahs = useRef<Set<number>>(new Set());
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const featuredAudioRef = useRef<HTMLAudioElement | null>(null);
   const ayahRefs = useRef<Record<number, HTMLDivElement | null>>({});
@@ -57,6 +64,17 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
   useEffect(() => {
     fetchSurahs().then(setSurahs);
     loadDailyFeaturedAyah();
+    setAiContent({}); // Reset AI content on language change
+    translatedAyahs.current.clear();
+    loadingAyahs.current.clear();
+    
+    if (selectedSurah) {
+      setLoading(true);
+      fetchSurahDetail(selectedSurah.number, activeEdition).then(data => {
+        setAyahs(data);
+        setLoading(false);
+      });
+    }
     
     return () => {
       stopAudio();
@@ -89,6 +107,18 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
       const data = await fetchAyahDetail(ayahId, activeEdition);
       if (data) {
         setFeaturedAyah(data);
+        
+        // Auto-translate featured ayah if not English
+        if (currentLanguage !== 'en') {
+          const langName = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage)?.name || currentLanguage;
+          const translated = await translateQuranicAyah(data.text, data.translation, langName);
+          if (translated) {
+            setAiContent(prev => ({
+              ...prev,
+              [data.number]: translated
+            }));
+          }
+        }
       } else {
         setFeaturedError(true);
       }
@@ -105,6 +135,9 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
     stopFeaturedAudio();
     setSelectedSurah(surah);
     setLoading(true);
+    setAiContent({}); // Reset AI content for new surah
+    translatedAyahs.current.clear();
+    loadingAyahs.current.clear();
     try {
       const data = await fetchSurahDetail(surah.number, activeEdition);
       setAyahs(data);
@@ -114,6 +147,71 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
       setLoading(false);
     }
   };
+
+  const translateAyahIfNeeded = useCallback(async (ayah: Ayah) => {
+    if (translatedAyahs.current.has(ayah.number) || loadingAyahs.current.has(ayah.number)) return;
+    
+    loadingAyahs.current.add(ayah.number);
+    setIsAiLoading(prev => ({ ...prev, [ayah.number]: true }));
+    
+    let success = false;
+    let attempts = 0;
+    const maxAttempts = 2;
+
+    while (!success && attempts < maxAttempts) {
+      try {
+      const lang = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage);
+      const langName = lang ? `${lang.name} (${lang.native})` : currentLanguage;
+      const translated = await translateQuranicAyah(ayah.text, ayah.translation, langName);
+        if (translated) {
+          translatedAyahs.current.add(ayah.number);
+          setAiContent(prev => ({
+            ...prev,
+            [ayah.number]: translated
+          }));
+          success = true;
+        } else {
+          attempts++;
+          if (attempts < maxAttempts) await new Promise(r => setTimeout(r, 1000));
+        }
+      } catch (e) {
+        console.error(`AI Translation Error for Ayah ${ayah.number} (Attempt ${attempts + 1}):`, e);
+        attempts++;
+        if (attempts < maxAttempts) await new Promise(r => setTimeout(r, 2000));
+      }
+    }
+    
+    loadingAyahs.current.delete(ayah.number);
+    setIsAiLoading(prev => ({ ...prev, [ayah.number]: false }));
+  }, [currentLanguage]);
+
+  // Auto-translate visible ayahs
+  useEffect(() => {
+    if (currentLanguage === 'en' || !ayahs.length || !selectedSurah) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const ayahNumber = Number(entry.target.getAttribute('data-ayah-number'));
+            const ayah = ayahs.find(a => a.number === ayahNumber);
+            if (ayah) {
+              translateAyahIfNeeded(ayah);
+            }
+          }
+        });
+      },
+      { threshold: 0, rootMargin: '200px' }
+    );
+
+    // Observe all ayah elements
+    const elements = Object.values(ayahRefs.current).filter((el): el is HTMLDivElement => el !== null);
+    elements.forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [ayahs, currentLanguage, selectedSurah, translateAyahIfNeeded]);
 
   const stopAudio = () => {
     if (audioRef.current) {
@@ -154,6 +252,9 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
       stopFeaturedAudio();
       if (audioRef.current) stopAudio();
       
+      // Translate when playing
+      translateAyahIfNeeded(ayah);
+
       const audio = new Audio(ayah.audio);
       audioRef.current = audio;
       setPlayingAyahNumber(ayah.number);
@@ -246,7 +347,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
                 className={`p-2 rounded-xl transition-all ${showTransliteration ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
                 title={t('toggle_pronunciation')}
               >
-                <Volume2 size={18}/>
+                <Sparkles size={18}/>
               </button>
               <button 
                 onClick={() => setShowTranslation(!showTranslation)} 
@@ -276,6 +377,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
                   <div 
                     key={ayah.number} 
                     ref={el => { ayahRefs.current[ayah.number] = el; }} 
+                    data-ayah-number={ayah.number}
                     className={`w-full h-full snap-start flex flex-col p-8 transition-all duration-700 relative overflow-hidden border-b border-slate-50 dark:border-white/5 ${
                       isPlaying 
                         ? 'bg-[#ECFDF5] dark:bg-emerald-950/40' 
@@ -323,21 +425,29 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
 
                       {showTransliteration && (
                         <div className="text-center px-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                          <p className={`${exSize} font-semibold leading-relaxed tracking-wide ${
-                            isPlaying ? 'text-[#064E3B] dark:text-emerald-300/80' : 'text-slate-700 dark:text-zinc-400'
-                          }`}>
-                            {ayah.transliteration}
-                          </p>
+                          {isAiLoading[ayah.number] ? (
+                            <Loader2 className="animate-spin text-emerald-600/30 mx-auto" size={16} />
+                          ) : (
+                            <p className={`${exSize} font-semibold leading-relaxed tracking-wide ${
+                              isPlaying ? 'text-[#064E3B] dark:text-emerald-300/80' : 'text-slate-700 dark:text-zinc-400'
+                            }`}>
+                              {aiContent[ayah.number]?.transliteration || ayah.transliteration}
+                            </p>
+                          )}
                         </div>
                       )}
 
                       {showTranslation && (
                         <div className="text-center px-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                          <p className={`${trSize} font-medium leading-relaxed italic ${
-                            isPlaying ? 'text-[#064E3B] dark:text-emerald-100 font-bold' : 'text-slate-700 dark:text-zinc-400'
-                          }`}>
-                            "{ayah.translation}"
-                          </p>
+                          {isAiLoading[ayah.number] ? (
+                            <Loader2 className="animate-spin text-emerald-600/30 mx-auto mt-2" size={16} />
+                          ) : (
+                            <p className={`${trSize} font-medium leading-relaxed italic ${
+                              isPlaying ? 'text-[#064E3B] dark:text-emerald-100 font-bold' : 'text-slate-700 dark:text-zinc-400'
+                            }`}>
+                              "{aiContent[ayah.number]?.translation || ayah.translation}"
+                            </p>
+                          )}
                         </div>
                       )}
                     </div>
@@ -399,10 +509,10 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
                     </div>
                     <div className="space-y-2 pt-3 border-t border-white/5">
                       <p className="text-[9px] font-bold tracking-wide text-emerald-400/60 italic">
-                        {featuredAyah.transliteration}
+                        {aiContent[featuredAyah.number]?.transliteration || featuredAyah.transliteration}
                       </p>
                       <p className="text-[11px] font-medium leading-relaxed text-slate-300 line-clamp-2">
-                        "{featuredAyah.translation}"
+                        "{aiContent[featuredAyah.number]?.translation || featuredAyah.translation}"
                       </p>
                       <div className="pt-1">
                         <span className="text-[7px] font-black text-emerald-500/80 uppercase tracking-[0.3em] bg-emerald-500/10 px-2 py-0.5 rounded-lg">

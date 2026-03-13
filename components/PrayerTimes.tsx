@@ -22,13 +22,18 @@ interface Props {
   initialTimings: IPrayerTimes | null;
   settings: UserSettings;
   onUpdateSettings: (s: Partial<UserSettings>) => void;
+  onSetLocation: (l: LocationData) => void;
   onAskAgent?: (query: string) => void;
   setActiveAdhan: (adhan: {name: string, voiceId: string} | null) => void;
 }
 
-const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUpdateSettings, onAskAgent, setActiveAdhan }) => {
+const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUpdateSettings, onSetLocation, onAskAgent, setActiveAdhan }) => {
   const { t } = useTranslation(settings.language);
   const [isEditing, setIsEditing] = useState(false);
+  const [manualCity, setManualCity] = useState('');
+  const [isSearchingLocation, setIsSearchingLocation] = useState(false);
+  const [locationError, setLocationError] = useState<string | null>(null);
+
   const [currentPrayerInfo, setCurrentPrayerInfo] = useState<{ 
     name: string; 
     time: string; 
@@ -39,6 +44,54 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
     secondsRemaining: number;
   } | null>(null);
 
+  const handleManualLocationSearch = async () => {
+    if (!manualCity.trim()) return;
+    setIsSearchingLocation(true);
+    setLocationError(null);
+    try {
+      const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(manualCity)}&country=&method=${settings.calculationMethod}`);
+      const data = await res.json();
+      if (data.code === 200) {
+        onSetLocation({
+          latitude: parseFloat(data.data.meta.latitude),
+          longitude: parseFloat(data.data.meta.longitude),
+          city: manualCity,
+          country: data.data.meta.timezone
+        });
+        setManualCity('');
+      } else {
+        setLocationError(t('city_not_found') || 'City not found');
+      }
+    } catch (err) {
+      setLocationError(t('search_failed') || 'Search failed');
+    } finally {
+      setIsSearchingLocation(false);
+    }
+  };
+
+  const handleUseGPS = () => {
+    setIsSearchingLocation(true);
+    setLocationError(null);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          onSetLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          setIsSearchingLocation(false);
+        },
+        (error) => {
+          setLocationError(t('gps_denied') || 'GPS access denied');
+          setIsSearchingLocation(false);
+        }
+      );
+    } else {
+      setLocationError('Geolocation not supported');
+      setIsSearchingLocation(false);
+    }
+  };
+
   useEffect(() => {
     if (!initialTimings) return;
 
@@ -48,6 +101,7 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
       
       const prayers = [
         { name: 'Fajr', time: initialTimings.Fajr },
+        { name: 'Sunrise', time: initialTimings.Sunrise },
         { name: 'Dhuhr', time: initialTimings.Dhuhr },
         { name: 'Asr', time: initialTimings.Asr },
         { name: 'Maghrib', time: initialTimings.Maghrib },
@@ -112,10 +166,10 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
   }, [initialTimings]);
 
   const prayerIcons: Record<string, string> = { 
-    Fajr: '🌅', Dhuhr: '☀️', Asr: '🌥️', Maghrib: '🌆', Isha: '🌙' 
+    Fajr: '🌅', Sunrise: '☀️', Dhuhr: '☀️', Asr: '🌥️', Maghrib: '🌆', Isha: '🌙' 
   };
   const arabicNames: Record<string, string> = { 
-    Fajr: 'الفجر', Dhuhr: 'الظهر', Asr: 'العصر', Maghrib: 'المغرب', Isha: 'العشاء' 
+    Fajr: 'الفجر', Sunrise: 'الشروق', Dhuhr: 'الظهر', Asr: 'العصر', Maghrib: 'المغرب', Isha: 'العشاء' 
   };
 
   if (!initialTimings) {
@@ -206,7 +260,7 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
           </div>
         </div>
         
-        {['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].map((name) => {
+        {['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].map((name) => {
           const time = initialTimings[name as keyof IPrayerTimes];
           const isNext = currentPrayerInfo?.nextName === name;
 
@@ -265,6 +319,40 @@ const PrayerTimes: React.FC<Props> = ({ location, initialTimings, settings, onUp
               </div>
 
               <div className="space-y-12">
+                 <div>
+                    <label className="block text-[10px] font-black text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 uppercase tracking-[0.5em] mb-8 flex items-center gap-3">
+                       <MapPin size={16} className="text-ummah-icon-active-light" /> {t('location_settings')}
+                    </label>
+                    <div className="space-y-4">
+                       <div className="relative">
+                          <input 
+                            type="text"
+                            value={manualCity}
+                            onChange={(e) => setManualCity(e.target.value)}
+                            placeholder={t('enter_city_manually') || 'Enter city manually'}
+                            className="w-full p-6 bg-ummah-mint dark:bg-white/5 rounded-[2.5rem] border border-transparent focus:border-ummah-icon-active-light outline-none text-sm font-bold tracking-tight"
+                          />
+                          <button 
+                            onClick={handleManualLocationSearch}
+                            disabled={isSearchingLocation}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 p-4 bg-ummah-icon-active-light text-white rounded-2xl disabled:opacity-50"
+                          >
+                            {isSearchingLocation ? <Loader2 className="animate-spin" size={18} /> : <ChevronRight size={18} />}
+                          </button>
+                       </div>
+                       <button 
+                         onClick={handleUseGPS}
+                         disabled={isSearchingLocation}
+                         className="w-full p-6 flex items-center justify-center gap-3 bg-white dark:bg-ummah-bg-dark border border-black/5 dark:border-white/5 rounded-[2.5rem] text-[10px] font-black uppercase tracking-widest text-ummah-text-light/60 dark:text-ummah-text-secondary-dark/60 hover:text-ummah-icon-active-light transition-all"
+                       >
+                         <MapPin size={14} /> {t('use_my_location') || 'Use My Location'}
+                       </button>
+                       {locationError && (
+                         <p className="text-[10px] font-bold text-rose-500 text-center uppercase tracking-wider">{locationError}</p>
+                       )}
+                    </div>
+                 </div>
+
                  <div>
                     <label className="block text-[10px] font-black text-ummah-text-light/40 dark:text-ummah-text-secondary-dark/40 uppercase tracking-[0.5em] mb-8 flex items-center gap-3">
                        <BellRing size={16} className="text-ummah-icon-active-light" /> {t('notification_sound')}
