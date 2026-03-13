@@ -225,16 +225,22 @@ const ADDICTION_ARTICLES: Article[] = [
 ];
 
 const DOUBT_ARTICLES: Article[] = [
-  {
-    id: 'hijab-struggle',
-    title: 'I Believe in Islam, But I Struggle With Wearing Hijab',
-    category: 'Doubt',
-    intro: 'Many Muslim women deeply believe in Allah yet struggle with hijab. The struggle is often internal and emotional rather than rebellious.',
-    sections: [
-      { heading: 'INTRODUCTION', content: 'Many Muslim women deeply believe in Allah yet struggle with hijab. The struggle is often internal and emotional rather than rebellious. Some feel pressure from society, friends, or workplace environments. Others fear judgment or loss of confidence.' }
-    ],
-    tags: ['hijab', 'headscarf', 'struggle', 'modesty', 'pressure', 'confidence', 'judgment', 'identity']
-  },
+{
+  id: 'hijab-struggle',
+  title: 'I Believe in Islam, But I Struggle With Wearing Hijab',
+  category: 'Doubt',
+  intro: 'Many Muslim women sincerely believe in Islam yet struggle with wearing hijab. The conflict is often emotional and social rather than a rejection of faith.',
+  sections: [
+    { heading: 'INTRODUCTION', content: 'Many Muslim women believe in Allah and respect Islamic teachings, yet they struggle with the idea of wearing hijab. This struggle is often quiet and internal. Some feel pressure from society, friends, school, or workplace environments. Others worry about how people will judge them or whether they will lose confidence or opportunities.' },
+    { heading: 'WHAT DOES THIS STRUGGLE MEAN?', content: 'This struggle usually means that a person believes in the importance of modesty but feels emotionally unprepared or afraid to practice it fully. The heart may accept the command, but the mind worries about social reactions, personal identity, and life changes that might come with wearing hijab.' },
+    { heading: 'WHY DO MANY PEOPLE FEEL THIS WAY?', content: 'There are many reasons this struggle happens. In some societies hijab attracts criticism or misunderstanding. Social media also promotes strong beauty standards that make modesty feel difficult. Sometimes family expectations, cultural pressure, or fear of standing out make the decision feel overwhelming.' },
+    { heading: 'ISLAMIC PERSPECTIVE', content: 'In Islam, hijab is part of the broader principle of modesty and obedience to Allah. However, Islam also understands the human journey of growth. Faith does not always develop instantly. Many companions of the Prophet ﷺ gradually strengthened their practice as their faith grew. Experiencing struggle does not mean someone has no faith. Often it shows that the person still cares deeply about doing what is right.' },
+    { heading: 'A HEALTHIER WAY TO APPROACH IT', content: 'Instead of seeing hijab only as a burden, it can help to view it as part of a personal spiritual journey. Learning the wisdom behind modesty, strengthening the relationship with Allah, and building confidence slowly can make the decision easier. Many people find that when their faith deepens, practicing hijab becomes more natural and meaningful.' },
+    { heading: 'IF THE STRUGGLE CONTINUES', content: 'If someone continues to struggle, they should not allow guilt to push them away from Allah. Continue praying, learning, and reflecting sincerely. Faith grows step by step, and many believers gradually develop the strength to practice what once felt difficult.' }
+  ],
+  reflection: 'Struggling with a command of Islam does not automatically mean weak faith. Sometimes it means the heart is caught between fear and obedience. Growth takes time, but continuing to turn toward Allah is always the right direction.',
+  tags: ['hijab', 'headscarf', 'struggle', 'modesty', 'faith', 'confidence', 'pressure', 'identity']
+}
   {
     id: 'teenage-adult-love',
     title: 'Is teenage/adult love haram in Islam?',
