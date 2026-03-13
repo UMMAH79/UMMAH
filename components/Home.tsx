@@ -60,36 +60,48 @@ interface Article {
 }
 
 const MARRIAGE_ARTICLES: Article[] = [
-  {
-    id: 'marriage-pressure',
-    title: 'What if I’m not ready but everyone is pressuring me to marry?',
-    category: 'Marriage',
-    intro: 'Marriage in Islam is described as sakinah — tranquility. But pressure creates the opposite of sakinah. It creates anxiety, guilt, and internal conflict.',
-    sections: [
-      { heading: 'INTRODUCTION', content: 'Marriage in Islam is described as sakinah — tranquility. But pressure creates the opposite of sakinah. It creates anxiety, guilt, and internal conflict. When everyone around you says, “It’s time,” but your heart whispers, “I’m not ready,” the tension becomes exhausting. You start questioning yourself. Am I immature? Am I sinful for delaying? Am I overthinking? Or am I protecting something fragile inside me? This question is not rebellion. It is responsibility.' },
-      { heading: 'WHAT DOES “NOT READY” ACTUALLY MEAN?', content: 'Not ready does not always mean you eject marriage. It can mean you are aware of its weight. Marriage is not only love. It is emotional availability. It is financial accountability. It is patience during conflict. It is sacrificing ego. It is waking up and choosing someone every single day. Maybe you are still healing from trauma. Maybe your career is unstable. Maybe your iman fluctuates heavily. Maybe you fear hurting someone because you know you are not emotionally consistent yet. That awareness is maturity, not weakness.' },
-      { heading: 'WHY DOES PRESSURE FEEL SO HEAVY?', content: 'Family pressure often comes from concern, culture, and fear. Parents worry about your age, reputation, or falling into sin. Society treats marriage like a milestone checklist: education, job, marriage, children. When you delay one box, people panic. But emotional readiness does not follow a calendar. Pressure feels heavy because it attacks your autonomy. It makes you feel like your life timeline belongs to others. It creates guilt — especially if you fear disappointing your parents.' },
-      { heading: 'THE DEEPER INTERNAL CONFLICT', content: 'You may fear two things at once: Marrying too early and suffering, or waiting too long and regretting. This inner tug-of-war creates anxiety. You imagine worst-case scenarios. What if I ruin someone’s life because I wasn’t prepared? What if I miss a good person because I hesitated? The mind becomes noisy.' },
-      { heading: 'THE PATH FORWARD', content: 'First, sit alone and define readiness for yourself. Not society’s definition. Yours. Write it down clearly. What would make you confident entering marriage? Second, strengthen your foundation. Marriage does not magically fix insecurity, laziness, anger issues, or weak faith. It magnifies them. Third, communicate with wisdom. Not defensiveness. Not anger. Calm clarity. When families see responsibility instead of rebellion, their fear reduces.' }
-    ],
-    reflection: 'Marriage is sunnah. But justice is fard. If you enter marriage unprepared and harm someone emotionally, that is not righteousness. Delay is not sin if the intention is growth. True readiness is when you no longer feel pressured into marriage — you feel responsibility for it.',
-    tags: ['marriage', 'pressure', 'ready', 'age', 'parents', 'guilt', 'anxiety', 'timeline', 'responsibility', 'family']
-  },
-  {
-    id: 'love-vs-attachment',
-    title: 'How do I know if this is love or attachment?',
-    category: 'Marriage',
-    intro: 'Love feels intense. Attachment feels intense. Both make your heart race. Both keep you awake at night. But only one brings peace.',
-    sections: [
-      { heading: 'INTRODUCTION', content: 'Love feels intense. Attachment feels intense. Both make your heart race. Both keep you awake at night. Both make you replay conversations in your head. But only one brings peace. The problem is not feeling deeply. The problem is mislabeling the feeling.' },
-      { heading: 'UNDERSTANDING THE EMOTIONAL DIFFERENCE', content: 'Love is stable. Attachment is unstable. Love says: “I value you.” Attachment says: “I need you.” Love allows you to function without constant reassurance. Attachment makes your mood dependent on their messages. Love grows slowly through trust, shared values, and patience. Attachment grows quickly through emotional dependency and fear of loss.' },
-      { heading: 'WHY ATTACHMENT FEELS SO POWERFUL', content: 'Attachment often forms when someone fills a gap inside you. Loneliness. Low self-worth. Emotional neglect. When a person suddenly gives attention and validation, your brain associates them with safety. This creates emotional dependency. You don’t just want them — you feel like you cannot regulate yourself without them.' },
-      { heading: 'THE SPIRITUAL DIMENSION', content: 'Ask yourself honestly: Has this relationship strengthened your deen or weakened it? Do you feel closer to Allah or more distracted from Him? Real love brings you closer to righteousness. Attachment often pulls you into secrecy, anxiety, and compromise. Love is aligned with barakah. Attachment is driven by fear.' },
-      { heading: 'HEALING THE ATTACHMENT', content: 'Strengthen yourself independently. Build routines without them. Reconnect deeply with your relationship with Allah. Develop hobbies, goals, friendships. When your life is full, love becomes a choice — not a dependency. True love is not obsessive. It is <article class=""></article>teady. It does not consume your identity. It complements it.' }
-    ],
-    reflection: 'If the relationship is halal, transparent, and moving toward commitment with wisdom, it may be love. If it is abolished, secretive, emotionally exhausting, and attachment-based, it is likely attachment. Love gives sakinah. Attachment gives anxiety.',
-    tags: ['love', 'attachment', 'relationship', 'feelings', 'peace', 'dependency', 'obsession', 'emotional', 'security']
-  },
+{
+  id: 'marriage-pressure',
+  title: 'What if I’m not ready but everyone is pressuring me to marry?',
+  category: 'Marriage',
+  intro: 'Marriage in Islam is described as sakinah — tranquility. But pressure creates the opposite of sakinah. It creates anxiety, guilt, and internal conflict.',
+  sections: [
+    { heading: 'INTRODUCTION', content: 'Marriage in Islam is described as sakinah — tranquility. But pressure creates the opposite of sakinah. It creates anxiety, guilt, and internal conflict. When everyone around you says, “It’s time,” but your heart whispers, “I’m not ready,” the tension becomes exhausting. You start questioning yourself. Am I immature? Am I sinful for delaying? Am I overthinking? Or am I protecting something fragile inside me? This question is not rebellion. It is responsibility. Wanting to enter marriage with awareness rather than pressure shows that you understand the seriousness of the commitment.' },
+
+    { heading: 'WHAT DOES “NOT READY” ACTUALLY MEAN?', content: 'Not ready does not always mean rejecting marriage. Often it means you recognize its weight. Marriage is not only love or attraction. It requires emotional stability, financial responsibility, patience during conflict, and the ability to compromise. It means sharing your life with someone and being accountable for their emotional well-being as well. Some people delay marriage because they are still healing from past experiences, trying to stabilize their career, strengthening their faith, or learning how to manage their own emotions. Recognizing these realities is not weakness. It is maturity.' },
+
+    { heading: 'WHY DOES PRESSURE FEEL SO HEAVY?', content: 'Family pressure often comes from concern, culture, and fear. Parents may worry about your future, your reputation, or the possibility of falling into sinful relationships. In many cultures, marriage is seen as a life milestone that must happen within a certain age. When someone delays it, people become anxious and start applying pressure. However, emotional readiness does not follow a calendar. Pressure feels heavy because it removes your sense of choice and replaces it with guilt. Instead of seeing marriage as a meaningful step, you begin to see it as something you must do to satisfy others.' },
+
+    { heading: 'THE DEEPER INTERNAL CONFLICT', content: 'When pressure increases, the mind becomes divided. One part of you fears marrying too early and entering a relationship you are not prepared to sustain. Another part fears waiting too long and losing a good opportunity or disappointing your family. This internal conflict can create anxiety, overthinking, and emotional exhaustion. You may start imagining worst-case scenarios from both directions. The mind becomes noisy because it is trying to protect you from regret.' },
+
+    { heading: 'THE PATH FORWARD', content: 'The healthiest step is to define readiness for yourself. Sit quietly and think about what emotional, financial, and spiritual stability would make you confident entering marriage. Write these things down. Work toward them gradually. Strengthen your character, patience, communication skills, and relationship with Allah. Marriage does not automatically fix personal struggles; it often magnifies them. When you become stronger as a person, you become a better partner. At the same time, communicate respectfully with your family. Explain your reasons calmly and show them that your delay comes from responsibility, not rebellion.' },
+
+    { heading: 'BALANCING RESPONSIBILITY AND TRUST', content: 'While preparation is important, perfection is not required for marriage. No one enters marriage completely ready. What matters is sincere effort, willingness to grow, and trust in Allah. If a good opportunity appears and you feel reasonably prepared, do not let fear prevent you from moving forward. Preparation and trust should exist together.' }
+  ],
+  reflection: 'Marriage is sunnah. But justice is fard. Entering a marriage unprepared and harming someone emotionally is not righteousness. Delay is not sinful when the intention is growth and responsibility. True readiness appears when marriage stops feeling like pressure and starts feeling like a responsibility you are willing to carry.',
+  tags: ['marriage', 'pressure', 'ready', 'age', 'parents', 'guilt', 'anxiety', 'timeline', 'responsibility', 'family']
+},
+{
+  id: 'love-vs-attachment',
+  title: 'How do I know if this is love or attachment?',
+  category: 'Marriage',
+  intro: 'Love feels intense. Attachment feels intense. Both make your heart race. Both keep you awake at night. But only one brings peace.',
+  sections: [
+    { heading: 'INTRODUCTION', content: 'Love feels intense. Attachment feels intense. Both can make your heart race, distract your thoughts, and keep you awake at night. You may replay conversations, wait for messages, and feel emotionally invested in the other person. Because the emotions feel similar, many people confuse attachment with love. The difference is not always obvious at first, but the long-term effects are very different.' },
+
+    { heading: 'UNDERSTANDING THE EMOTIONAL DIFFERENCE', content: 'Love tends to be calm and stable over time. It grows through respect, trust, shared values, and patience. It allows both people to maintain their identity while caring deeply for each other. Attachment, however, often feels unstable. It creates emotional highs when the person gives attention and emotional lows when they do not. Love says, “I value you.” Attachment says, “I cannot function without you.” Love supports independence. Attachment creates dependency.' },
+
+    { heading: 'WHY ATTACHMENT FEELS SO POWERFUL', content: 'Attachment often develops when someone fills an emotional gap in your life. If a person feels lonely, insecure, or emotionally neglected, attention from someone new can feel extremely powerful. The brain begins to associate that person with comfort and validation. Over time this creates dependency. Instead of simply appreciating the person, you begin to rely on them to regulate your emotions and self-worth.' },
+
+    { heading: 'THE SPIRITUAL DIMENSION', content: 'One of the most honest ways to evaluate a relationship is to look at its effect on your spiritual life. Does this relationship bring you closer to Allah or distract you from Him? Does it encourage honesty, modesty, and responsibility? Or does it lead to secrecy, guilt, and emotional chaos? Love that is aligned with halal intentions usually brings peace and clarity. Attachment often creates anxiety and secrecy.' },
+
+    { heading: 'HEALING THE ATTACHMENT', content: 'If you suspect the feeling is attachment, focus on strengthening yourself first. Rebuild your routines, goals, friendships, and personal growth. Strengthen your connection with Allah through prayer, reflection, and learning. When your life becomes balanced and full, your emotions become healthier as well. From that place of stability, love becomes a conscious choice rather than an emotional dependency.' },
+
+    { heading: 'WHEN LOVE IS REAL', content: 'Real love does not demand constant emotional reassurance. It respects boundaries and values long-term commitment. It grows through patience, honesty, and responsibility. When love is genuine and halal, it brings sakinah — a sense of calm, security, and trust.' }
+  ],
+  reflection: 'Love and attachment can feel similar in the beginning, but their outcomes are different. Love brings stability, respect, and peace. Attachment brings anxiety and dependency. The more a relationship aligns with honesty, faith, and commitment, the more likely it is to be real love.',
+  tags: ['love', 'attachment', 'relationship', 'feelings', 'peace', 'dependency', 'obsession', 'emotional', 'security']
+},
   {
     id: 'love-marriage',
     title: 'Is doing love marriage haram in Islam?',
