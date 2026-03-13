@@ -108,16 +108,15 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
       if (data) {
         setFeaturedAyah(data);
         
-        // Auto-translate featured ayah if not English
-        if (currentLanguage !== 'en') {
-          const langName = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage)?.name || currentLanguage;
-          const translated = await translateQuranicAyah(data.text, data.translation, langName);
-          if (translated) {
-            setAiContent(prev => ({
-              ...prev,
-              [data.number]: translated
-            }));
-          }
+        // Auto-translate featured ayah
+        const lang = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage);
+        const langName = lang ? `${lang.name} (${lang.native})` : currentLanguage;
+        const translated = await translateQuranicAyah(data.text, data.translation, langName);
+        if (translated) {
+          setAiContent(prev => ({
+            ...prev,
+            [data.number]: translated
+          }));
         }
       } else {
         setFeaturedError(true);
@@ -187,7 +186,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
 
   // Auto-translate visible ayahs
   useEffect(() => {
-    if (currentLanguage === 'en' || !ayahs.length || !selectedSurah) return;
+    if (!ayahs.length || !selectedSurah) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -201,7 +200,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
           }
         });
       },
-      { threshold: 0, rootMargin: '200px' }
+      { threshold: 0, rootMargin: '500px' }
     );
 
     // Observe all ayah elements

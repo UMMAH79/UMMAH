@@ -18,9 +18,15 @@ export interface GlobalHadith {
 
 const GET_VOICE_NAME = (voice: VoiceType) => 'Charon';
 
-const getApiKey = async (): Promise<string | undefined> => {
+export const getApiKey = async (): Promise<string | undefined> => {
   // Try process.env first
   let key = process.env.GEMINI_API_KEY || process.env.API_KEY;
+  
+  // Fallback to import.meta.env for Vite environments
+  if (!key || key === 'undefined') {
+    key = (import.meta as any).env?.VITE_GEMINI_API_KEY || (import.meta as any).env?.VITE_API_KEY;
+  }
+
   if (key && typeof key === 'string' && key.length > 10 && key !== 'undefined' && key !== 'null') return key;
 
   // Try window.aistudio if available
@@ -34,6 +40,7 @@ const getApiKey = async (): Promise<string | undefined> => {
     }
   }
 
+  console.warn("Gemini API Key not found. AI features may not work.");
   return undefined;
 };
 

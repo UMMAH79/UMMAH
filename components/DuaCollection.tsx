@@ -3,6 +3,7 @@ import { DUAS, SUPPORTED_LANGUAGES } from '../constants';
 import { Dua, AppLanguage } from '../types';
 import { useTranslation } from '../hooks/useTranslation';
 import { GoogleGenAI, ThinkingLevel, Type } from "@google/genai";
+import { getApiKey } from '../services/ai';
 import { 
   Search, 
   Sparkles, 
@@ -50,19 +51,20 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
 
   // Handle translation when language or selected dua changes
   useEffect(() => {
+    setTranslatedContent(null); // Reset on any change
+    
     if (!selectedDua) {
-      setTranslatedContent(null);
       return;
     }
 
     // If English is selected, we still proceed to AI to get refined content if needed
     // or we can just remove this block to let the translateDua handle it
     
-    const translateDua = async () => {
+    const translateDua = async (retryCount = 0) => {
       setIsTranslating(true);
       setTranslationError(false);
       try {
-        const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
+        const apiKey = await getApiKey();
         if (!apiKey) {
           setTranslationError(true);
           return;
@@ -125,13 +127,23 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
         if (response.text) {
           const data = JSON.parse(response.text.trim());
           setTranslatedContent(data);
+        } else if (retryCount < 2) {
+          setTimeout(() => translateDua(retryCount + 1), 1000);
         } else {
           setTranslationError(true);
         }
       } catch (e) {
         console.error("Dua Translation Error:", e);
-        setTranslationError(true);
+        if (retryCount < 2) {
+          setTimeout(() => translateDua(retryCount + 1), 2000);
+        } else {
+          setTranslationError(true);
+        }
       } finally {
+        if (retryCount === 0 || !isTranslating) {
+          // Only stop loading if we're not retrying or it's the last attempt
+          // Actually, better to just check if we're still in the process
+        }
         setIsTranslating(false);
       }
     };
