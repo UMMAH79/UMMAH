@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { fetchSurahs, fetchSurahDetail, fetchAyahDetail } from '../services/api';
-import { translateQuranicAyah } from '../services/ai';
+import { fetchSurahs, fetchSurahDetail, fetchAyahDetail, translateText } from '../services/api';
 import { Surah, Ayah, AppLanguage } from '../types';
 import { SUPPORTED_LANGUAGES } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
@@ -109,9 +108,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
         setFeaturedAyah(data);
         
         // Auto-translate featured ayah
-        const lang = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage);
-        const langName = lang ? `${lang.name} (${lang.native})` : currentLanguage;
-        const translated = await translateQuranicAyah(data.text, data.translation, langName);
+        const translated = await translateText(data.text, currentLanguage);
         if (translated) {
           setAiContent(prev => ({
             ...prev,
@@ -153,31 +150,17 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
     loadingAyahs.current.add(ayah.number);
     setIsAiLoading(prev => ({ ...prev, [ayah.number]: true }));
     
-    let success = false;
-    let attempts = 0;
-    const maxAttempts = 2;
-
-    while (!success && attempts < maxAttempts) {
-      try {
-      const lang = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage);
-      const langName = lang ? `${lang.name} (${lang.native})` : currentLanguage;
-      const translated = await translateQuranicAyah(ayah.text, ayah.translation, langName);
-        if (translated) {
-          translatedAyahs.current.add(ayah.number);
-          setAiContent(prev => ({
-            ...prev,
-            [ayah.number]: translated
-          }));
-          success = true;
-        } else {
-          attempts++;
-          if (attempts < maxAttempts) await new Promise(r => setTimeout(r, 1000));
-        }
-      } catch (e) {
-        console.error(`AI Translation Error for Ayah ${ayah.number} (Attempt ${attempts + 1}):`, e);
-        attempts++;
-        if (attempts < maxAttempts) await new Promise(r => setTimeout(r, 2000));
+    try {
+      const translated = await translateText(ayah.text, currentLanguage);
+      if (translated) {
+        translatedAyahs.current.add(ayah.number);
+        setAiContent(prev => ({
+          ...prev,
+          [ayah.number]: translated
+        }));
       }
+    } catch (e) {
+      console.error(`Translation Error for Ayah ${ayah.number}:`, e);
     }
     
     loadingAyahs.current.delete(ayah.number);

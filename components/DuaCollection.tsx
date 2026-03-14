@@ -2,8 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { DUAS, SUPPORTED_LANGUAGES } from '../constants';
 import { Dua, AppLanguage } from '../types';
 import { useTranslation } from '../hooks/useTranslation';
-import { GoogleGenAI, ThinkingLevel, Type } from "@google/genai";
-import { getApiKey } from '../services/ai';
+import { translateText } from '../services/api';
 import { 
   Search, 
   Sparkles, 
@@ -60,90 +59,30 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
     // If English is selected, we still proceed to AI to get refined content if needed
     // or we can just remove this block to let the translateDua handle it
     
-    const translateDua = async (retryCount = 0) => {
+    const translateDua = async () => {
       setIsTranslating(true);
       setTranslationError(false);
       try {
-        const apiKey = await getApiKey();
-        if (!apiKey) {
-          setTranslationError(true);
-          return;
-        }
-        const ai = new GoogleGenAI({ apiKey });
-        const lang = SUPPORTED_LANGUAGES.find(l => l.id === language);
-        const langName = lang ? `${lang.name} (${lang.native})` : language;
+        // Translate Title
+        const titleRes = await translateText(selectedDua.title, language);
+        // Translate Meaning
+        const meaningRes = await translateText(selectedDua.translations['en'] || '', language);
+        // Get Transliteration from Arabic
+        const arabicRes = await translateText(selectedDua.arabic, language);
         
-        const response = await ai.models.generateContent({
-          model: "gemini-3-flash-preview",
-          contents: language === 'en' 
-            ? `Refine the English translation and provide a clear phonetic transliteration for this Dua.
-            
-            Title: "${selectedDua.title}"
-            Arabic: "${selectedDua.arabic}"
-            Current Meaning: "${selectedDua.translations['en']}"
-            
-            Requirements:
-            1. Provide a clear phonetic transliteration using Latin script for English speakers.
-            
-            Return JSON ONLY:
-            {
-              "title": "Refined Title",
-              "translation": "Refined Meaning",
-              "transliteration": "Clear English transliteration"
-            }`
-            : `Translate the following Islamic Dua details into ${langName}. 
-            Maintain technical religious terms accurately.
-            
-            Title: "${selectedDua.title}"
-            Arabic: "${selectedDua.arabic}"
-            English Meaning: "${selectedDua.translations['en']}"
-            
-            Requirements:
-            1. Provide a phonetic transliteration specifically adapted for ${langName} speakers. 
-               - CRITICAL: Use the ${langName} script (e.g., Devanagari for Hindi, Urdu script for Urdu, Cyrillic for Russian, Bengali script for Bengali, etc.).
-               - If ${langName} uses the Latin script, provide a clear phonetic version.
-            
-            Return JSON ONLY:
-            {
-              "title": "Translated Title",
-              "translation": "Translated Meaning",
-              "transliteration": "Phonetic transliteration in ${langName} script"
-            }`,
-          config: {
-            responseMimeType: "application/json",
-            thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
-            responseSchema: {
-              type: Type.OBJECT,
-              properties: {
-                title: { type: Type.STRING },
-                translation: { type: Type.STRING },
-                transliteration: { type: Type.STRING }
-              },
-              required: ["title", "translation", "transliteration"]
-            }
-          }
-        });
-
-        if (response.text) {
-          const data = JSON.parse(response.text.trim());
-          setTranslatedContent(data);
-        } else if (retryCount < 2) {
-          setTimeout(() => translateDua(retryCount + 1), 1000);
+        if (titleRes && meaningRes && arabicRes) {
+          setTranslatedContent({
+            title: titleRes.translation,
+            translation: meaningRes.translation,
+            transliteration: arabicRes.transliteration || meaningRes.transliteration || selectedDua.transliteration
+          });
         } else {
           setTranslationError(true);
         }
       } catch (e) {
         console.error("Dua Translation Error:", e);
-        if (retryCount < 2) {
-          setTimeout(() => translateDua(retryCount + 1), 2000);
-        } else {
-          setTranslationError(true);
-        }
+        setTranslationError(true);
       } finally {
-        if (retryCount === 0 || !isTranslating) {
-          // Only stop loading if we're not retrying or it's the last attempt
-          // Actually, better to just check if we're still in the process
-        }
         setIsTranslating(false);
       }
     };
