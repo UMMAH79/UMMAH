@@ -164,6 +164,7 @@ const App: React.FC = () => {
       case Tab.Home:
         return (
           <Home 
+            key={settings.language}
             location={location} 
             timings={timings} 
             settings={settings}
@@ -176,7 +177,7 @@ const App: React.FC = () => {
           />
         );
       case Tab.Quran:
-        return <QuranReader currentLanguage={settings.language} />;
+        return <QuranReader key={settings.language} currentLanguage={settings.language} />;
       case Tab.Agent:
         return (
           <AiAgent 

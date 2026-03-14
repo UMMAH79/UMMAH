@@ -19,8 +19,19 @@ export interface GlobalHadith {
 const GET_VOICE_NAME = (voice: VoiceType) => 'Charon';
 
 export const getApiKey = async (): Promise<string | undefined> => {
-  // Try process.env first
-  let key = process.env.GEMINI_API_KEY || process.env.API_KEY;
+  // Check window.aistudio first
+  const aiStudio = (window as any).aistudio;
+  if (aiStudio && aiStudio.getApiKey) {
+    try {
+      const key = await aiStudio.getApiKey();
+      if (key && typeof key === 'string' && key.length > 10 && key !== 'undefined' && key !== 'null') return key;
+    } catch (e) {
+      console.error("Error getting key from AI Studio:", e);
+    }
+  }
+
+  // Try process.env
+  let key = process.env.GEMINI_API_KEY || process.env.API_KEY || process.env.GEMINI_API_KEY1 || process.env.GEMINI_API_KEY8;
   
   // Fallback to import.meta.env for Vite environments
   if (!key || key === 'undefined') {
@@ -28,17 +39,6 @@ export const getApiKey = async (): Promise<string | undefined> => {
   }
 
   if (key && typeof key === 'string' && key.length > 10 && key !== 'undefined' && key !== 'null') return key;
-
-  // Try window.aistudio if available
-  const aiStudio = (window as any).aistudio;
-  if (aiStudio && aiStudio.getApiKey) {
-    try {
-      key = await aiStudio.getApiKey();
-      if (key && typeof key === 'string' && key.length > 10) return key;
-    } catch (e) {
-      console.error("Error getting key from AI Studio:", e);
-    }
-  }
 
   console.warn("Gemini API Key not found. AI features may not work.");
   return undefined;

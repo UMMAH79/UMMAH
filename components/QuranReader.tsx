@@ -80,13 +80,13 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
       stopAudio();
       stopFeaturedAudio();
     };
-  }, [activeEdition]);
+  }, [currentLanguage, activeEdition]);
 
   useEffect(() => {
     if (selectedSurah) {
       handleSurahClick(selectedSurah);
     }
-  }, [activeEdition]);
+  }, [currentLanguage, activeEdition]);
 
   useEffect(() => {
     if (playingAyahNumber && ayahRefs.current[playingAyahNumber]) {
