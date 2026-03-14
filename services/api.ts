@@ -1,5 +1,8 @@
 
+import { GoogleGenAI } from "@google/genai";
 import { PrayerTimes, Surah, Ayah } from '../types';
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
 /**
  * Generic fetch wrapper with basic error handling to prevent app crashes on network failure
@@ -72,90 +75,120 @@ export const fetchAyahDetail = async (id: number, edition: string = 'en.sahih'):
 };
 
 /**
- * Free translation and transliteration using Google Translate's gtx API.
- * No API key required.
+ * Uses Gemini to get high-quality, language-specific transliteration (pronunciation)
+ * and translation for Quranic verses.
  */
-export const translateText = async (text: string, targetLang: string) => {
+export const getAiVerseContent = async (arabicText: string, targetLangName: string) => {
   try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&dt=rm&q=${encodeURIComponent(text)}`;
+    const model = "gemini-3-flash-preview";
+    const prompt = `
+      Arabic Text: "${arabicText}"
+      Target Language: ${targetLangName}
+      
+      Please provide:
+      1. A high-quality translation in ${targetLangName}.
+      2. A precise phonetic transliteration (pronunciation guide) adapted specifically for ${targetLangName} speakers. 
+         - For example, if Turkish, use Turkish phonetic rules (e.g., 'c' for 'j' sounds, 'ş' for 'sh', etc.).
+         - Ensure the FULL verse is transliterated, do not truncate.
+      
+      Return ONLY a JSON object with these keys: "translation", "transliteration".
+    `;
+
+    const response = await ai.models.generateContent({
+      model,
+      contents: [{ parts: [{ text: prompt }] }],
+      config: {
+        responseMimeType: "application/json",
+      }
+    });
+
+    const text = response.text;
+    if (!text) return null;
+    return JSON.parse(text.trim());
+  } catch (error) {
+    console.error("Gemini Verse Error:", error);
+    return null;
+  }
+};
+
+/**
+ * Free translation and transliteration using Google Translate's gtx API.
+ * No API key required. Used as a fallback or for simple text.
+ */
+export const translateText = async (text: string, targetLang: string, sourceTranslit?: string) => {
+  try {
+    // 1. Primary call: Arabic to Target Language
+    // We request translation (t) and transliteration (rm)
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ar&tl=${targetLang}&dt=t&dt=rm&q=${encodeURIComponent(text)}`;
     const response = await fetch(url);
-    if (!response.ok) return null;
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
-    // data[0] contains translation segments
-    // data[0][0][0] is the translated text
-    // data[0][1] often contains transliteration in some versions, 
-    // but in gtx it's usually in a separate segment if dt=rm is provided.
-    
     let translation = "";
-    let transliteration = "";
+    let googleTranslit = "";
     
-    if (data[0]) {
+    if (data && data[0]) {
       data[0].forEach((segment: any) => {
         if (segment[0]) translation += segment[0];
-        // segment[3] is the transliteration of the source text (Arabic)
-        if (segment[3]) transliteration += segment[3] + " ";
-        // segment[2] is the transliteration of the target text (if target is non-Latin)
-        // We prefer source transliteration for Quran/Dua
+        // segment[3] is the transliteration of the source (Arabic)
+        // For some languages, Google provides a native-script transliteration here
+        if (segment[3]) googleTranslit += segment[3] + " ";
       });
     }
 
-    // If no transliteration found in the primary response, try to get it via a second call to English
-    // This ensures we at least have a Latin transliteration even if the target language call failed to provide one
-    if (!transliteration.trim() && targetLang !== 'en') {
-      try {
-        const fallbackUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=rm&q=${encodeURIComponent(text)}`;
-        const fallbackRes = await fetch(fallbackUrl);
-        if (fallbackRes.ok) {
-          const fallbackData = await fallbackRes.json();
-          if (fallbackData[0]) {
-            fallbackData[0].forEach((s: any) => {
-              if (s[3]) transliteration += s[3] + " ";
-              else if (s[2]) transliteration += s[2] + " ";
-            });
-          }
-        }
-      } catch (e) {
-        console.warn("Transliteration fallback failed", e);
+    // 2. Base transliteration (Latin)
+    // We always want a good Latin base as a fallback or for phonetic bridge
+    let latinBase = sourceTranslit || "";
+    if (!latinBase || targetLang === 'en') {
+      // If we don't have a verified one, or we are in English, use Google's
+      if (googleTranslit.trim()) {
+        latinBase = googleTranslit.trim();
       }
     }
-    
-    // If we have a Latin transliteration and the target language is not English,
-    // try to convert the Latin transliteration into the target language's script.
-    // This is a trick: translating a phonetic string often results in a script conversion.
-    if (transliteration.trim() && targetLang !== 'en') {
+
+    // 3. Phonetic Adaptation / Script Conversion
+    let finalTranslit = googleTranslit.trim() || latinBase;
+
+    // If target is not English, we try to adapt the Latin base to the target language
+    if (targetLang !== 'en' && latinBase) {
       try {
-        const scriptUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(transliteration.trim())}`;
-        const scriptRes = await fetch(scriptUrl);
-        if (scriptRes.ok) {
-          const scriptData = await scriptRes.json();
-          if (scriptData[0]) {
-            let scriptTranslit = "";
-            scriptData[0].forEach((s: any) => {
-              if (s[0]) scriptTranslit += s[0];
+        // We use the "phonetic bridge"
+        // Translate the Latin base to the target language
+        const bridgeUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(latinBase)}`;
+        const bridgeRes = await fetch(bridgeUrl);
+        if (bridgeRes.ok) {
+          const bridgeData = await bridgeRes.json();
+          if (bridgeData && bridgeData[0]) {
+            let adapted = "";
+            bridgeData[0].forEach((s: any) => {
+              if (s[0]) adapted += s[0];
             });
             
-            // Only use it if it's actually different from the Latin version 
-            // and contains non-Latin characters (indicating script conversion)
-            if (scriptTranslit && scriptTranslit.trim() !== transliteration.trim()) {
-              const hasNonLatin = /[^\u0000-\u007F]/.test(scriptTranslit);
-              if (hasNonLatin) {
-                transliteration = scriptTranslit;
+            // If Google changed the spelling, it's likely a phonetic adaptation
+            if (adapted.trim() && adapted.trim().toLowerCase() !== latinBase.toLowerCase()) {
+              // Heuristic: if it's not a long sentence (meaning it's likely phonetics)
+              // or if it contains non-Latin characters
+              const hasNonLatin = /[^\u0000-\u007F]/.test(adapted);
+              if (hasNonLatin || adapted.split(' ').length === latinBase.split(' ').length) {
+                finalTranslit = adapted.trim();
               }
             }
           }
         }
       } catch (e) {
-        console.warn("Script conversion failed", e);
+        console.warn("Phonetic bridge failed", e);
       }
     }
     
     return {
       translation: translation.trim() || text,
-      transliteration: transliteration.trim() || ""
+      transliteration: finalTranslit || latinBase || googleTranslit.trim() || ""
     };
   } catch (error) {
-    console.error("Translation error:", error);
-    return null;
+    console.error('Translation Error:', error);
+    return {
+      translation: text,
+      transliteration: sourceTranslit || ""
+    };
   }
 };

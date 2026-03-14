@@ -68,7 +68,7 @@ const DuaCollection: React.FC<DuaCollectionProps> = ({ language }) => {
         // Translate Meaning
         const meaningRes = await translateText(selectedDua.translations['en'] || '', language);
         // Get Transliteration from Arabic
-        const arabicRes = await translateText(selectedDua.arabic, language);
+        const arabicRes = await translateText(selectedDua.arabic, language, selectedDua.transliteration);
         
         if (titleRes && meaningRes && arabicRes) {
           setTranslatedContent({

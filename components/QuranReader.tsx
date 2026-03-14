@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { fetchSurahs, fetchSurahDetail, fetchAyahDetail, translateText } from '../services/api';
+import { fetchSurahs, fetchSurahDetail, fetchAyahDetail, translateText, getAiVerseContent } from '../services/api';
 import { Surah, Ayah, AppLanguage } from '../types';
 import { SUPPORTED_LANGUAGES } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
@@ -63,7 +63,10 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
   useEffect(() => {
     fetchSurahs().then(setSurahs);
     loadDailyFeaturedAyah();
-    setAiContent({}); // Reset AI content on language change
+    
+    // Reset AI content and refs on language or surah change
+    setAiContent({});
+    setIsAiLoading({});
     translatedAyahs.current.clear();
     loadingAyahs.current.clear();
     
@@ -79,13 +82,7 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
       stopAudio();
       stopFeaturedAudio();
     };
-  }, [currentLanguage, activeEdition]);
-
-  useEffect(() => {
-    if (selectedSurah) {
-      handleSurahClick(selectedSurah);
-    }
-  }, [currentLanguage, activeEdition]);
+  }, [currentLanguage, activeEdition, selectedSurah?.number]);
 
   useEffect(() => {
     if (playingAyahNumber && ayahRefs.current[playingAyahNumber]) {
@@ -108,12 +105,23 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
         setFeaturedAyah(data);
         
         // Auto-translate featured ayah
-        const translated = await translateText(data.text, currentLanguage);
-        if (translated) {
-          setAiContent(prev => ({
-            ...prev,
-            [data.number]: translated
-          }));
+        if (currentLanguage !== 'en') {
+          const langName = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage)?.name || 'English';
+          const aiRes = await getAiVerseContent(data.text, langName);
+          if (aiRes) {
+            setAiContent(prev => ({
+              ...prev,
+              [data.number]: aiRes
+            }));
+          } else {
+            const translated = await translateText(data.text, currentLanguage, data.transliteration);
+            if (translated) {
+              setAiContent(prev => ({
+                ...prev,
+                [data.number]: translated
+              }));
+            }
+          }
         }
       } else {
         setFeaturedError(true);
@@ -151,13 +159,30 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
     setIsAiLoading(prev => ({ ...prev, [ayah.number]: true }));
     
     try {
-      const translated = await translateText(ayah.text, currentLanguage);
-      if (translated) {
+      if (currentLanguage === 'en') {
+        loadingAyahs.current.delete(ayah.number);
+        setIsAiLoading(prev => ({ ...prev, [ayah.number]: false }));
+        return;
+      }
+
+      const langName = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage)?.name || 'English';
+      const aiRes = await getAiVerseContent(ayah.text, langName);
+      
+      if (aiRes) {
         translatedAyahs.current.add(ayah.number);
         setAiContent(prev => ({
           ...prev,
-          [ayah.number]: translated
+          [ayah.number]: aiRes
         }));
+      } else {
+        const translated = await translateText(ayah.text, currentLanguage, ayah.transliteration);
+        if (translated) {
+          translatedAyahs.current.add(ayah.number);
+          setAiContent(prev => ({
+            ...prev,
+            [ayah.number]: translated
+          }));
+        }
       }
     } catch (e) {
       console.error(`Translation Error for Ayah ${ayah.number}:`, e);
@@ -282,26 +307,29 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
   );
 
   const getDynamicFontSizes = (ayah: Ayah) => {
+    const currentTranslit = aiContent[ayah.number]?.transliteration || ayah.transliteration;
+    const currentTrans = aiContent[ayah.number]?.translation || ayah.translation;
+    
     const totalChars = ayah.text.length + 
-                       (showTransliteration ? ayah.transliteration.length : 0) + 
-                       (showTranslation ? ayah.translation.length : 0);
+                       (showTransliteration ? currentTranslit.length : 0) + 
+                       (showTranslation ? currentTrans.length : 0);
     
     let arSize = 'text-3xl md:text-4xl';
     let exSize = 'text-sm md:text-base';
     let trSize = 'text-xs md:text-sm';
 
     if (totalChars > 800) {
-      arSize = 'text-lg md:text-xl';
-      exSize = 'text-[9px] md:text-[10px]';
-      trSize = 'text-[8px] md:text-[9px]';
-    } else if (totalChars > 500) {
       arSize = 'text-xl md:text-2xl';
-      exSize = 'text-[10px] md:text-xs';
-      trSize = 'text-[9px] md:text-[10px]';
-    } else if (totalChars > 300) {
-      arSize = 'text-2xl md:text-3xl';
       exSize = 'text-xs md:text-sm';
       trSize = 'text-[10px] md:text-xs';
+    } else if (totalChars > 500) {
+      arSize = 'text-2xl md:text-3xl';
+      exSize = 'text-sm md:text-base';
+      trSize = 'text-xs md:text-sm';
+    } else if (totalChars > 300) {
+      arSize = 'text-2xl md:text-3xl';
+      exSize = 'text-sm md:text-base';
+      trSize = 'text-xs md:text-sm';
     } else if (totalChars < 120) {
       arSize = 'text-4xl md:text-5xl';
       exSize = 'text-base md:text-lg';
