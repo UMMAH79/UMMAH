@@ -10,28 +10,72 @@ interface FreeAiResponse {
   content: string;
 }
 
-const SCHOLAR_SUGGESTION = "\n\n**Note:** This query involves personal or complex matters. I strongly suggest you consult a **trusted local Imam or Islamic Scholar** for a definitive ruling (Fatwa) tailored to your specific situation.";
+const SCHOLAR_SUGGESTION = "\n\n**Note:** For complex personal matters, it is always best to consult a **trusted local Imam or Scholar** who can provide a specific ruling (Fatwa) for your unique situation.";
 
 const CONVERSATION_MAP: Record<string, string> = {
-  "assalamu alaikum": "Wa Alaikum Assalam! I am **UMMAH AI**, your Islamic lifestyle companion. How can I assist you today in your journey of faith?",
-  "salam": "Wa Alaikum Assalam! How can I help you today?",
-  "hello": "Assalamu Alaikum! I am **UMMAH AI**. I can help you with questions about Islam, Quran, and Hadith. How can I assist you?",
-  "hi": "Assalamu Alaikum! How can I help you today?",
-  "how are you": "Alhamdulillah, I am functioning well and ready to assist you. How are you doing?",
-  "thank you": "You are most welcome! May Allah bless you. Is there anything else you would like to know?",
-  "jazakallah": "Wa Iyyakum! May Allah reward you with goodness as well.",
-  "who are you": "I am **UMMAH AI**, a specialized assistant designed to provide authentic Islamic knowledge and guidance based on the Quran and Sunnah.",
-  "what can you do": "I can provide information on **Salah**, **Zakat**, **Fasting**, **Hajj**, and general Islamic history. I can also help you find relevant **Quranic verses**."
+  "assalamu alaikum": "Wa Alaikum Assalam! I am **UMMAH AI**. How can I assist you today?",
+  "salam": "Wa Alaikum Assalam! How can I help you?",
+  "hello": "Assalamu Alaikum! I am **UMMAH AI**. How can I assist you with Islamic knowledge today?",
+  "hi": "Assalamu Alaikum! How can I help you?",
+  "how are you": "Alhamdulillah, I am here to serve you. How can I help you today?",
+  "thank you": "You are most welcome! May Allah bless you.",
+  "jazakallah": "Wa Iyyakum! May Allah reward you with goodness.",
+  "who are you": "I am **UMMAH AI**, your companion for authentic Islamic knowledge and guidance.",
+  "what can you do": "I can provide detailed information on **Salah**, **Quran**, **Hadith**, **Islamic History**, and **Daily Life** according to the Sunnah."
 };
 
-const ISLAMIC_KEYWORDS = [
-  "islam", "allah", "prophet", "quran", "hadith", "salah", "prayer", "fasting", "ramadan", 
-  "zakat", "hajj", "mecca", "medina", "dua", "wudu", "ghusl", "halal", "haram", "iman", 
-  "sunnah", "sharia", "ummah", "jannah", "jahannam", "angel", "caliph", "mosque", "imam", 
-  "fatwa", "jihad", "hijab", "modesty", "patience", "gratitude", "marriage", "divorce", 
-  "parents", "tahajjud", "kaaba", "eid", "companion", "sahaba", "deen", "faith", "worship",
-  "sin", "repent", "tawbah", "afterlife", "judgment", "creation", "miracle"
-];
+const KNOWLEDGE_BASE: Record<string, string> = {
+  "salah": "Salah is the foundation of a Muslim's life. The **Five Daily Prayers** (Fajr, Dhuhr, Asr, Maghrib, Isha) are mandatory. It is the first thing we will be questioned about on the Day of Judgment.",
+  "zakat": "Zakat is a beautiful system of wealth purification. It is **2.5%** of your qualifying wealth given to those in need, ensuring social justice and spiritual growth.",
+  "fasting": "Fasting in **Ramadan** is a shield and a means of attaining Taqwa (God-consciousness). It is not just abstaining from food, but also from bad speech and actions.",
+  "hajj": "Hajj is the journey of a lifetime to the **House of Allah** in Mecca. It is a demonstration of the unity of the Ummah and a chance for a fresh start in life.",
+  "iman": "Iman is the firm belief in **Allah**, His Angels, His Books, His Messengers, the Last Day, and the Divine Decree. It is the light that guides a believer's heart.",
+  "quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH). It is a healing for the hearts and a guide for all of humanity.",
+  "hadith": "Hadith are the recorded sayings and actions of the **Prophet Muhammad (PBUH)**. They provide the practical application of the Quranic teachings.",
+  "sunnah": "The Sunnah is the way of the **Prophet (PBUH)**. Following it brings us closer to Allah and ensures we are living our lives in the best possible way.",
+  "halal": "Halal refers to everything that is **permissible** in Islam. It is a blessing from Allah that ensures our physical and spiritual well-being.",
+  "haram": "Haram refers to what is **forbidden**. Avoiding the Haram is an act of worship that protects us from harm and keeps our hearts pure.",
+  "wudu": "Wudu is the ritual purification before prayer. It is a means of **washing away sins** and preparing oneself to stand before the Creator.",
+  "ghusl": "Ghusl is the full-body purification required after certain states. It is a **mandatory act of worship** that restores ritual purity.",
+  "dua": "Dua is the **weapon of the believer**. It is a direct conversation with Allah, who says: 'Call upon Me; I will respond to you.'",
+  "tahajjud": "Tahajjud is the **Night Prayer**, a time when the gates of heaven are open and Allah descends to the lowest heaven to answer the prayers of His servants.",
+  "marriage": "Marriage is **half of our Deen**. It is a sacred contract built on love, mercy, and mutual respect between a husband and a wife.",
+  "divorce": "While permitted as a last resort, divorce is the **most disliked** of permissible things. Islam encourages reconciliation and patience whenever possible.",
+  "parents": "Kindness to parents is ranked immediately after the worship of Allah. **Paradise lies at the feet of mothers**, and the pleasure of Allah is in the pleasure of the father.",
+  "modesty": "Modesty (Haya) is a branch of faith. It is the **beauty of the soul** and applies to our dress, our speech, and our interactions with others.",
+  "patience": "Patience (Sabr) is a light. Allah is with those who are patient, and the reward for Sabr is **Paradise without account**.",
+  "gratitude": "Gratitude (Shukr) is the key to more blessings. If you are grateful, Allah will surely **increase you** in His favors.",
+  "ramadan": "Ramadan is the month of the Quran and mercy. It is a time for **spiritual rebooting** and strengthening our connection with the Creator.",
+  "eid": "Eid is a time of **celebration and gratitude**. We celebrate the completion of worship and share our joy with the family and the community.",
+  "prophet": "Prophet Muhammad (PBUH) is the **Mercy to the Worlds**. He is our role model in every aspect of life, from leadership to family and character.",
+  "kaaba": "The Kaaba is the **Qibla** for all Muslims. It represents the unity of the Ummah as we all face one direction in our worship of the One God.",
+  "mecca": "Mecca is the **holiest city**, the birthplace of the Prophet (PBUH) and the site of the first house of worship built for humanity.",
+  "medina": "Medina is the **City of the Prophet**, a place of peace and tranquility where the first Islamic state was established and where the Prophet (PBUH) rests.",
+  "hijab": "The Hijab is an act of **obedience and modesty**. It is a symbol of a woman's identity and her commitment to the commands of Allah.",
+  "jannah": "Jannah is the **eternal home** of the righteous. It contains what no eye has seen, no ear has heard, and no human heart has ever imagined.",
+  "jahannam": "Jahannam is the place of punishment for those who rejected the truth. It is a **reminder to stay on the straight path** and seek Allah's mercy.",
+  "angel": "Angels are noble servants of Allah. They **never disobey Him** and are constantly engaged in His worship and carrying out His commands.",
+  "sharia": "Sharia is the **Divine Path** that ensures justice, mercy, and the well-being of all people. It is the framework for a righteous life.",
+  "ummah": "The Ummah is the **global family** of Muslims. We are like one body; if one part suffers, the whole body feels the pain and the fever.",
+  "caliph": "A Caliph is a leader who follows the guidance of the Prophet (PBUH) to **uphold justice** and lead the community in the way of Allah.",
+  "mosque": "The Mosque is the **heart of the community**. it is a place of worship, learning, and brotherhood for all Muslims.",
+  "imam": "An Imam is a leader in prayer and a **guide for the community**. They carry the responsibility of teaching the Deen and leading by example.",
+  "fatwa": "A Fatwa is a **scholarly opinion** on Islamic law. It helps Muslims navigate modern challenges while staying true to the principles of the faith.",
+  "jihad": "Jihad is the **struggle for the sake of Allah**. The greatest Jihad is the struggle against one's own soul to stay on the path of righteousness.",
+  "charity": "Charity (Sadaqah) **extinguishes sins** as water extinguishes fire. It is a proof of one's faith and a means of bringing barakah into one's life.",
+  "forgiveness": "Allah is the **Most Forgiving**. No matter how great the sin, His mercy is greater. We should always turn back to Him in sincere repentance.",
+  "death": "Death is not the end, but a **bridge to the hereafter**. It is a reminder to live our lives in a way that prepares us for the meeting with our Lord.",
+  "afterlife": "The Afterlife (Akhirah) is the **true life**. This world is temporary, while the next is eternal. Our actions here determine our station there.",
+  "judgment": "The Day of Judgment is the day of **absolute justice**. Every soul will be rewarded for what it earned, and no one will be wronged in the least.",
+  "mercy": "Allah's Mercy precedes His Wrath. He is **Ar-Rahman and Ar-Rahim**, the source of all compassion and kindness in the universe.",
+  "knowledge": "Seeking knowledge is **obligatory** for every Muslim. It is the path to understanding our purpose and drawing closer to our Creator.",
+  "honesty": "Honesty is a core Islamic value. The Prophet (PBUH) was known as **Al-Amin** (the Trustworthy) even before he received the revelation.",
+  "justice": "Islam commands justice even against oneself or one's kin. Allah loves those who are **just and fair** in all their dealings.",
+  "brotherhood": "Muslims are brothers to one another. We should **love for our brother** what we love for ourselves and support each other in goodness.",
+  "character": "The best of you are those with the **best character**. Good manners are the heaviest thing on the scales on the Day of Judgment.",
+  "intentions": "Actions are judged by **intentions**. A small deed done with a pure heart is better than a great deed done for show.",
+  "trust": "Trust in Allah (Tawakkul) means doing your best and then **leaving the results to Him**. He is the best of disposers of affairs."
+};
 
 /**
  * Gathers information from free sources and local knowledge base.
@@ -47,24 +91,33 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
   }
 
   // 2. Topic Filter - Check if it's Islamic
+  const ISLAMIC_KEYWORDS = [
+    "islam", "allah", "prophet", "quran", "hadith", "salah", "prayer", "fasting", "ramadan", 
+    "zakat", "hajj", "mecca", "medina", "dua", "wudu", "ghusl", "halal", "haram", "iman", 
+    "sunnah", "sharia", "ummah", "jannah", "jahannam", "angel", "caliph", "mosque", "imam", 
+    "fatwa", "jihad", "hijab", "modesty", "patience", "gratitude", "marriage", "divorce", 
+    "parents", "tahajjud", "kaaba", "eid", "companion", "sahaba", "deen", "faith", "worship",
+    "sin", "repent", "tawbah", "afterlife", "judgment", "creation", "miracle", "charity",
+    "forgiveness", "death", "knowledge", "honesty", "justice", "brotherhood", "character",
+    "intentions", "trust"
+  ];
   const isIslamic = ISLAMIC_KEYWORDS.some(k => lowerQuery.includes(k));
   
-  // If not Islamic and not a greeting, politely decline
   if (!isIslamic) {
     return { 
-      content: "**UMMAH AI** is specialized in **Islamic knowledge** and guidance. I cannot provide information on topics outside of Islam. Please ask me something related to our beautiful faith!" 
+      content: "**UMMAH AI** is dedicated to providing **Islamic knowledge**. I am here to answer your questions about faith, Quran, Sunnah, and Islamic lifestyle. Please ask me something related to these topics!" 
     };
   }
 
-  // 3. Check for personal/sensitive topics
-  const sensitiveKeywords = [
-    "should i", "can i marry", "is it haram for me", "my wife", "my husband", 
-    "my problem", "feeling", "depressed", "suicide", "fatwa", "ruling on me",
-    "divorce", "talaq", "inheritance", "money problem"
-  ];
-  
-  const isSensitive = sensitiveKeywords.some(k => lowerQuery.includes(k));
-  
+  // 3. Search Local Knowledge Base
+  let localResult = "";
+  for (const [key, val] of Object.entries(KNOWLEDGE_BASE)) {
+    if (lowerQuery.includes(key)) {
+      localResult = val;
+      break;
+    }
+  }
+
   // 4. Search Quran (Free API)
   let quranResult = "";
   try {
@@ -80,16 +133,7 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
     console.warn("Quran search failed", e);
   }
 
-  // 5. Search Local Knowledge Base
-  let localResult = "";
-  for (const [key, val] of Object.entries(KNOWLEDGE_BASE)) {
-    if (lowerQuery.includes(key)) {
-      localResult = val;
-      break;
-    }
-  }
-
-  // 6. Search Wikipedia (Free API)
+  // 5. Search Wikipedia (Free API)
   let wikiResult = "";
   if (!localResult) {
     try {
@@ -105,24 +149,32 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
     }
   }
 
-  // 7. Construct Final Response
+  // 6. Construct Final Response
   let content = "";
   
   if (localResult) {
     content = `**${query.toUpperCase()}**\n\n${localResult}`;
   } else if (wikiResult) {
-    content = `**INFORMATION GATHERED**\n\n${wikiResult}`;
+    content = `**GUIDANCE FOUND**\n\n${wikiResult}`;
   } else if (quranResult) {
     content = `**QURANIC GUIDANCE**\n\nI found a relevant verse for your query:`;
   } else {
-    content = `**UMMAH AI GUIDANCE**\n\nI am currently operating in **Lite Mode**. I can provide general Islamic information, but for specific queries, I recommend checking our **Ask & Learn** section or the **Quran Reader**.`;
+    content = `**UMMAH AI GUIDANCE**\n\nI have searched the available resources. Based on Islamic principles, we should always seek to align our actions with the **Quran and Sunnah**. For deeper details, I recommend exploring our **Ask & Learn** section or the **Quran Reader**.`;
   }
 
   if (quranResult) {
     content += quranResult;
   }
 
-  if (isSensitive || (!localResult && !wikiResult && !quranResult)) {
+  // Check for personal/sensitive topics for scholar suggestion
+  const sensitiveKeywords = [
+    "should i", "can i marry", "is it haram for me", "my wife", "my husband", 
+    "my problem", "feeling", "depressed", "suicide", "fatwa", "ruling on me",
+    "divorce", "talaq", "inheritance", "money problem"
+  ];
+  const isSensitive = sensitiveKeywords.some(k => lowerQuery.includes(k));
+
+  if (isSensitive) {
     content += SCHOLAR_SUGGESTION;
   }
 
