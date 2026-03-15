@@ -136,7 +136,7 @@ const AdhanPlayer: React.FC<AdhanPlayerProps> = ({ voiceId, prayerName, onClose 
       <div className="relative mb-6 md:mb-10 flex flex-col items-center animate-fade-up shrink-0">
         <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-ummah-icon-active-dark to-emerald-900 p-1 mb-2 shadow-glow">
           <div className="w-full h-full rounded-full bg-ummah-bg-dark flex items-center justify-center text-ummah-icon-active-dark">
-            <User size={24} md:size={30} />
+            <User className="w-6 h-6 md:w-8 md:h-8" />
           </div>
         </div>
         <h3 className="text-white font-bold text-base md:text-lg tracking-tight mb-0.5">{voice.reciter}</h3>

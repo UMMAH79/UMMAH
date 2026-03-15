@@ -49,40 +49,59 @@ const isValidKey = (key: any): boolean => {
   return typeof key === 'string' && key.length > 10 && key !== 'undefined' && key !== 'null';
 };
 
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 /**
- * Premium Markdown Parser
+ * Premium Markdown Parser using react-markdown
  */
 const MarkdownText: React.FC<{ content: string }> = ({ content }) => {
-  const lines = content.split('\n');
-  
+  const isArabic = (text: string) => /[\u0600-\u06FF]/.test(text);
+
   return (
-    <div className="space-y-3">
-      {lines.map((line, lineIdx) => {
-        if (!line.trim()) return <div key={lineIdx} className="h-2" />;
-        
-        const parts = line.split(/(\*\*.*?\*\*|\*.*?\*)/g);
-        return (
-          <p key={lineIdx} className="leading-relaxed">
-            {parts.map((part, i) => {
-              if (part.startsWith('**') && part.endsWith('**')) {
-                return (
-                  <strong key={i} className="font-extrabold text-ummah-text-light dark:text-white">
-                    {part.slice(2, -2)}
-                  </strong>
-                );
-              }
-              if (part.startsWith('*') && part.endsWith('*')) {
-                return (
-                  <em key={i} className="arabic-text italic text-lg text-ummah-icon-active-light dark:text-ummah-icon-active-dark not-italic-style">
-                    {part.slice(1, -1)}
-                  </em>
-                );
-              }
-              return part;
-            })}
-          </p>
-        );
-      })}
+    <div className="markdown-body prose dark:prose-invert max-w-none prose-sm prose-p:leading-relaxed prose-strong:font-extrabold prose-strong:text-ummah-text-light dark:prose-strong:text-white prose-em:not-italic prose-em:text-ummah-icon-active-light dark:prose-em:text-ummah-icon-active-dark">
+      <ReactMarkdown 
+        remarkPlugins={[remarkGfm]}
+        components={{
+          p: ({ children }) => <p className="mb-3 last:mb-0">{children}</p>,
+          strong: ({ children }) => (
+            <strong className="font-extrabold text-ummah-text-light dark:text-white">
+              {children}
+            </strong>
+          ),
+          em: ({ children }) => {
+            const text = String(children);
+            return (
+              <em className={`${isArabic(text) ? 'arabic-text text-lg' : 'italic'} text-ummah-icon-active-light dark:text-ummah-icon-active-dark not-italic-style`}>
+                {children}
+              </em>
+            );
+          },
+          ul: ({ children }) => <ul className="list-disc pl-4 mb-3 space-y-1">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal pl-4 mb-3 space-y-1">{children}</ol>,
+          li: ({ children }) => <li className="text-ummah-text-light/80 dark:text-ummah-text-secondary-dark">{children}</li>,
+          h1: ({ children }) => <h1 className="premium-header text-lg font-black mb-2 uppercase tracking-tight">{children}</h1>,
+          h2: ({ children }) => <h2 className="premium-header text-base font-black mb-2 uppercase tracking-tight">{children}</h2>,
+          h3: ({ children }) => <h3 className="premium-header text-sm font-black mb-2 uppercase tracking-tight">{children}</h3>,
+          blockquote: ({ children }) => (
+            <blockquote className="border-l-4 border-ummah-gold/30 pl-4 py-1 italic my-3 text-ummah-text-light/70 dark:text-ummah-text-secondary-dark/70">
+              {children}
+            </blockquote>
+          ),
+          code: ({ children }) => (
+            <code className="bg-ummah-mint dark:bg-white/5 px-1.5 py-0.5 rounded-md font-mono text-xs text-ummah-icon-active-light dark:text-ummah-icon-active-dark">
+              {children}
+            </code>
+          ),
+          pre: ({ children }) => (
+            <pre className="bg-ummah-bg-light dark:bg-black/20 p-4 rounded-2xl overflow-x-auto my-4 border border-black/5 dark:border-white/5 no-scrollbar">
+              {children}
+            </pre>
+          )
+        }}
+      >
+        {content}
+      </ReactMarkdown>
     </div>
   );
 };

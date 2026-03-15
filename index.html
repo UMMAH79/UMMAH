@@ -105,6 +105,69 @@
         .dark .green-scrollbar::-webkit-scrollbar-thumb {
             background: #10B981;
         }
+
+        /* Consistent Markdown Styling */
+        .markdown-body {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: inherit;
+        }
+        .markdown-body p {
+            margin-bottom: 0.75rem;
+        }
+        .markdown-body strong {
+            font-weight: 800;
+            color: #0E3B2E;
+        }
+        .dark .markdown-body strong {
+            color: #F1F5F9;
+        }
+        .markdown-body em {
+            font-style: italic;
+            color: #0E6F4F;
+        }
+        .dark .markdown-body em {
+            color: #10B981;
+        }
+        .markdown-body em.arabic-text {
+            font-style: normal;
+            font-size: 1.25rem;
+        }
+        .markdown-body ul, .markdown-body ol {
+            padding-left: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .markdown-body li {
+            margin-bottom: 0.25rem;
+        }
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #0E6F4F;
+        }
+        .dark .markdown-body h1, .dark .markdown-body h2, .dark .markdown-body h3 {
+            color: #10B981;
+        }
+        .markdown-body blockquote {
+            border-left: 4px solid rgba(197, 160, 89, 0.3);
+            padding-left: 1rem;
+            font-style: italic;
+            margin: 1rem 0;
+            opacity: 0.8;
+        }
+        .markdown-body code {
+            font-family: monospace;
+            background: rgba(14, 111, 79, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.375rem;
+            font-size: 0.85em;
+        }
+        .dark .markdown-body code {
+            background: rgba(255, 255, 255, 0.05);
+        }
         @keyframes fade-up {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }

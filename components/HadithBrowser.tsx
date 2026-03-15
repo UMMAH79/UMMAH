@@ -39,9 +39,11 @@ import {
 } from '../services/ai';
 import { useTranslation } from '../hooks/useTranslation';
 
+import { AppLanguage } from '../types';
+
 interface HadithBrowserProps {
   onAskAgent?: (query: string) => void;
-  language: string;
+  language: AppLanguage;
 }
 
 const BOOKMARKS_KEY = 'ummah_hub_hadith_bookmarks';

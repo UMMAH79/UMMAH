@@ -26,12 +26,14 @@ const CONVERSATION_MAP: Record<string, string> = {
 
 const KNOWLEDGE_BASE: Record<string, string> = {
   "allah": "Allah is the **One and Only God**, the Creator and Sustainer of the universe. In Islam, He is known by His **99 Beautiful Names**, such as Ar-Rahman (The Most Merciful) and Ar-Rahim (The Especially Merciful). He has no partners, no parents, and no children. He is the source of all peace, guidance, and mercy. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
+  "who is allah": "Allah is the **One and Only God**, the Creator and Sustainer of the universe. In Islam, He is known by His **99 Beautiful Names**, such as Ar-Rahman (The Most Merciful) and Ar-Rahim (The Especially Merciful). He has no partners, no parents, and no children. He is the source of all peace, guidance, and mercy. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
   "salah": "Salah is the foundation of a Muslim's life. The **Five Daily Prayers** (Fajr, Dhuhr, Asr, Maghrib, Isha) are mandatory. It is the first thing we will be questioned about on the Day of Judgment. It is our direct connection to our Creator.",
   "zakat": "Zakat is a beautiful system of wealth purification. It is **2.5%** of your qualifying wealth given to those in need, ensuring social justice and spiritual growth. It is an act of worship that cleanses the heart from greed.",
   "fasting": "Fasting in **Ramadan** is a shield and a means of attaining Taqwa (God-consciousness). It is not just abstaining from food, but also from bad speech and actions. It is a time of spiritual renewal and empathy for the poor.",
   "hajj": "Hajj is the journey of a lifetime to the **House of Allah** in Mecca. It is a demonstration of the unity of the Ummah and a chance for a fresh start in life. It commemorates the trials of Prophet Ibrahim (AS) and his family.",
   "iman": "Iman is the firm belief in **Allah**, His Angels, His Books, His Messengers, the Last Day, and the Divine Decree. It is the light that guides a believer's heart and gives purpose to our existence.",
   "quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH) through the Angel Jibril. It is a healing for the hearts, a guide for all of humanity, and the final revelation.",
+  "what is quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH) through the Angel Jibril. It is a healing for the hearts, a guide for all of humanity, and the final revelation.",
   "hadith": "Hadith are the recorded sayings and actions of the **Prophet Muhammad (PBUH)**. They provide the practical application of the Quranic teachings and are the second source of Islamic law.",
   "sunnah": "The Sunnah is the way of the **Prophet (PBUH)**. Following it brings us closer to Allah and ensures we are living our lives in the best possible way, following the best of examples.",
   "halal": "Halal refers to everything that is **permissible** in Islam. It is a blessing from Allah that ensures our physical and spiritual well-being. It covers food, earnings, and lifestyle.",
@@ -88,7 +90,11 @@ const INTENT_MAP: Record<string, string> = {
   "why was i created": "Allah says in the Quran: *'And I did not create the jinn and mankind except to worship Me.'* (**Surah Adh-Dhariyat, 51:56**). Our purpose is to recognize our Creator, live according to His guidance, and return to Him with a pure heart.",
   "is music haram": "The ruling on music is a subject of scholarly discussion. Many scholars advise caution, especially if the content promotes vanity or neglect of remembrance of Allah. It is best to focus on the **recitation of the Quran**, which brings true peace to the heart.",
   "how to be a better muslim": "To improve your faith: 1. Be consistent in **Salah**, 2. Read the **Quran** with understanding, 3. Maintain **Good Character** (Akhlaq), 4. Seek **Knowledge**, and 5. Make constant **Dua** for guidance. Remember, Allah loves those who strive to improve.",
-  "what is jannah": "Jannah is the **Eternal Paradise** promised to the believers. It is a place of infinite joy, where there is no pain, no sadness, and no death. The greatest reward in Jannah will be the **vision of Allah (SWT)**."
+  "what is jannah": "Jannah is the **Eternal Paradise** promised to the believers. It is a place of infinite joy, where there is no pain, no sadness, and no death. The greatest reward in Jannah will be the **vision of Allah (SWT)**.",
+  "who is allah": "Allah is the **One and Only God**, the Creator and Sustainer of the universe. In Islam, He is known by His **99 Beautiful Names**, such as Ar-Rahman (The Most Merciful) and Ar-Rahim (The Especially Merciful). He has no partners, no parents, and no children. He is the source of all peace, guidance, and mercy. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
+  "tell me about allah": "Allah is the **One and Only God**, the Creator and Sustainer of the universe. In Islam, He is known by His **99 Beautiful Names**, such as Ar-Rahman (The Most Merciful) and Ar-Rahim (The Especially Merciful). He has no partners, no parents, and no children. He is the source of all peace, guidance, and mercy. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
+  "tell me about quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH) through the Angel Jibril. It is a healing for the hearts, a guide for all of humanity, and the final revelation.",
+  "what is the quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH) through the Angel Jibril. It is a healing for the hearts, a guide for all of humanity, and the final revelation."
 };
 
 /**
@@ -149,30 +155,34 @@ export const getFreeAiResponse = async (
   const lastAiMessage = history.length > 0 ? history.filter(m => m.role === 'model').pop()?.content.toLowerCase() : "";
 
   // 1. Handle Memory/Context (Follow-ups and Corrections)
-  const isCorrection = lowerQuery.includes("not those") || lowerQuery.includes("i said") || lowerQuery.includes("wrong") || lowerQuery.includes("instead");
+  const isCorrection = lowerQuery.includes("not those") || lowerQuery.includes("i said") || lowerQuery.includes("wrong") || lowerQuery.includes("instead") || lowerQuery.includes("incorrect");
+  const isFollowUp = lowerQuery.length < 25 && (lowerQuery.includes("more") || lowerQuery.includes("elaborate") || lowerQuery.includes("why") || lowerQuery.includes("how") || lowerQuery.includes("tell me about it") || lowerQuery.includes("explain"));
+  
   let contextualQuery = lowerQuery;
 
   if (isCorrection && lastUserMessage) {
-    // Try to extract the topic from the previous message if the current one is a correction
     contextualQuery = lastUserMessage;
+  } else if (isFollowUp && lastUserMessage) {
+    // Combine current follow-up with previous topic
+    contextualQuery = `${lastUserMessage} ${lowerQuery}`;
   }
 
   // 2. Handle Normal Conversation
   for (const [key, val] of Object.entries(CONVERSATION_MAP)) {
-    if (lowerQuery.includes(key)) {
+    if (lowerQuery === key || lowerQuery.startsWith(key + " ")) {
       return { content: val };
     }
   }
 
-  // 3. Handle Specific Intent Questions
+  // 3. Handle Specific Intent Questions (Fuzzy matching)
   for (const [key, val] of Object.entries(INTENT_MAP)) {
     if (contextualQuery.includes(key)) {
       return { content: val };
     }
   }
 
-  // 4. Handle "Tell me a Hadith" specifically (Randomized or Sequential)
-  if (contextualQuery.includes("hadith") && (lowerQuery.includes("tell me") || lowerQuery.includes("give me") || isCorrection)) {
+  // 4. Handle "Tell me a Hadith" specifically
+  if (contextualQuery.includes("hadith") && (lowerQuery.includes("tell me") || lowerQuery.includes("give me") || lowerQuery.includes("another") || isCorrection)) {
     const randomIndex = Math.floor(Math.random() * HADITH_COLLECTION.length);
     return { content: `**HADITH OF THE DAY**\n\n${HADITH_COLLECTION[randomIndex]}` };
   }
