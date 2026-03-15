@@ -13,71 +13,71 @@ interface FreeAiResponse {
 const SCHOLAR_SUGGESTION = "\n\n**Note:** For complex personal matters, it is always best to consult a **trusted local Imam or Scholar** who can provide a specific ruling (Fatwa) for your unique situation.";
 
 const CONVERSATION_MAP: Record<string, string> = {
-  "assalamu alaikum": "Wa Alaikum Assalam! I am **UMMAH AI**. How can I assist you today?",
-  "salam": "Wa Alaikum Assalam! How can I help you?",
-  "hello": "Assalamu Alaikum! I am **UMMAH AI**. How can I assist you with Islamic knowledge today?",
-  "hi": "Assalamu Alaikum! How can I help you?",
-  "how are you": "Alhamdulillah, I am here to serve you. How can I help you today?",
-  "thank you": "You are most welcome! May Allah bless you.",
-  "jazakallah": "Wa Iyyakum! May Allah reward you with goodness.",
-  "who are you": "I am **UMMAH AI**, your companion for authentic Islamic knowledge and guidance.",
-  "what can you do": "I can provide detailed information on **Salah**, **Quran**, **Hadith**, **Islamic History**, and **Daily Life** according to the Sunnah."
+  "assalamu alaikum": "Wa Alaikum Assalam wa Rahmatullahi wa Barakatuh! I am **UMMAH AI**, your dedicated companion for Islamic knowledge and spiritual growth. How can I serve you today?",
+  "salam": "Wa Alaikum Assalam! It is a blessing to connect with you. How can I assist you on your journey of faith today?",
+  "hello": "Assalamu Alaikum! I am **UMMAH AI**. I am here to provide you with authentic Islamic guidance, Quranic insights, and Sunnah-based wisdom. What is on your mind?",
+  "hi": "Assalamu Alaikum! How can I help you today? Whether it's about Salah, Quran, or daily life, I am here for you.",
+  "how are you": "Alhamdulillah, I am functioning at my best to serve the Ummah. I hope you are in the best of health and Iman. How can I help you today?",
+  "thank you": "You are most welcome! May Allah (SWT) reward your kindness and increase you in goodness. Is there anything else you'd like to know?",
+  "jazakallah": "Wa Iyyakum! May Allah (SWT) grant you the best in this world and the hereafter. It is my honor to assist you.",
+  "who are you": "I am **UMMAH AI**, a specialized artificial intelligence designed to be a companion for every Muslim. My mission is to provide authentic, accessible, and spiritually uplifting Islamic knowledge based on the Quran and the Sahih Sunnah.",
+  "what can you do": "I am equipped to help you with a wide range of topics: from explaining **Quranic verses** and **Hadiths** to providing guidance on **Salah**, **Wudu**, **Islamic History**, and **Daily Ethics**. I can also help you find Duas for specific situations and provide insights into the lives of the Prophets (AS)."
 };
 
 const KNOWLEDGE_BASE: Record<string, string> = {
-  "allah": "Allah is the **One and Only God**, the Creator and Sustainer of the universe. In Islam, He is known by His **99 Beautiful Names**, such as Ar-Rahman (The Most Merciful) and Ar-Rahim (The Especially Merciful). He has no partners, no parents, and no children. He is the source of all peace, guidance, and mercy. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
-  "who is allah": "Allah is the **One and Only God**, the Creator and Sustainer of the universe. In Islam, He is known by His **99 Beautiful Names**, such as Ar-Rahman (The Most Merciful) and Ar-Rahim (The Especially Merciful). He has no partners, no parents, and no children. He is the source of all peace, guidance, and mercy. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
-  "salah": "Salah is the foundation of a Muslim's life. The **Five Daily Prayers** (Fajr, Dhuhr, Asr, Maghrib, Isha) are mandatory. It is the first thing we will be questioned about on the Day of Judgment. It is our direct connection to our Creator.",
-  "zakat": "Zakat is a beautiful system of wealth purification. It is **2.5%** of your qualifying wealth given to those in need, ensuring social justice and spiritual growth. It is an act of worship that cleanses the heart from greed.",
-  "fasting": "Fasting in **Ramadan** is a shield and a means of attaining Taqwa (God-consciousness). It is not just abstaining from food, but also from bad speech and actions. It is a time of spiritual renewal and empathy for the poor.",
-  "hajj": "Hajj is the journey of a lifetime to the **House of Allah** in Mecca. It is a demonstration of the unity of the Ummah and a chance for a fresh start in life. It commemorates the trials of Prophet Ibrahim (AS) and his family.",
-  "iman": "Iman is the firm belief in **Allah**, His Angels, His Books, His Messengers, the Last Day, and the Divine Decree. It is the light that guides a believer's heart and gives purpose to our existence.",
-  "quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH) through the Angel Jibril. It is a healing for the hearts, a guide for all of humanity, and the final revelation.",
-  "what is quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH) through the Angel Jibril. It is a healing for the hearts, a guide for all of humanity, and the final revelation.",
-  "hadith": "Hadith are the recorded sayings and actions of the **Prophet Muhammad (PBUH)**. They provide the practical application of the Quranic teachings and are the second source of Islamic law.",
-  "sunnah": "The Sunnah is the way of the **Prophet (PBUH)**. Following it brings us closer to Allah and ensures we are living our lives in the best possible way, following the best of examples.",
-  "halal": "Halal refers to everything that is **permissible** in Islam. It is a blessing from Allah that ensures our physical and spiritual well-being. It covers food, earnings, and lifestyle.",
-  "haram": "Haram refers to what is **forbidden**. Avoiding the Haram is an act of worship that protects us from harm and keeps our hearts pure. It is a boundary set by Allah for our own benefit.",
-  "wudu": "Wudu is the ritual purification before prayer. It is a means of **washing away sins** and preparing oneself to stand before the Creator in a state of physical and spiritual cleanliness.",
-  "ghusl": "Ghusl is the full-body purification required after certain states. It is a **mandatory act of worship** that restores ritual purity and allows a Muslim to perform their religious duties.",
-  "dua": "Dua is the **weapon of the believer**. It is a direct conversation with Allah, who says: 'Call upon Me; I will respond to you.' It is an expression of our complete dependence on Him.",
-  "tahajjud": "Tahajjud is the **Night Prayer**, a time when the gates of heaven are open and Allah descends to the lowest heaven to answer the prayers of His servants. It is a sign of deep love for Allah.",
-  "marriage": "Marriage is **half of our Deen**. It is a sacred contract built on love, mercy, and mutual respect between a husband and a wife, designed to build a righteous family and community.",
-  "divorce": "While permitted as a last resort, divorce is the **most disliked** of permissible things. Islam encourages reconciliation, patience, and fair treatment whenever possible.",
-  "parents": "Kindness to parents is ranked immediately after the worship of Allah. **Paradise lies at the feet of mothers**, and the pleasure of Allah is in the pleasure of the father. We must serve them with love.",
-  "modesty": "Modesty (Haya) is a branch of faith. It is the **beauty of the soul** and applies to our dress, our speech, and our interactions with others. It is a protection for one's dignity.",
-  "patience": "Patience (Sabr) is a light. Allah is with those who are patient, and the reward for Sabr is **Paradise without account**. It is the ability to remain steadfast during trials.",
-  "gratitude": "Gratitude (Shukr) is the key to more blessings. If you are grateful, Allah will surely **increase you** in His favors. It is acknowledging that every blessing comes from Him.",
-  "ramadan": "Ramadan is the month of the Quran and mercy. It is a time for **spiritual rebooting**, strengthening our connection with the Creator, and increasing our acts of charity and worship.",
-  "eid": "Eid is a time of **celebration and gratitude**. We celebrate the completion of worship and share our joy with the family and the community, remembering the less fortunate.",
-  "prophet": "Prophet Muhammad (PBUH) is the **Mercy to the Worlds**. He is our role model in every aspect of life, from leadership to family and character. He is the Seal of the Prophets.",
-  "kaaba": "The Kaaba is the **Qibla** for all Muslims. It represents the unity of the Ummah as we all face one direction in our worship of the One God. It was built by Ibrahim (AS) and Ismail (AS).",
-  "mecca": "Mecca is the **holiest city**, the birthplace of the Prophet (PBUH) and the site of the first house of worship built for humanity. It is the heart of the Islamic world.",
-  "medina": "Medina is the **City of the Prophet**, a place of peace and tranquility where the first Islamic state was established and where the Prophet (PBUH) rests in his mosque.",
-  "hijab": "The Hijab is an act of **obedience and modesty**. It is a symbol of a woman's identity and her commitment to the commands of Allah, protecting her from being judged by her appearance.",
-  "jannah": "Jannah is the **eternal home** of the righteous. It contains what no eye has seen, no ear has heard, and no human heart has ever imagined. It is the ultimate reward for faith.",
-  "jahannam": "Jahannam is the place of punishment for those who rejected the truth. It is a **reminder to stay on the straight path**, seek Allah's mercy, and fear His justice.",
-  "angel": "Angels are noble servants of Allah created from light. They **never disobey Him** and are constantly engaged in His worship and carrying out His commands, such as Jibril and Mika'il.",
-  "sharia": "Sharia is the **Divine Path** that ensures justice, mercy, and the well-being of all people. It is the framework for a righteous life based on the Quran and Sunnah.",
-  "ummah": "The Ummah is the **global family** of Muslims. We are like one body; if one part suffers, the whole body feels the pain. It transcends race, nationality, and language.",
-  "caliph": "A Caliph is a leader who follows the guidance of the Prophet (PBUH) to **uphold justice** and lead the community in the way of Allah, protecting the Deen and the people.",
-  "mosque": "The Mosque is the **heart of the community**. It is a place of worship, learning, and brotherhood for all Muslims, where we stand shoulder to shoulder before Allah.",
-  "imam": "An Imam is a leader in prayer and a **guide for the community**. They carry the responsibility of teaching the Deen, leading by example, and providing spiritual support.",
-  "fatwa": "A Fatwa is a **scholarly opinion** on Islamic law. It helps Muslims navigate modern challenges while staying true to the principles of the faith, given by qualified scholars.",
-  "jihad": "Jihad is the **struggle for the sake of Allah**. The greatest Jihad is the struggle against one's own soul (Jihad al-Nafs) to stay on the path of righteousness and truth.",
-  "charity": "Charity (Sadaqah) **extinguishes sins** as water extinguishes fire. It is a proof of one's faith and a means of bringing barakah into one's life and helping the needy.",
-  "forgiveness": "Allah is the **Most Forgiving**. No matter how great the sin, His mercy is greater. We should always turn back to Him in sincere repentance and seek His pleasure.",
-  "death": "Death is not the end, but a **bridge to the hereafter**. It is a reminder to live our lives in a way that prepares us for the meeting with our Lord and the eternal life.",
-  "afterlife": "The Afterlife (Akhirah) is the **true life**. This world is temporary, while the next is eternal. Our actions here determine our station in the presence of Allah.",
-  "judgment": "The Day of Judgment is the day of **absolute justice**. Every soul will be rewarded for what it earned, and no one will be wronged. It is the day of accountability.",
-  "mercy": "Allah's Mercy precedes His Wrath. He is **Ar-Rahman and Ar-Rahim**, the source of all compassion and kindness. We must show mercy to others to receive His mercy.",
-  "knowledge": "Seeking knowledge is **obligatory** for every Muslim. It is the path to understanding our purpose, drawing closer to our Creator, and benefiting humanity.",
-  "honesty": "Honesty is a core Islamic value. The Prophet (PBUH) was known as **Al-Amin** (the Trustworthy). A Muslim must be truthful in speech and action at all times.",
-  "justice": "Islam commands justice even against oneself or one's kin. Allah loves those who are **just and fair** in all their dealings, as it is the foundation of a stable society.",
-  "brotherhood": "Muslims are brothers to one another. We should **love for our brother** what we love for ourselves and support each other in goodness and piety.",
-  "character": "The best of you are those with the **best character**. Good manners are the heaviest thing on the scales on the Day of Judgment. Character is the fruit of faith.",
-  "intentions": "Actions are judged by **intentions**. A small deed done with a pure heart for the sake of Allah is better than a great deed done for show or worldly gain.",
-  "trust": "Trust in Allah (Tawakkul) means doing your best and then **leaving the results to Him**. He is the best of disposers of affairs and knows what is best for us."
+  "allah": "Allah is the **One and Only God**, the Creator, the Sustainer, and the Sovereign of all that exists. In Islam, the concept of **Tawhid** (the Oneness of Allah) is central. He is described in the Quran as having no partners, no parents, and no children. He is **Ar-Rahman** (The Most Merciful) and **Ar-Rahim** (The Especially Merciful). His knowledge encompasses everything, and His mercy extends to all creation. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
+  "who is allah": "Allah is the **One and Only God**, the Creator, the Sustainer, and the Sovereign of all that exists. In Islam, the concept of **Tawhid** (the Oneness of Allah) is central. He is described in the Quran as having no partners, no parents, and no children. He is **Ar-Rahman** (The Most Merciful) and **Ar-Rahim** (The Especially Merciful). His knowledge encompasses everything, and His mercy extends to all creation. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
+  "salah": "Salah (Prayer) is the second pillar of Islam and the daily connection between a believer and Allah (SWT). It is mandatory for every adult Muslim to perform the **Five Daily Prayers**: Fajr, Dhuhr, Asr, Maghrib, and Isha. Salah is not just a ritual; it is a spiritual ascension, a time of peace, and a means of seeking forgiveness and guidance. The Prophet (PBUH) said: 'The first thing for which a person will be brought to account on the Day of Resurrection will be his prayer.'",
+  "zakat": "Zakat is the mandatory act of charity and the third pillar of Islam. It involves giving **2.5%** of one's qualifying wealth (savings, gold, trade goods) to specific categories of people in need, such as the poor and the wayfarer. Zakat is a means of **purifying one's wealth** and heart from greed, and it ensures social justice within the Ummah by redistributing resources to those who need them most.",
+  "fasting": "Fasting (Sawm) during the month of **Ramadan** is the fourth pillar of Islam. It is an act of deep devotion where Muslims abstain from food, drink, and marital relations from dawn until sunset. The primary goal of fasting is to attain **Taqwa** (God-consciousness). It is a time for self-discipline, empathy for the hungry, increased recitation of the Quran, and seeking the Night of Decree (Laylat al-Qadr).",
+  "hajj": "Hajj is the pilgrimage to the **Kaaba in Mecca** and the fifth pillar of Islam. It is mandatory once in a lifetime for those who are physically and financially able. Hajj is a profound demonstration of the unity and equality of the Ummah, as millions of Muslims from all over the world gather in simple white garments (Ihram) to worship Allah (SWT) and commemorate the trials of Prophet Ibrahim (AS) and his family.",
+  "iman": "Iman (Faith) is the firm belief in the heart, the testimony of the tongue, and the actions of the limbs. The **Six Pillars of Iman** are: Belief in Allah, His Angels, His Books, His Messengers, the Last Day, and the Divine Decree (Qadar). Iman is like a tree; its root is the Shahada, and its branches are good deeds. It increases with obedience to Allah and decreases with disobedience.",
+  "quran": "The **Holy Quran** is the final revelation from Allah (SWT) to humanity, revealed to Prophet Muhammad (PBUH) over 23 years through the Angel Jibril. It is the literal Word of Allah, preserved perfectly in its original Arabic. The Quran is a **healing for the hearts**, a criterion between right and wrong, and a complete guide for every aspect of life. Its beauty and wisdom are unmatched, and reciting it is an act of great worship.",
+  "what is quran": "The **Holy Quran** is the final revelation from Allah (SWT) to humanity, revealed to Prophet Muhammad (PBUH) over 23 years through the Angel Jibril. It is the literal Word of Allah, preserved perfectly in its original Arabic. The Quran is a **healing for the hearts**, a criterion between right and wrong, and a complete guide for every aspect of life. Its beauty and wisdom are unmatched, and reciting it is an act of great worship.",
+  "hadith": "Hadith refers to the recorded sayings, actions, and silent approvals of the **Prophet Muhammad (PBUH)**. They are the second primary source of Islamic law and guidance, providing the practical application of the Quran's teachings. Authentic collections like **Sahih Bukhari** and **Sahih Muslim** are highly revered. Following the Hadith is essential to understanding how to live as a true follower of the Sunnah.",
+  "sunnah": "The Sunnah represents the **way of life** of the Prophet Muhammad (PBUH). It encompasses his character, his dealings with people, his worship, and his ethics. Following the Sunnah is a sign of love for the Prophet (PBUH) and a means of attaining the love of Allah (SWT). As Allah says in the Quran: 'Say, [O Muhammad], If you should love Allah, then follow me, [so] Allah will love you and forgive you your sins.' (3:31).",
+  "halal": "Halal is an Arabic term meaning **permissible**. In Islam, it refers to everything that is allowed according to the Sharia. While often associated with food (like meat slaughtered in the name of Allah), it also applies to earnings, relationships, and lifestyle. Choosing Halal is an act of obedience that brings **Barakah** (blessing) into a Muslim's life and ensures spiritual purity.",
+  "haram": "Haram refers to everything that is **forbidden** by Allah (SWT). These prohibitions are set for the protection and well-being of humanity. Avoiding the Haram—whether it be in food, speech, or actions—is a fundamental part of a Muslim's struggle (Jihad) to stay on the Straight Path. Sincere repentance (Tawbah) is always open for those who have fallen into the Haram.",
+  "wudu": "Wudu (Ablution) is the ritual purification performed before Salah and other acts of worship. It involves washing the hands, mouth, nose, face, arms, wiping the head, and washing the feet. Wudu is not just physical cleaning; it is a **spiritual preparation** that washes away minor sins and allows a believer to stand before their Creator in a state of purity.",
+  "ghusl": "Ghusl is the full-body ritual purification required after certain states, such as after marital relations or the completion of a woman's cycle. It is a **mandatory act of worship** that restores ritual purity. Performing Ghusl is also a Sunnah before the Friday (Jumu'ah) prayer and on the two Eids, symbolizing a fresh start and spiritual cleanliness.",
+  "dua": "Dua (Supplication) is the **essence of worship**. It is a direct, personal conversation between a servant and Allah (SWT). Allah loves to be asked and has promised to respond: 'Call upon Me; I will respond to you.' (40:60). Dua can be made in any language, at any time, and for any need, reflecting our complete reliance on the Almighty.",
+  "tahajjud": "Tahajjud is the **voluntary night prayer** performed after waking up from sleep in the last third of the night. It is one of the most virtuous acts of worship, a time when Allah (SWT) descends to the lowest heaven to answer the prayers and forgive the sins of those who seek Him. It is a sign of deep spiritual devotion and a means of attaining high ranks in Jannah.",
+  "marriage": "In Islam, marriage (Nikah) is a **sacred contract** and a sign of Allah's mercy. It is described as 'half of the Deen' because it protects one's chastity and provides a framework for a life of companionship, love, and mutual support. A successful Islamic marriage is built on **Mawaddah** (love) and **Rahmah** (mercy), with the goal of building a righteous family.",
+  "divorce": "While divorce (Talaq) is permitted in Islam as a last resort when a marriage becomes untenable, it is described as the **most disliked of permissible things** to Allah. Islam provides a clear process for divorce that ensures fairness and protects the rights of both parties, especially women, while encouraging reconciliation and patience whenever possible.",
+  "parents": "The Quran places the duty of being kind to parents immediately after the duty to worship Allah alone. **Paradise lies at the feet of mothers**, and the pleasure of the father is linked to the pleasure of Allah. We are commanded to speak to them with honor and never even say 'uff' (a sigh of frustration) to them, especially in their old age.",
+  "modesty": "Modesty (Haya) is a core value in Islam, described by the Prophet (PBUH) as a **branch of faith**. It is not just about dress; it is an internal state of being that reflects in one's speech, behavior, and interactions. Haya protects a person's dignity and acts as a shield against indecency and immorality.",
+  "patience": "Patience (Sabr) is one of the most emphasized virtues in the Quran. It involves remaining steadfast in the face of trials, persevering in worship, and restraining oneself from sin. Allah says: 'Indeed, Allah is with the patient.' (2:153). The reward for Sabr is **Paradise without account**, and it is a key to success in both worlds.",
+  "gratitude": "Gratitude (Shukr) is the act of acknowledging and thanking Allah (SWT) for His infinite blessings. Allah promises: 'If you are grateful, I will surely increase you [in favor].' (14:7). A grateful heart is a content heart, and Shukr is expressed through the tongue, the heart, and by using Allah's blessings in ways that please Him.",
+  "ramadan": "Ramadan is the **holiest month** in the Islamic calendar, the month in which the Quran was first revealed. It is a time of intense worship, fasting, charity, and community. The gates of Jannah are opened, the gates of Jahannam are closed, and the devils are chained. It is a spiritual boot camp designed to recharge a Muslim's Iman for the rest of the year.",
+  "eid": "Islam has two main festivals: **Eid al-Fitr**, celebrated at the end of Ramadan, and **Eid al-Adha**, which commemorates the sacrifice of Prophet Ibrahim (AS). These are days of joy, gratitude, and community. We begin the day with a special prayer, give charity (Zakat al-Fitr), and share meals and gifts with family and the needy.",
+  "prophet": "Prophet Muhammad (PBUH) is the **final Messenger** sent by Allah to all of humanity. He is the 'Seal of the Prophets' and a 'Mercy to the Worlds'. His life (Seerah) is the perfect example of character, leadership, and devotion. Following him is the path to attaining Allah's love and success in the hereafter.",
+  "kaaba": "The Kaaba is the **House of Allah** in Mecca, the most sacred site in Islam. It is the Qibla (direction) that all Muslims face during their daily prayers, symbolizing the unity of the Ummah. It was originally built by Prophet Ibrahim (AS) and his son Ismail (AS) as the first house dedicated to the worship of the One True God.",
+  "mecca": "Mecca is the **holiest city** in Islam, located in Saudi Arabia. It is the birthplace of Prophet Muhammad (PBUH) and the site of the Kaaba. Every year, millions of Muslims travel to Mecca for Hajj and Umrah, fulfilling a deep spiritual longing to visit the heart of the Islamic world.",
+  "medina": "Medina is the second holiest city, known as **Al-Madinah al-Munawwarah** (The Radiant City). It is where the Prophet (PBUH) migrated (Hijrah), established the first Islamic community, and where he is buried in the **Prophet's Mosque** (Al-Masjid an-Nabawi). It is a place of immense peace and spiritual significance.",
+  "hijab": "The Hijab is an act of **devotion and modesty** for Muslim women, commanded by Allah (SWT) in the Quran. It is a symbol of a woman's identity and her commitment to her faith. Beyond the physical headscarf, Hijab encompasses a woman's entire conduct and character, protecting her dignity and ensuring she is judged for her intellect and soul.",
+  "jannah": "Jannah (Paradise) is the **eternal abode of peace** and joy promised to the righteous. It is described as having gardens beneath which rivers flow, and its inhabitants will have whatever their hearts desire. The greatest of all rewards in Jannah will be the honor of **beholding the Countenance of Allah (SWT)**.",
+  "jahannam": "Jahannam (Hellfire) is the place of punishment in the hereafter for those who rejected faith and committed injustice. It is a **stern warning** from Allah (SWT) to humanity to stay on the path of truth. Seeking refuge from the Fire is a constant Dua of the believer, and Allah's mercy is always available for those who repent.",
+  "angel": "Angels (Mala'ikah) are noble beings created by Allah (SWT) from light. They have no free will and **always obey Allah's commands**. Key angels include Jibril (who brought revelation), Mika'il (in charge of rain and sustenance), and Israfil (who will blow the trumpet on the Day of Judgment). Belief in angels is a pillar of Iman.",
+  "sharia": "Sharia is the **Divine Law** of Islam, derived from the Quran and the Sunnah. It is not just a legal code but a comprehensive path that guides a Muslim in worship, ethics, and social conduct. The ultimate goal of Sharia is to promote **justice, mercy, and the common good** for all of humanity.",
+  "ummah": "The Ummah is the **global community** of Muslims, united by their faith in Allah (SWT) and the Prophet (PBUH). It transcends all boundaries of race, language, and nationality. The Prophet (PBUH) described the Ummah as one body; if one part is in pain, the whole body feels it. This brotherhood is a core strength of Islam.",
+  "caliph": "A Caliph (Khalifah) is a successor to the Prophet (PBUH) in his role as the political and spiritual leader of the Ummah. The first four Caliphs—Abu Bakr, Umar, Uthman, and Ali (RA)—are known as the **Rightly Guided Caliphs** (Al-Khulafa al-Rashidun) for their adherence to the Prophet's path and their just leadership.",
+  "mosque": "A Mosque (Masjid) is a **place of prostration** and the center of Islamic life. It is where Muslims gather for the five daily prayers, the Friday sermon, and community learning. The most sacred mosques are Al-Masjid al-Haram in Mecca, Al-Masjid an-Nabawi in Medina, and Al-Masjid al-Aqsa in Jerusalem.",
+  "imam": "An Imam is a leader who **leads the congregational prayer** and often serves as a spiritual guide and teacher for the community. In a broader sense, an Imam is a person of deep knowledge and piety who provides leadership and guidance based on the Quran and Sunnah.",
+  "fatwa": "A Fatwa is a **scholarly legal opinion** given by a qualified Islamic scholar (Mufti) in response to a question about Islamic law. It helps Muslims understand how to apply the principles of the faith to specific situations or modern challenges, though it is generally not a binding law.",
+  "jihad": "Jihad means **struggle** or striving in the path of Allah. The 'Greater Jihad' is the internal struggle against one's own desires and ego to stay righteous. The 'Lesser Jihad' refers to the physical struggle to defend the faith or the oppressed. Jihad is never about aggression; it is about establishing justice and truth.",
+  "charity": "Charity (Sadaqah) is a voluntary act of giving that is highly encouraged in Islam. It is a sign of sincere faith and a means of **bringing Barakah** into one's life. The Prophet (PBUH) said: 'Sadaqah extinguishes sin as water extinguishes fire.' Even a smile or a kind word is considered Sadaqah.",
+  "forgiveness": "Allah is **Al-Ghafur** (The All-Forgiving) and **Al-Afuww** (The Pardoner). No matter how many sins a person has committed, if they turn to Allah with sincere repentance, He will forgive them. Islam also encourages Muslims to be forgiving towards others, as we hope for Allah's forgiveness for ourselves.",
+  "death": "In Islam, death is not the end but a **transition** from the temporary life of this world to the eternal life of the hereafter. It is a reminder to live a purposeful life and to prepare for the meeting with our Creator. The Prophet (PBUH) advised us to 'remember the destroyer of pleasures' (death) frequently.",
+  "afterlife": "The Afterlife (Akhirah) is the **true and eternal life**. This world is a testing ground where our actions determine our station in the next. Belief in the Akhirah gives meaning to our struggles and ensures that ultimate justice will be served by Allah (SWT) on the Day of Judgment.",
+  "judgment": "The Day of Judgment (Yawm al-Qiyamah) is the day when all of humanity will be resurrected and held **accountable for their deeds**. Every person will be given their book of deeds, and Allah (SWT) will judge with absolute justice and mercy. It is the day when the true successful ones will be revealed.",
+  "mercy": "Mercy (Rahmah) is a defining attribute of Allah (SWT) and a core value for Muslims. Allah's mercy encompasses everything, and He has commanded us to be **merciful to all creation**. The Prophet (PBUH) said: 'Those who are merciful will be shown mercy by the Most Merciful.'",
+  "knowledge": "Seeking knowledge (Ilm) is a **sacred duty** for every Muslim, man and woman. It is the path to recognizing Allah, understanding our purpose, and benefiting society. The Prophet (PBUH) said: 'Whoever follows a path in pursuit of knowledge, Allah will make easy for him a path to Paradise.'",
+  "honesty": "Honesty (Sidq) is a fundamental trait of a believer. The Prophet (PBUH) was known as **Al-Amin** (the Trustworthy) even before his prophethood. Islam teaches that truthfulness leads to righteousness, and righteousness leads to Paradise, while falsehood leads to wickedness and the Fire.",
+  "justice": "Islam commands absolute justice (Adl), even if it is against oneself or one's loved ones. Allah says: 'O you who have believed, be persistently standing firm in justice.' (4:135). Justice is the **foundation of a healthy society** and a means of attaining the pleasure of the Almighty.",
+  "brotherhood": "Islamic brotherhood (Ukhuwwah) is a bond of faith that is stronger than blood. Muslims are commanded to support one another, protect each other's honor, and **love for their brother** what they love for themselves. It is a source of strength and unity for the global Ummah.",
+  "character": "Good character (Akhlaq) is the **fruit of faith**. The Prophet (PBUH) said: 'I was sent only to perfect good character.' On the Day of Judgment, nothing will be heavier on the scales than good manners. A Muslim's faith is reflected in how they treat others with kindness, respect, and integrity.",
+  "intentions": "In Islam, the value of an action depends on the **intention (Niyyah)** behind it. The Prophet (PBUH) said: 'Actions are but by intentions.' A small deed done purely for the sake of Allah is far more valuable than a massive deed done for show or worldly gain. Sincerity (Ikhlas) is the key.",
+  "trust": "Trust in Allah (Tawakkul) means putting one's full confidence in Allah's plan after having made the necessary effort. It is the **peace of mind** that comes from knowing that whatever Allah has decreed will happen, and whatever He has not decreed will never happen. It is the ultimate reliance on the Best of Disposers."
 };
 
 const INTENT_MAP: Record<string, string> = {
@@ -94,7 +94,12 @@ const INTENT_MAP: Record<string, string> = {
   "who is allah": "Allah is the **One and Only God**, the Creator and Sustainer of the universe. In Islam, He is known by His **99 Beautiful Names**, such as Ar-Rahman (The Most Merciful) and Ar-Rahim (The Especially Merciful). He has no partners, no parents, and no children. He is the source of all peace, guidance, and mercy. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
   "tell me about allah": "Allah is the **One and Only God**, the Creator and Sustainer of the universe. In Islam, He is known by His **99 Beautiful Names**, such as Ar-Rahman (The Most Merciful) and Ar-Rahim (The Especially Merciful). He has no partners, no parents, and no children. He is the source of all peace, guidance, and mercy. **Subhanahu Wa Ta'ala** (Glorified and Exalted is He).",
   "tell me about quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH) through the Angel Jibril. It is a healing for the hearts, a guide for all of humanity, and the final revelation.",
-  "what is the quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH) through the Angel Jibril. It is a healing for the hearts, a guide for all of humanity, and the final revelation."
+  "what is the quran": "The **Holy Quran** is the literal word of Allah, revealed to Prophet Muhammad (PBUH) through the Angel Jibril. It is a healing for the hearts, a guide for all of humanity, and the final revelation.",
+  "is smoking haram": "Many modern scholars have ruled that smoking is **Haram** (forbidden) or at least highly disliked (Makruh Tahrimi) because of the clear evidence of its severe harm to the body, which is a trust from Allah. Islam teaches us to protect our health and not to waste wealth on things that cause harm.",
+  "how to convert to islam": "To convert to Islam, one must sincerely recite the **Shahada** (the testimony of faith): *'Ash-hadu an la ilaha illa Allah, wa ash-hadu anna Muhammadan rasulu Allah'* (I bear witness that there is no god but Allah, and I bear witness that Muhammad is the messenger of Allah). It is recommended to do this in the presence of witnesses at a mosque, but the sincere belief in the heart is what truly matters before Allah.",
+  "what is the purpose of life": "The purpose of life in Islam is to **recognize and worship our Creator**, Allah (SWT), and to live according to His guidance to attain His pleasure and the eternal reward of Jannah. Allah says in the Quran: *'And I did not create the jinn and mankind except to worship Me.'* (51:56).",
+  "can i pray without wudu": "No, **Wudu is a mandatory requirement** for the validity of Salah. The Prophet (PBUH) said: 'The prayer of one of you is not accepted if he is in a state of impurity until he performs wudu.' (Bukhari). If water is unavailable or harmful, one may perform **Tayammum** (dry purification).",
+  "what is sharia": "Sharia is the **Divine Path** and legal framework derived from the Quran and the Sunnah. It is designed to protect five essential human needs: **Faith, Life, Intellect, Lineage, and Property**. It is a system of justice, mercy, and wisdom that guides a Muslim in all aspects of life."
 };
 
 /**
@@ -104,21 +109,35 @@ const synthesizeIslamicResponse = (text: string): string => {
   let synthesized = text;
   
   // Remove overly academic/secular phrasing
-  synthesized = synthesized.replace(/principally associated with Islam/gi, "central to the Islamic faith");
-  synthesized = synthesized.replace(/thought to be derived/gi, "understood in Islam");
-  synthesized = synthesized.replace(/Arabic language term for God/gi, "the proper Name of the One True God");
-  synthesized = synthesized.replace(/specifically the monotheistic God of Abraham/gi, "the God of all the Prophets, including Ibrahim (AS), Musa (AS), and Isa (AS)");
-  synthesized = synthesized.replace(/Abrahamic religions/gi, "divine messages");
-  synthesized = synthesized.replace(/principally associated with/gi, "the core of");
+  synthesized = synthesized.replace(/principally associated with Islam/gi, "the cornerstone of the Islamic faith");
+  synthesized = synthesized.replace(/thought to be derived/gi, "understood in the light of the Quran and Sunnah");
+  synthesized = synthesized.replace(/Arabic language term for God/gi, "the proper Name of the One True God, Allah (SWT)");
+  synthesized = synthesized.replace(/specifically the monotheistic God of Abraham/gi, "the God of all the Prophets, from Adam (AS) to Muhammad (PBUH)");
+  synthesized = synthesized.replace(/Abrahamic religions/gi, "the divine lineage of monotheism");
+  synthesized = synthesized.replace(/principally associated with/gi, "the heart of");
+  synthesized = synthesized.replace(/is a term used in/gi, "is a sacred concept in");
+  synthesized = synthesized.replace(/refers to/gi, "beautifully encompasses");
   
   // Add Islamic honorifics and context
-  synthesized = synthesized.replace(/Muhammad/g, "Muhammad (PBUH)");
+  synthesized = synthesized.replace(/Muhammad/g, "Prophet Muhammad (PBUH)");
   synthesized = synthesized.replace(/Allah/g, "Allah (SWT)");
   synthesized = synthesized.replace(/God/g, "Allah (SWT)");
   
-  // Ensure the tone is respectful
+  // Ensure the tone is respectful and conversational
   if (!synthesized.includes("Islam teaches")) {
-    synthesized = "According to the beautiful teachings of Islam, " + synthesized.charAt(0).toLowerCase() + synthesized.slice(1);
+    const intros = [
+      "In the beautiful light of Islam, ",
+      "According to the authentic teachings of our Deen, ",
+      "As we learn from the Quran and the Sunnah, ",
+      "Islam provides a comprehensive guide where "
+    ];
+    const randomIntro = intros[Math.floor(Math.random() * intros.length)];
+    synthesized = randomIntro + synthesized.charAt(0).toLowerCase() + synthesized.slice(1);
+  }
+
+  // Add a concluding spiritual note if it's long
+  if (synthesized.length > 200 && !synthesized.includes("Allah knows best")) {
+    synthesized += "\n\nMay Allah (SWT) grant us the correct understanding and guide us all to the Straight Path. And Allah knows best.";
   }
 
   return synthesized;
@@ -253,23 +272,31 @@ export const getFreeAiResponse = async (
     console.warn("Wiki search failed", e);
   }
 
-  // 7. Construct Final Response
+  // 7. Construct Final Response with Personality
   let content = "";
   
+  const personalityIntros = [
+    "Alhamdulillah, I have gathered some insights for you.",
+    "It is my pleasure to share this knowledge with you.",
+    "Based on the authentic sources I have access to, here is what I found:",
+    "In the spirit of seeking knowledge, let's explore this topic together."
+  ];
+  const intro = personalityIntros[Math.floor(Math.random() * personalityIntros.length)];
+
   if (localResult && wikiResult) {
-    content = `**${query.toUpperCase()}**\n\n${localResult}\n\n**ADDITIONAL GUIDANCE**\n${wikiResult}`;
+    content = `${intro}\n\n**${query.toUpperCase()}**\n\n${localResult}\n\n**DEEPER INSIGHTS**\n${wikiResult}`;
   } else if (localResult) {
-    content = `**${query.toUpperCase()}**\n\n${localResult}`;
+    content = `${intro}\n\n**${query.toUpperCase()}**\n\n${localResult}`;
   } else if (wikiResult) {
-    content = `**ISLAMIC GUIDANCE**\n\n${wikiResult}`;
+    content = `${intro}\n\n**ISLAMIC PERSPECTIVE**\n\n${wikiResult}`;
   } else if (quranResult) {
-    content = `**QURANIC GUIDANCE**\n\nI found a relevant verse from the Holy Quran regarding your query:`;
+    content = `${intro}\n\nI found a relevant verse from the Holy Quran regarding your query:`;
   } else {
     const foundKeywords = ISLAMIC_KEYWORDS.filter(k => lowerQuery.includes(k));
     if (foundKeywords.length > 0) {
-      content = `**UMMAH AI GUIDANCE**\n\nRegarding **${foundKeywords[0].toUpperCase()}**, Islam teaches us to always seek the truth through the **Quran and Sunnah**. This topic is central to our faith and character. I recommend looking into the specific verses and hadiths related to this for a deeper understanding.`;
+      content = `${intro}\n\nRegarding **${foundKeywords[0].toUpperCase()}**, Islam teaches us to always seek the truth through the **Quran and Sunnah**. This topic is central to our faith and character. I recommend looking into the specific verses and hadiths related to this for a deeper understanding.`;
     } else {
-      content = `**UMMAH AI GUIDANCE**\n\nI have analyzed your query. In Islam, we are encouraged to seek knowledge and act with **Ikhlas** (sincerity). I recommend exploring this topic further through the **Quran Reader** or by consulting a local scholar for a detailed explanation.`;
+      content = `I am **UMMAH AI**, and I am here to assist you with Islamic knowledge. While I don't have a specific detailed entry for that exact phrase, I can tell you that in Islam, we are encouraged to seek knowledge and act with **Ikhlas** (sincerity). \n\nWould you like to know about **Salah**, **Quran**, or perhaps the **Life of the Prophet (PBUH)**? I have extensive knowledge in those areas!`;
     }
   }
 

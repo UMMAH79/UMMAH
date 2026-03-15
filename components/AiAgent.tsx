@@ -140,7 +140,8 @@ const AiAgent: React.FC<AiAgentProps> = ({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [hasApiKey, setHasApiKey] = useState(true);
+  const [hasApiKey, setHasApiKey] = useState(false);
+  const [isKeyChecking, setIsKeyChecking] = useState(true);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<{ data: string; mimeType: string } | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -198,6 +199,7 @@ Tone: Sincere teacher. Language: ${activeLangName}.`;
 
   useEffect(() => {
     const checkKey = async () => {
+      setIsKeyChecking(true);
       const key = await getApiKey();
       let hasKey = !!key;
       
@@ -211,6 +213,7 @@ Tone: Sincere teacher. Language: ${activeLangName}.`;
       }
 
       setHasApiKey(hasKey);
+      setIsKeyChecking(false);
     };
     
     checkKey();
@@ -275,6 +278,10 @@ Tone: Sincere teacher. Language: ${activeLangName}.`;
     onUpdateSettings({ dailyChatCount: { date: today, count: currentCount + 1 } });
 
     const streamFreeFallback = async () => {
+      // Simulate "thinking" for a better UX
+      setIsLoading(true);
+      await new Promise(r => setTimeout(r, 800));
+      
       const freeResponse = await getFreeAiResponse(
         userMessageContent, 
         preferredLanguage as AppLanguage,
@@ -292,6 +299,7 @@ Tone: Sincere teacher. Language: ${activeLangName}.`;
         });
         if (i % 3 === 0) await new Promise(r => setTimeout(r, 30));
       }
+      setIsLoading(false);
     };
 
     try {
@@ -403,6 +411,16 @@ Tone: Sincere teacher. Language: ${activeLangName}.`;
           </div>
         </div>
         <div className="flex items-center gap-2">
+           {!hasApiKey && !isKeyChecking && (
+             <button 
+               onClick={handleSelectKey}
+               className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded-xl border border-amber-500/20 transition-all active:scale-95 group"
+               title="Connect Gemini for Best Experience"
+             >
+               <Zap size={14} className="fill-current group-hover:animate-pulse" />
+               <span className="text-[9px] font-black uppercase tracking-widest hidden sm:inline">Best AI</span>
+             </button>
+           )}
            {!isDeveloper && (
              <div className="px-2 py-1 bg-ummah-mint dark:bg-white/5 rounded-lg border border-black/5 dark:border-white/10 flex items-center gap-1.5">
                 <span className={`text-[8px] font-black ${chatStatus.reachedLimit ? 'text-rose-500' : 'text-ummah-icon-active-light'}`}>{chatStatus.count}/{DAILY_LIMIT}</span>
