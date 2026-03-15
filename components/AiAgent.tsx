@@ -255,34 +255,33 @@ Tone: Sincere teacher. Language: ${activeLangName}.`;
     const currentCount = settings.dailyChatCount?.date === today ? settings.dailyChatCount.count : 0;
     onUpdateSettings({ dailyChatCount: { date: today, count: currentCount + 1 } });
 
+    const streamFreeFallback = async () => {
+      const freeResponse = await getFreeAiResponse(userMessageContent, preferredLanguage as AppLanguage);
+      setMessages(prev => [...prev, { role: 'model', content: '' }]);
+      const words = freeResponse.content.split(' ');
+      let currentText = '';
+      for (let i = 0; i < words.length; i++) {
+        currentText += words[i] + ' ';
+        setMessages(prev => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = { role: 'model', content: currentText };
+          return newMessages;
+        });
+        if (i % 3 === 0) await new Promise(r => setTimeout(r, 30));
+      }
+    };
+
     try {
       const apiKey = await getApiKey();
       
       if (!apiKey) {
-        // Use Free AI Service instead of throwing error
-        const freeResponse = await getFreeAiResponse(userMessageContent, preferredLanguage as AppLanguage);
-        
-        setMessages(prev => [...prev, { role: 'model', content: '' }]);
-        
-        // Simulate streaming for "same style" feel
-        const words = freeResponse.content.split(' ');
-        let currentText = '';
-        for (let i = 0; i < words.length; i++) {
-          currentText += words[i] + ' ';
-          setMessages(prev => {
-            const newMessages = [...prev];
-            newMessages[newMessages.length - 1] = { role: 'model', content: currentText };
-            return newMessages;
-          });
-          // Small delay to simulate thinking/streaming
-          if (i % 3 === 0) await new Promise(r => setTimeout(r, 30));
-        }
+        await streamFreeFallback();
         return;
       }
       
       const ai = new GoogleGenAI({ apiKey });
       
-      const historyToInclude = messages.slice(-4); // Shorter history for speed
+      const historyToInclude = messages.slice(-4); 
       
       const contents: any[] = historyToInclude.map(msg => ({
         role: msg.role,
@@ -328,27 +327,10 @@ Tone: Sincere teacher. Language: ${activeLangName}.`;
       }
     } catch (error: any) {
       if (error.name === 'AbortError') return;
-      console.error("AI Error:", error);
+      console.error("AI Error (Falling back to Free Mode):", error);
       
-      const errorStr = String(error?.message || "") + String(error?.stack || "") + JSON.stringify(error);
-      const isKeyError = 
-        errorStr.includes("API_KEY_INVALID") || 
-        errorStr.includes("not valid") || 
-        errorStr.includes("INVALID_ARGUMENT") ||
-        errorStr.includes("API Key missing") ||
-        errorStr.includes("entity was not found") ||
-        error?.status === 400;
-
-      let errorMsg = "**Connection issue.** Please try again.";
-      
-      if (isKeyError) {
-        setHasApiKey(false);
-        errorMsg = "**API Key Error.** Your connection is not authorized. Please reconnect your API key.";
-      } else if (errorStr.includes("quota") || error?.status === 429) {
-        errorMsg = "**Quota exceeded.** You've reached the limit for your Google AI Studio key. Please check your [billing/plan](https://aistudio.google.com/app/plan_and_billing) or wait a moment before trying again.";
-      }
-      
-      setMessages(prev => [...prev, { role: 'model', content: errorMsg }]);
+      // On any error (Quota, Invalid Key, Network), use the Free Fallback
+      await streamFreeFallback();
     } finally {
       setIsLoading(false);
     }
