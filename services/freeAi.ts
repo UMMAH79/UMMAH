@@ -99,21 +99,22 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
     "parents", "tahajjud", "kaaba", "eid", "companion", "sahaba", "deen", "faith", "worship",
     "sin", "repent", "tawbah", "afterlife", "judgment", "creation", "miracle", "charity",
     "forgiveness", "death", "knowledge", "honesty", "justice", "brotherhood", "character",
-    "intentions", "trust"
+    "intentions", "trust", "prophets", "messenger", "revelation", "scripture", "monotheism"
   ];
   const isIslamic = ISLAMIC_KEYWORDS.some(k => lowerQuery.includes(k));
   
   if (!isIslamic) {
     return { 
-      content: "**UMMAH AI** is dedicated to providing **Islamic knowledge**. I am here to answer your questions about faith, Quran, Sunnah, and Islamic lifestyle. Please ask me something related to these topics!" 
+      content: "**UMMAH AI** is a specialized assistant for **Islamic knowledge**. To provide you with the most accurate guidance, please ask questions related to Islam, the Quran, the Sunnah, or Islamic lifestyle. How can I help you with your faith today?" 
     };
   }
 
-  // 3. Search Local Knowledge Base
+  // 3. Search Local Knowledge Base (More flexible matching)
   let localResult = "";
-  for (const [key, val] of Object.entries(KNOWLEDGE_BASE)) {
+  const sortedKeys = Object.keys(KNOWLEDGE_BASE).sort((a, b) => b.length - a.length);
+  for (const key of sortedKeys) {
     if (lowerQuery.includes(key)) {
-      localResult = val;
+      localResult = KNOWLEDGE_BASE[key];
       break;
     }
   }
@@ -126,40 +127,55 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
       const data = await quranRes.json();
       if (data.data && data.data.matches && data.data.matches.length > 0) {
         const match = data.data.matches[0];
-        quranResult = `\n\n*${match.text}*\n*Surah ${match.surah.englishName} : ${match.numberInSurah}*\n**Translation: [Sahih International]**`;
+        quranResult = `\n\n**QURANIC REFERENCE**\n*${match.text}*\n*Surah ${match.surah.englishName} : ${match.numberInSurah}*\n**Translation: [Sahih International]**`;
       }
     }
   } catch (e) {
     console.warn("Quran search failed", e);
   }
 
-  // 5. Search Wikipedia (Free API)
+  // 5. Advanced Wikipedia Search (Try search first, then summary)
   let wikiResult = "";
-  if (!localResult) {
-    try {
-      const wikiRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
-      if (wikiRes.ok) {
-        const data = await wikiRes.json();
-        if (data.extract) {
-          wikiResult = data.extract;
+  try {
+    // First, search for the most relevant title
+    const searchRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query + " Islam")}&format=json&origin=*`);
+    if (searchRes.ok) {
+      const searchData = await searchRes.json();
+      if (searchData.query?.search?.length > 0) {
+        const bestTitle = searchData.query.search[0].title;
+        // Now get the summary for this specific title
+        const summaryRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(bestTitle)}`);
+        if (summaryRes.ok) {
+          const summaryData = await summaryRes.json();
+          if (summaryData.extract) {
+            wikiResult = summaryData.extract;
+          }
         }
       }
-    } catch (e) {
-      console.warn("Wiki search failed", e);
     }
+  } catch (e) {
+    console.warn("Wiki search failed", e);
   }
 
   // 6. Construct Final Response
   let content = "";
   
-  if (localResult) {
+  if (localResult && wikiResult) {
+    content = `**${query.toUpperCase()}**\n\n${localResult}\n\n**ADDITIONAL CONTEXT**\n${wikiResult}`;
+  } else if (localResult) {
     content = `**${query.toUpperCase()}**\n\n${localResult}`;
   } else if (wikiResult) {
-    content = `**GUIDANCE FOUND**\n\n${wikiResult}`;
+    content = `**ISLAMIC GUIDANCE**\n\n${wikiResult}`;
   } else if (quranResult) {
-    content = `**QURANIC GUIDANCE**\n\nI found a relevant verse for your query:`;
+    content = `**QURANIC GUIDANCE**\n\nI found a relevant verse from the Holy Quran regarding your query:`;
   } else {
-    content = `**UMMAH AI GUIDANCE**\n\nI have searched the available resources. Based on Islamic principles, we should always seek to align our actions with the **Quran and Sunnah**. For deeper details, I recommend exploring our **Ask & Learn** section or the **Quran Reader**.`;
+    // Final fallback: Synthesize a response based on keywords
+    const foundKeywords = ISLAMIC_KEYWORDS.filter(k => lowerQuery.includes(k));
+    if (foundKeywords.length > 0) {
+      content = `**UMMAH AI GUIDANCE**\n\nRegarding **${foundKeywords[0].toUpperCase()}**, Islam teaches us to always seek the truth through the **Quran and Sunnah**. This topic is central to our faith and character. I recommend looking into the specific verses and hadiths related to this for a deeper understanding.`;
+    } else {
+      content = `**UMMAH AI GUIDANCE**\n\nI have analyzed your query. In Islam, we are encouraged to seek knowledge and act with **Ikhlas** (sincerity). I recommend exploring this topic further through the **Quran Reader** or by consulting a local scholar for a detailed explanation.`;
+    }
   }
 
   if (quranResult) {
