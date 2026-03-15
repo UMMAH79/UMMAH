@@ -98,7 +98,20 @@ const INTENT_MAP: Record<string, string> = {
   "is smoking haram": "Many modern scholars have ruled that smoking is **Haram** (forbidden) or at least highly disliked (Makruh Tahrimi) because of the clear evidence of its severe harm to the body, which is a trust from Allah. Islam teaches us to protect our health and not to waste wealth on things that cause harm.",
   "how to convert to islam": "To convert to Islam, one must sincerely recite the **Shahada** (the testimony of faith): *'Ash-hadu an la ilaha illa Allah, wa ash-hadu anna Muhammadan rasulu Allah'* (I bear witness that there is no god but Allah, and I bear witness that Muhammad is the messenger of Allah). It is recommended to do this in the presence of witnesses at a mosque, but the sincere belief in the heart is what truly matters before Allah.",
   "what is the purpose of life": "The purpose of life in Islam is to **recognize and worship our Creator**, Allah (SWT), and to live according to His guidance to attain His pleasure and the eternal reward of Jannah. Allah says in the Quran: *'And I did not create the jinn and mankind except to worship Me.'* (51:56).",
-  "can i pray without wudu": "No, **Wudu is a mandatory requirement** for the validity of Salah. The Prophet (PBUH) said: 'The prayer of one of you is not accepted if he is in a state of impurity until he performs wudu.' (Bukhari). If water is unavailable or harmful, one may perform **Tayammum** (dry purification).",
+  "meaning of islam": "The word Islam is derived from the Arabic root 'S-L-M,' which signifies peace, safety, and submission. In a religious context, it means the complete surrender of one’s will to Allah, the Creator of the universe. By submitting to the divine guidance of Allah, a person achieves internal peace and harmony with the world around them.",
+  "allah has no partner": "The belief in the absolute oneness of Allah (Tawhid) is the foundation of Islam. If there were multiple gods, the universe would be in chaos due to conflicting wills. The harmony and precision of the universe are evidence of a single, consistent Designer. Attributing partners to Allah (Shirk) is the gravest sin.",
+  "five pillars": "The Five Pillars are the core practices of Islam: 1. **Shahada** (Faith), 2. **Salah** (Prayer), 3. **Zakat** (Charity), 4. **Sawm** (Fasting), and 5. **Hajj** (Pilgrimage). They serve as the spiritual and practical foundation for a Muslim’s life.",
+  "importance of salah": "Salah is the direct link between a Muslim and Allah. It serves as a spiritual recharge, a source of peace, and a reminder of our purpose in life. It is the second pillar of Islam and helps to purify the soul and prevent one from committing sins.",
+  "how many times do muslims pray": "Muslims pray five times a day: Fajr (Dawn), Dhuhr (Noon), Asr (Afternoon), Maghrib (Sunset), and Isha (Night). These specific timings ensure that Allah is remembered throughout the entire day, weaving spirituality into the fabric of daily life.",
+  "missed a prayer": "If a prayer is missed due to sleep or forgetfulness, it should be made up (Qada) as soon as it is remembered. The Prophet (PBUH) said that the 'debt' of prayer must be repaid. Intentionally skipping prayer is a serious spiritual neglect that requires sincere repentance.",
+  "purpose of fasting": "Fasting (Sawm) during Ramadan aims to develop **Taqwa** (God-consciousness), self-control, and empathy for the less fortunate. By denying the body its basic needs, the believer learns to discipline their desires and strengthens their willpower.",
+  "who must fast": "Fasting is mandatory for every healthy, adult Muslim. Exceptions are made for the sick, travelers, elderly, and women who are pregnant, nursing, or menstruating. Allah does not intend hardship; missed days can be made up later or compensated with Fidyah.",
+  "what is zakat": "Zakat is a mandatory charitable contribution of 2.5% of one’s surplus wealth. It literally means 'purification' and 'growth.' It is a right of the poor over the wealthy, ensuring wealth circulates and supports the most vulnerable in society.",
+  "how is zakat calculated": "Zakat is calculated as 2.5% of wealth that has been held for one lunar year and exceeds the **Nisab** (minimum threshold). It applies to cash, gold, silver, and business assets. It is a beautiful system of social security in Islam.",
+  "meaning of hajj": "Hajj is the pilgrimage to the Kaaba in Mecca, performed during the month of Dhu al-Hijjah. it is the fifth pillar of Islam and is mandatory once in a lifetime for those who are physically and financially able. It symbolizes the unity of the Ummah and the equality of all humans before Allah.",
+  "connect better with the quran": "To connect better with the Quran: 1. Read it with **Tadabbur** (reflection), 2. Listen to beautiful recitations, 3. Study the Tafsir (explanation), 4. Act upon its teachings, and 5. Make Dua for Allah to open your heart to its light.",
+  "improve my character": "Improving character (Akhlaq) is central to faith. The Prophet (PBUH) said: 'I was sent only to perfect good character.' Focus on honesty, patience, kindness, and humility. Remember that your character is the heaviest thing on the scales on the Day of Judgment.",
+  "find peace in difficult times": "In difficult times, find peace through: 1. **Dhikr** (remembrance of Allah), 2. **Salah**, 3. **Sabr** (patience), 4. **Dua**, and 5. Trusting in Allah's plan (**Tawakkul**). Allah says: 'Verily, in the remembrance of Allah do hearts find rest.' (13:28).",
   "what is sharia": "Sharia is the **Divine Path** and legal framework derived from the Quran and the Sunnah. It is designed to protect five essential human needs: **Faith, Life, Intellect, Lineage, and Property**. It is a system of justice, mercy, and wisdom that guides a Muslim in all aspects of life."
 };
 
@@ -186,17 +199,32 @@ export const getFreeAiResponse = async (
     contextualQuery = `${lastUserMessage} ${lowerQuery}`;
   }
 
+  const DEEP_DIVE_PREFIX = "please provide more authentic islamic context and sources regarding this topic:";
+  const isDeepDive = lowerQuery.startsWith(DEEP_DIVE_PREFIX);
+  let deepDiveTopic = "";
+  
+  if (isDeepDive) {
+    deepDiveTopic = lowerQuery.replace(DEEP_DIVE_PREFIX, "").trim();
+    contextualQuery = deepDiveTopic;
+  }
+
   // 2. Handle Normal Conversation
-  for (const [key, val] of Object.entries(CONVERSATION_MAP)) {
-    if (lowerQuery === key || lowerQuery.startsWith(key + " ")) {
-      return { content: val };
+  if (!isDeepDive) {
+    for (const [key, val] of Object.entries(CONVERSATION_MAP)) {
+      if (lowerQuery === key || lowerQuery.startsWith(key + " ")) {
+        return { content: val };
+      }
     }
   }
 
   // 3. Handle Specific Intent Questions (Fuzzy matching)
   for (const [key, val] of Object.entries(INTENT_MAP)) {
     if (contextualQuery.includes(key)) {
-      return { content: val };
+      let content = val;
+      if (isDeepDive) {
+        content = `**DEEP DIVE: ${deepDiveTopic.toUpperCase()}**\n\nAccording to the authentic knowledge prepared within **UMMAH AI**, here is a comprehensive exploration of this topic:\n\n${val}\n\n**ADDITIONAL CONTEXT**\nIslam encourages us to look beyond the surface and understand the wisdom (Hikmah) behind every teaching. This topic is essential for a complete understanding of our Deen.`;
+      }
+      return { content };
     }
   }
 
