@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { fetchSurahs, fetchSurahDetail, fetchAyahDetail, translateText, getAiVerseContent } from '../services/api';
+import { fetchSurahs, fetchSurahDetail, fetchAyahDetail, translateText } from '../services/api';
 import { Surah, Ayah, AppLanguage } from '../types';
 import { SUPPORTED_LANGUAGES } from '../constants';
 import { useTranslation } from '../hooks/useTranslation';
@@ -106,21 +106,12 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
         
         // Auto-translate featured ayah
         if (currentLanguage !== 'en') {
-          const langName = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage)?.name || 'English';
-          const aiRes = await getAiVerseContent(data.text, langName);
-          if (aiRes) {
+          const translated = await translateText(data.text, currentLanguage, data.transliteration);
+          if (translated) {
             setAiContent(prev => ({
               ...prev,
-              [data.number]: aiRes
+              [data.number]: translated
             }));
-          } else {
-            const translated = await translateText(data.text, currentLanguage, data.transliteration);
-            if (translated) {
-              setAiContent(prev => ({
-                ...prev,
-                [data.number]: translated
-              }));
-            }
           }
         }
       } else {
@@ -165,24 +156,13 @@ const QuranReader: React.FC<QuranReaderProps> = ({ currentLanguage }) => {
         return;
       }
 
-      const langName = SUPPORTED_LANGUAGES.find(l => l.id === currentLanguage)?.name || 'English';
-      const aiRes = await getAiVerseContent(ayah.text, langName);
-      
-      if (aiRes) {
+      const translated = await translateText(ayah.text, currentLanguage, ayah.transliteration);
+      if (translated) {
         translatedAyahs.current.add(ayah.number);
         setAiContent(prev => ({
           ...prev,
-          [ayah.number]: aiRes
+          [ayah.number]: translated
         }));
-      } else {
-        const translated = await translateText(ayah.text, currentLanguage, ayah.transliteration);
-        if (translated) {
-          translatedAyahs.current.add(ayah.number);
-          setAiContent(prev => ({
-            ...prev,
-            [ayah.number]: translated
-          }));
-        }
       }
     } catch (e) {
       console.error(`Translation Error for Ayah ${ayah.number}:`, e);

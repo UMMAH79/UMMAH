@@ -1,8 +1,5 @@
 
-import { GoogleGenAI } from "@google/genai";
 import { PrayerTimes, Surah, Ayah } from '../types';
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
 /**
  * Generic fetch wrapper with basic error handling to prevent app crashes on network failure
@@ -75,53 +72,16 @@ export const fetchAyahDetail = async (id: number, edition: string = 'en.sahih'):
 };
 
 /**
- * Uses Gemini to get high-quality, language-specific transliteration (pronunciation)
- * and translation for Quranic verses.
- */
-export const getAiVerseContent = async (arabicText: string, targetLangName: string) => {
-  try {
-    const model = "gemini-3-flash-preview";
-    const prompt = `
-      Arabic Text: "${arabicText}"
-      Target Language: ${targetLangName}
-      
-      Please provide:
-      1. A high-quality translation in ${targetLangName}.
-      2. A precise phonetic transliteration (pronunciation guide) adapted specifically for ${targetLangName} speakers, using the ${targetLangName} script if applicable (e.g., Bengali script for Bengali, Latin script for Turkish/English).
-         - The goal is to help a non-Arabic speaker pronounce the verse correctly.
-         - Use phonetic rules of ${targetLangName} (e.g., for Turkish, use 'ş' for 'sh', 'ç' for 'ch', 'ğ' where appropriate).
-         - Ensure the ENTIRE verse is transliterated. Do not truncate or summarize.
-      
-      Return ONLY a JSON object with these keys: "translation", "transliteration".
-    `;
-
-    const response = await ai.models.generateContent({
-      model,
-      contents: [{ parts: [{ text: prompt }] }],
-      config: {
-        responseMimeType: "application/json",
-      }
-    });
-
-    const text = response.text;
-    if (!text) return null;
-    return JSON.parse(text.trim());
-  } catch (error) {
-    console.error("Gemini Verse Error:", error);
-    return null;
-  }
-};
-
-/**
  * Free translation and transliteration using Google Translate's gtx API.
- * No API key required. Used as a fallback or for simple text.
- * Handles chunking to prevent truncation of long verses.
+ * No API key required. Handles chunking to prevent truncation of long verses.
+ * Optimized to provide accurate transliteration that adapts to the app language.
  */
 export const translateText = async (text: string, targetLang: string, sourceTranslit?: string) => {
   try {
     // Helper to fetch in chunks if text is too long
     const fetchInChunks = async (input: string, sl: string, tl: string, dt: string) => {
-      const maxLength = 1000; // Safe limit for gtx API
+      if (!input) return null;
+      const maxLength = 500; // Smaller chunks for absolute reliability against truncation
       if (input.length <= maxLength) {
         const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=${dt}&q=${encodeURIComponent(input)}`;
         const res = await fetch(url);
@@ -129,12 +89,11 @@ export const translateText = async (text: string, targetLang: string, sourceTran
         return await res.json();
       }
 
-      // Split by sentence or space
+      // Split by space to avoid cutting words
       const chunks = [];
       let current = input;
       while (current.length > 0) {
-        let splitIndex = current.lastIndexOf('. ', maxLength);
-        if (splitIndex === -1) splitIndex = current.lastIndexOf(' ', maxLength);
+        let splitIndex = current.lastIndexOf(' ', maxLength);
         if (splitIndex === -1 || splitIndex === 0) splitIndex = maxLength;
         
         chunks.push(current.substring(0, splitIndex));
@@ -158,58 +117,50 @@ export const translateText = async (text: string, targetLang: string, sourceTran
       return merged;
     };
 
-    // 1. Primary call: Arabic to Target Language
-    const data = await fetchInChunks(text, 'ar', targetLang, 't&dt=rm');
-    if (!data) throw new Error("Translation failed");
-    
+    // 1. Get Translation (Arabic -> Target)
+    const transData = await fetchInChunks(text, 'ar', targetLang, 't');
     let translation = "";
-    let googleTranslit = "";
-    
-    if (data && data[0]) {
-      data[0].forEach((segment: any) => {
-        if (segment[0]) translation += segment[0];
-        if (segment[3]) googleTranslit += segment[3] + " ";
+    if (transData && transData[0]) {
+      transData[0].forEach((s: any) => {
+        if (s[0]) translation += s[0];
       });
     }
 
-    // 2. Base transliteration (Latin)
-    let latinBase = sourceTranslit || "";
-    if (!latinBase || targetLang === 'en') {
-      if (googleTranslit.trim()) {
-        latinBase = googleTranslit.trim();
-      }
-    }
-
-    // 3. Phonetic Adaptation / Script Conversion
-    let finalTranslit = googleTranslit.trim() || latinBase;
-
-    // If target is not English, we try to adapt the Latin base to the target language
-    if (targetLang !== 'en' && latinBase) {
-      try {
-        // We use the "phonetic bridge" with chunking
-        const bridgeData = await fetchInChunks(latinBase, 'en', targetLang, 't');
-        if (bridgeData && bridgeData[0]) {
-          let adapted = "";
-          bridgeData[0].forEach((s: any) => {
-            if (s[0]) adapted += s[0];
-          });
-          
-          if (adapted.trim() && adapted.trim().toLowerCase() !== latinBase.toLowerCase()) {
-            const hasNonLatin = /[^\u0000-\u007F]/.test(adapted);
-            // Only use if it looks like a phonetic adaptation (similar length or non-latin script)
-            if (hasNonLatin || Math.abs(adapted.length - latinBase.length) < latinBase.length * 0.3) {
-              finalTranslit = adapted.trim();
-            }
-          }
+    // 2. Get Language-Specific Transliteration (Pronunciation)
+    // We use the accurate Latin transliteration as a base and "translate" it to the target language.
+    // This forces Google to provide the pronunciation in the target script (like Bengali)
+    // or adapt the phonetics to the target language's rules.
+    // This avoids the "half text glitch" because it uses the full Latin string as source.
+    let finalTranslit = sourceTranslit || "";
+    
+    if (targetLang !== 'en' && sourceTranslit) {
+      // Phonetic Bridge: Latin Translit -> Target Language
+      // This is what makes it "work perfectly" for Bengali and other non-Latin scripts
+      const bridgeData = await fetchInChunks(sourceTranslit, 'en', targetLang, 't');
+      if (bridgeData && bridgeData[0]) {
+        let adapted = "";
+        bridgeData[0].forEach((s: any) => {
+          if (s[0]) adapted += s[0];
+        });
+        if (adapted.trim()) {
+          finalTranslit = adapted.trim();
         }
-      } catch (e) {
-        console.warn("Phonetic bridge failed", e);
+      }
+    } else if (!sourceTranslit) {
+      // Fallback: Use Google's direct Arabic transliteration if no base is provided
+      const fallbackData = await fetchInChunks(text, 'ar', targetLang, 't&dt=rm');
+      if (fallbackData && fallbackData[0]) {
+        let googleTranslit = "";
+        fallbackData[0].forEach((s: any) => {
+          if (s[3]) googleTranslit += s[3].replace(/[⟨⟩]/g, '') + " ";
+        });
+        if (googleTranslit.trim()) finalTranslit = googleTranslit.trim();
       }
     }
     
     return {
       translation: translation.trim() || text,
-      transliteration: finalTranslit || latinBase || googleTranslit.trim() || ""
+      transliteration: finalTranslit
     };
   } catch (error) {
     console.error('Translation Error:', error);
