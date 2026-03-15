@@ -256,7 +256,11 @@ Tone: Sincere teacher. Language: ${activeLangName}.`;
     onUpdateSettings({ dailyChatCount: { date: today, count: currentCount + 1 } });
 
     const streamFreeFallback = async () => {
-      const freeResponse = await getFreeAiResponse(userMessageContent, preferredLanguage as AppLanguage);
+      const freeResponse = await getFreeAiResponse(
+        userMessageContent, 
+        preferredLanguage as AppLanguage,
+        messages
+      );
       setMessages(prev => [...prev, { role: 'model', content: '' }]);
       const words = freeResponse.content.split(' ');
       let currentText = '';

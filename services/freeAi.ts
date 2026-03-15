@@ -118,27 +118,66 @@ const synthesizeIslamicResponse = (text: string): string => {
   return synthesized;
 };
 
+const HADITH_COLLECTION: string[] = [
+  "The Prophet Muhammad (PBUH) said: 'The best of you are those who are best to their families.' (Tirmidhi)",
+  "The Prophet Muhammad (PBUH) said: 'None of you truly believes until he loves for his brother what he loves for himself.' (Bukhari & Muslim)",
+  "The Prophet Muhammad (PBUH) said: 'A good word is charity.' (Bukhari & Muslim)",
+  "The Prophet Muhammad (PBUH) said: 'Allah does not look at your appearances or your wealth, but He looks at your hearts and your actions.' (Muslim)",
+  "The Prophet Muhammad (PBUH) said: 'The strong is not the one who overcomes the people by his strength, but the strong is the one who controls himself while in anger.' (Bukhari)",
+  "The Prophet Muhammad (PBUH) said: 'Whoever believes in Allah and the Last Day should speak good or remain silent.' (Bukhari)",
+  "The Prophet Muhammad (PBUH) said: 'Kindness is not found in anything except that it beautifies it, and it is not removed from anything except that it disgraces it.' (Muslim)",
+  "The Prophet Muhammad (PBUH) said: 'The most beloved of deeds to Allah are those that are most consistent, even if they are small.' (Bukhari)",
+  "The Prophet Muhammad (PBUH) said: 'Every religion has a character, and the character of Islam is modesty (Haya).' (Ibn Majah)",
+  "The Prophet Muhammad (PBUH) said: 'Seek knowledge from the cradle to the grave.'",
+  "The Prophet Muhammad (PBUH) said: 'The world is a prison for the believer and a paradise for the disbeliever.' (Muslim)",
+  "The Prophet Muhammad (PBUH) said: 'Purity is half of faith.' (Muslim)",
+  "The Prophet Muhammad (PBUH) said: 'The best among you is the one who learns the Quran and teaches it.' (Bukhari)",
+  "The Prophet Muhammad (PBUH) said: 'He who does not show mercy to others, will not be shown mercy.' (Bukhari)",
+  "The Prophet Muhammad (PBUH) said: 'The upper hand is better than the lower hand (the giving hand is better than the receiving hand).' (Bukhari)"
+];
+
 /**
  * Gathers information from free sources and local knowledge base.
  */
-export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en'): Promise<FreeAiResponse> => {
+export const getFreeAiResponse = async (
+  query: string, 
+  lang: AppLanguage = 'en',
+  history: { role: string, content: string }[] = []
+): Promise<FreeAiResponse> => {
   const lowerQuery = query.toLowerCase().trim();
-  
-  // 1. Handle Normal Conversation
+  const lastUserMessage = history.length > 0 ? history.filter(m => m.role === 'user').pop()?.content.toLowerCase() : "";
+  const lastAiMessage = history.length > 0 ? history.filter(m => m.role === 'model').pop()?.content.toLowerCase() : "";
+
+  // 1. Handle Memory/Context (Follow-ups and Corrections)
+  const isCorrection = lowerQuery.includes("not those") || lowerQuery.includes("i said") || lowerQuery.includes("wrong") || lowerQuery.includes("instead");
+  let contextualQuery = lowerQuery;
+
+  if (isCorrection && lastUserMessage) {
+    // Try to extract the topic from the previous message if the current one is a correction
+    contextualQuery = lastUserMessage;
+  }
+
+  // 2. Handle Normal Conversation
   for (const [key, val] of Object.entries(CONVERSATION_MAP)) {
     if (lowerQuery.includes(key)) {
       return { content: val };
     }
   }
 
-  // 2. Handle Specific Intent Questions (New Layer)
+  // 3. Handle Specific Intent Questions
   for (const [key, val] of Object.entries(INTENT_MAP)) {
-    if (lowerQuery.includes(key)) {
+    if (contextualQuery.includes(key)) {
       return { content: val };
     }
   }
 
-  // 3. Topic Filter - Check if it's Islamic
+  // 4. Handle "Tell me a Hadith" specifically (Randomized or Sequential)
+  if (contextualQuery.includes("hadith") && (lowerQuery.includes("tell me") || lowerQuery.includes("give me") || isCorrection)) {
+    const randomIndex = Math.floor(Math.random() * HADITH_COLLECTION.length);
+    return { content: `**HADITH OF THE DAY**\n\n${HADITH_COLLECTION[randomIndex]}` };
+  }
+
+  // 5. Topic Filter - Check if it's Islamic
   const ISLAMIC_KEYWORDS = [
     "islam", "allah", "prophet", "quran", "hadith", "salah", "prayer", "fasting", "ramadan", 
     "zakat", "hajj", "mecca", "medina", "dua", "wudu", "ghusl", "halal", "haram", "iman", 
