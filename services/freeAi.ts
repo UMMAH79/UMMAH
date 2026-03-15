@@ -78,6 +78,19 @@ const KNOWLEDGE_BASE: Record<string, string> = {
   "trust": "Trust in Allah (Tawakkul) means doing your best and then **leaving the results to Him**. He is the best of disposers of affairs and knows what is best for us."
 };
 
+const INTENT_MAP: Record<string, string> = {
+  "most beautiful ayah": "Many scholars and believers consider **Ayat al-Kursi** (The Throne Verse, 2:255) to be the most beautiful and powerful ayah in the Quran. It describes the absolute majesty and knowledge of Allah. Another deeply beloved ayah is from **Surah Az-Zumar (39:53)**: *'O My servants who have transgressed against themselves [by sinning], do not despair of the mercy of Allah. Indeed, Allah forgives all sins.'*",
+  "beautiful verse": "One of the most heart-touching verses is from **Surah Ar-Rahman (55:13)**: *'So which of the favors of your Lord would you deny?'* This verse is repeated throughout the Surah as a reminder of Allah's infinite blessings upon us.",
+  "how to pray": "Salah is performed in specific steps: **Niyyah** (intention), **Takbir** (Allahu Akbar), **Qiyam** (standing and reciting Fatiha), **Ruku** (bowing), **Sajdah** (prostration), and **Tashahhud** (sitting). For a complete visual guide, I recommend checking our **Ask & Learn** section or visiting a local mosque for practical learning.",
+  "how to do wudu": "Wudu involves: 1. Washing hands, 2. Rinsing mouth, 3. Rinsing nose, 4. Washing face, 5. Washing arms to elbows, 6. Wiping head and ears, 7. Washing feet to ankles. Always start with **Bismillah**.",
+  "what is islam": "Islam is the complete submission to the will of **Allah (SWT)**. It is built on five pillars: **Shahada** (Faith), **Salah** (Prayer), **Zakat** (Charity), **Sawm** (Fasting), and **Hajj** (Pilgrimage). It is a deen of peace, justice, and mercy for all of creation.",
+  "who is muhammad": "Prophet Muhammad (PBUH) is the **final Messenger of Allah**. He was born in Mecca and received the revelation of the Quran. He is known as **Al-Amin** (the Trustworthy) and is the perfect role model for all humanity in character and conduct.",
+  "why was i created": "Allah says in the Quran: *'And I did not create the jinn and mankind except to worship Me.'* (**Surah Adh-Dhariyat, 51:56**). Our purpose is to recognize our Creator, live according to His guidance, and return to Him with a pure heart.",
+  "is music haram": "The ruling on music is a subject of scholarly discussion. Many scholars advise caution, especially if the content promotes vanity or neglect of remembrance of Allah. It is best to focus on the **recitation of the Quran**, which brings true peace to the heart.",
+  "how to be a better muslim": "To improve your faith: 1. Be consistent in **Salah**, 2. Read the **Quran** with understanding, 3. Maintain **Good Character** (Akhlaq), 4. Seek **Knowledge**, and 5. Make constant **Dua** for guidance. Remember, Allah loves those who strive to improve.",
+  "what is jannah": "Jannah is the **Eternal Paradise** promised to the believers. It is a place of infinite joy, where there is no pain, no sadness, and no death. The greatest reward in Jannah will be the **vision of Allah (SWT)**."
+};
+
 /**
  * Cleans up Wikipedia text to make it more faith-based and Islamic.
  */
@@ -118,7 +131,14 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
     }
   }
 
-  // 2. Topic Filter - Check if it's Islamic
+  // 2. Handle Specific Intent Questions (New Layer)
+  for (const [key, val] of Object.entries(INTENT_MAP)) {
+    if (lowerQuery.includes(key)) {
+      return { content: val };
+    }
+  }
+
+  // 3. Topic Filter - Check if it's Islamic
   const ISLAMIC_KEYWORDS = [
     "islam", "allah", "prophet", "quran", "hadith", "salah", "prayer", "fasting", "ramadan", 
     "zakat", "hajj", "mecca", "medina", "dua", "wudu", "ghusl", "halal", "haram", "iman", 
@@ -138,7 +158,7 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
     };
   }
 
-  // 3. Search Local Knowledge Base (More flexible matching)
+  // 4. Search Local Knowledge Base (More flexible matching)
   let localResult = "";
   const sortedKeys = Object.keys(KNOWLEDGE_BASE).sort((a, b) => b.length - a.length);
   for (const key of sortedKeys) {
@@ -148,7 +168,7 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
     }
   }
 
-  // 4. Search Quran (Free API)
+  // 5. Search Quran (Free API)
   let quranResult = "";
   try {
     const quranRes = await fetch(`https://api.alquran.cloud/v1/search/${encodeURIComponent(query)}/all/en.sahih`);
@@ -163,7 +183,7 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
     console.warn("Quran search failed", e);
   }
 
-  // 5. Advanced Wikipedia Search (Try search first, then summary)
+  // 6. Advanced Wikipedia Search (Try search first, then summary)
   let wikiResult = "";
   try {
     const searchRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query + " Islam")}&format=json&origin=*`);
@@ -184,7 +204,7 @@ export const getFreeAiResponse = async (query: string, lang: AppLanguage = 'en')
     console.warn("Wiki search failed", e);
   }
 
-  // 6. Construct Final Response
+  // 7. Construct Final Response
   let content = "";
   
   if (localResult && wikiResult) {
