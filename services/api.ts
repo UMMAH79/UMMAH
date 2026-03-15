@@ -87,9 +87,10 @@ export const getAiVerseContent = async (arabicText: string, targetLangName: stri
       
       Please provide:
       1. A high-quality translation in ${targetLangName}.
-      2. A precise phonetic transliteration (pronunciation guide) adapted specifically for ${targetLangName} speakers. 
-         - For example, if Turkish, use Turkish phonetic rules (e.g., 'c' for 'j' sounds, 'ş' for 'sh', etc.).
-         - Ensure the FULL verse is transliterated, do not truncate.
+      2. A precise phonetic transliteration (pronunciation guide) adapted specifically for ${targetLangName} speakers, using the ${targetLangName} script if applicable (e.g., Bengali script for Bengali, Latin script for Turkish/English).
+         - The goal is to help a non-Arabic speaker pronounce the verse correctly.
+         - Use phonetic rules of ${targetLangName} (e.g., for Turkish, use 'ş' for 'sh', 'ç' for 'ch', 'ğ' where appropriate).
+         - Ensure the ENTIRE verse is transliterated. Do not truncate or summarize.
       
       Return ONLY a JSON object with these keys: "translation", "transliteration".
     `;
@@ -114,15 +115,52 @@ export const getAiVerseContent = async (arabicText: string, targetLangName: stri
 /**
  * Free translation and transliteration using Google Translate's gtx API.
  * No API key required. Used as a fallback or for simple text.
+ * Handles chunking to prevent truncation of long verses.
  */
 export const translateText = async (text: string, targetLang: string, sourceTranslit?: string) => {
   try {
+    // Helper to fetch in chunks if text is too long
+    const fetchInChunks = async (input: string, sl: string, tl: string, dt: string) => {
+      const maxLength = 1000; // Safe limit for gtx API
+      if (input.length <= maxLength) {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=${dt}&q=${encodeURIComponent(input)}`;
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        return await res.json();
+      }
+
+      // Split by sentence or space
+      const chunks = [];
+      let current = input;
+      while (current.length > 0) {
+        let splitIndex = current.lastIndexOf('. ', maxLength);
+        if (splitIndex === -1) splitIndex = current.lastIndexOf(' ', maxLength);
+        if (splitIndex === -1 || splitIndex === 0) splitIndex = maxLength;
+        
+        chunks.push(current.substring(0, splitIndex));
+        current = current.substring(splitIndex).trim();
+      }
+
+      const results = await Promise.all(chunks.map(async (chunk) => {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=${dt}&q=${encodeURIComponent(chunk)}`;
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        return await res.json();
+      }));
+
+      // Merge results
+      const merged: any = [[], null, sl];
+      results.forEach(r => {
+        if (r && r[0]) {
+          merged[0].push(...r[0]);
+        }
+      });
+      return merged;
+    };
+
     // 1. Primary call: Arabic to Target Language
-    // We request translation (t) and transliteration (rm)
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ar&tl=${targetLang}&dt=t&dt=rm&q=${encodeURIComponent(text)}`;
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const data = await response.json();
+    const data = await fetchInChunks(text, 'ar', targetLang, 't&dt=rm');
+    if (!data) throw new Error("Translation failed");
     
     let translation = "";
     let googleTranslit = "";
@@ -130,17 +168,13 @@ export const translateText = async (text: string, targetLang: string, sourceTran
     if (data && data[0]) {
       data[0].forEach((segment: any) => {
         if (segment[0]) translation += segment[0];
-        // segment[3] is the transliteration of the source (Arabic)
-        // For some languages, Google provides a native-script transliteration here
         if (segment[3]) googleTranslit += segment[3] + " ";
       });
     }
 
     // 2. Base transliteration (Latin)
-    // We always want a good Latin base as a fallback or for phonetic bridge
     let latinBase = sourceTranslit || "";
     if (!latinBase || targetLang === 'en') {
-      // If we don't have a verified one, or we are in English, use Google's
       if (googleTranslit.trim()) {
         latinBase = googleTranslit.trim();
       }
@@ -152,26 +186,19 @@ export const translateText = async (text: string, targetLang: string, sourceTran
     // If target is not English, we try to adapt the Latin base to the target language
     if (targetLang !== 'en' && latinBase) {
       try {
-        // We use the "phonetic bridge"
-        // Translate the Latin base to the target language
-        const bridgeUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${targetLang}&dt=t&q=${encodeURIComponent(latinBase)}`;
-        const bridgeRes = await fetch(bridgeUrl);
-        if (bridgeRes.ok) {
-          const bridgeData = await bridgeRes.json();
-          if (bridgeData && bridgeData[0]) {
-            let adapted = "";
-            bridgeData[0].forEach((s: any) => {
-              if (s[0]) adapted += s[0];
-            });
-            
-            // If Google changed the spelling, it's likely a phonetic adaptation
-            if (adapted.trim() && adapted.trim().toLowerCase() !== latinBase.toLowerCase()) {
-              // Heuristic: if it's not a long sentence (meaning it's likely phonetics)
-              // or if it contains non-Latin characters
-              const hasNonLatin = /[^\u0000-\u007F]/.test(adapted);
-              if (hasNonLatin || adapted.split(' ').length === latinBase.split(' ').length) {
-                finalTranslit = adapted.trim();
-              }
+        // We use the "phonetic bridge" with chunking
+        const bridgeData = await fetchInChunks(latinBase, 'en', targetLang, 't');
+        if (bridgeData && bridgeData[0]) {
+          let adapted = "";
+          bridgeData[0].forEach((s: any) => {
+            if (s[0]) adapted += s[0];
+          });
+          
+          if (adapted.trim() && adapted.trim().toLowerCase() !== latinBase.toLowerCase()) {
+            const hasNonLatin = /[^\u0000-\u007F]/.test(adapted);
+            // Only use if it looks like a phonetic adaptation (similar length or non-latin script)
+            if (hasNonLatin || Math.abs(adapted.length - latinBase.length) < latinBase.length * 0.3) {
+              finalTranslit = adapted.trim();
             }
           }
         }
