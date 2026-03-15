@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { Question } from '../types';
 
-const QUESTIONS: Question[] = [
+export const QUESTIONS: Question[] = [
   {
     id: '1',
     title: 'What is the meaning of Islam?',
